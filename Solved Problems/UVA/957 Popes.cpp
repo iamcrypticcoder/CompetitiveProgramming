@@ -51,7 +51,6 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -79,54 +78,31 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_LEN 1000001
+#define MAX_LEN 1000000
 
-vector<ULL> A;
-string digits = "";
+int Y, P;
+int a[MAX_LEN+7];
 
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
-}
-
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
+int lowerBound(int l, int r, int x)
 {
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
+    while(l < r) {
+        int mid = l + (r-l)/2;
+        if(x > a[mid]) l = mid + 1;
+        else r = mid;
     }
+    if(x > a[l]) return l+1;
+    return l;
+}
+
+int upperBound(int l, int r, int x)
+{
+    while(l < r) {
+        int mid = l + (r-l)/2;
+        if(x < a[mid]) r = mid;
+        else l = mid + 1;
+    }
+    if(x == a[l]) return l+1;
+    return l;
 }
 
 int main()
@@ -137,15 +113,26 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    calcS();
+    while(scanf("%d", &Y) == 1) {
+        P = src();
+        FOR(i, 0, P-1) scanf("%d", &a[i]);
 
-    scanf("%d", &TC);
-    FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+        int maxPope = 0, firstPope, lastPope;
+        for(i = 1; i <= a[P-1]-Y+1; i++) {
+            j = i + Y - 1;
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+            //int low = lower_bound(a, a+P, i) - a;
+            //int high = upper_bound(a, a+P, j) - a;
+            int low = lowerBound(0, P-1, i);
+            int high = upperBound(0, P-1, j);
+
+            if(high - low > maxPope) {
+                maxPope = high - low;
+                firstPope = a[low];
+                lastPope = (high > P-1 || a[high] > j) ? a[high-1] : a[high];
+            }
+        }
+        printf("%d %d %d\n", maxPope, firstPope, lastPope);
     }
 
     cl = clock() - cl;

@@ -51,7 +51,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
+typedef unsigned long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -81,71 +81,76 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX_LEN 1000001
 
-vector<ULL> A;
-string digits = "";
+int M, N, K;
+char grid[51][51];
+string p;
+bool isFound;
 
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
-}
-
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
+void findWord(int x, int y)
 {
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
+    FOR(i, 0, 7) {
+        int nx = x;
+        int ny = y;
+        int ptr = 0;
+        while(nx >= 0 && nx < M && ny >= 0 && ny < N && ptr < p.length() && tolower(p[ptr]) == grid[nx][ny]) {
+            nx += dx[i];
+            ny += dy[i];
+            ptr++;
+        }
+        if(ptr == p.length()) {
+            isFound = true;
+            break;
+        }
     }
 }
+
+PII solution()
+{
+    PII loc;
+    isFound = false;
+    FOR(i, 0, M-1) {
+        if(isFound) break;
+        FOR(j, 0, N-1) {
+            if(tolower(p[0]) == grid[i][j]) findWord(i, j);
+            if(isFound) {
+                loc = make_pair(i, j);
+                break;
+            }
+        }
+    }
+    return loc;
+}
+
 
 int main()
 {
-    READ("input.txt");
+    //READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
-    calcS();
+    cin >> TC;
 
-    scanf("%d", &TC);
     FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+        cin >> M >> N;
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+        FOR(i, 0, M-1) FOR(j, 0, N-1) {
+            cin >> grid[i][j];
+            grid[i][j] = tolower(grid[i][j]);
+        }
+
+        cin >> K;
+
+        FOR(i, 1, K) {
+            cin >> p;
+
+            PII loc = solution();
+
+            cout << loc.first + 1 << " " << loc.second + 1 << endl;
+        }
+
+        if(tc < TC) cout << endl;
     }
 
     cl = clock() - cl;

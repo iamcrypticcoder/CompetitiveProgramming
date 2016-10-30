@@ -51,7 +51,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
+typedef unsigned long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -79,55 +79,11 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_LEN 1000001
+#define MAX_N 50000
+#define MAX_Q 25000
 
-vector<ULL> A;
-string digits = "";
-
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
-}
-
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
-{
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
-    }
-}
+int N, Q;
+int n[MAX_N+7];
 
 int main()
 {
@@ -137,15 +93,17 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    calcS();
+    N = src();
+    FOR(i, 0, N-1) scanf("%d", &n[i]);
+    Q = src();
+    FOR(i, 0, Q-1) {
+        int x = src();
 
-    scanf("%d", &TC);
-    FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+        int low = lower_bound(n, n + N, x) - n;
+        int high = upper_bound(n, n + N, x) - n;
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+        (low  == 0) ? printf("X ") : printf("%d ", n[low-1]);
+        (high == N) ? printf("X\n") : printf("%d\n", n[high]);
     }
 
     cl = clock() - cl;

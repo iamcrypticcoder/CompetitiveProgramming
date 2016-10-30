@@ -51,7 +51,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
+typedef unsigned long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -81,71 +81,57 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX_LEN 1000001
 
-vector<ULL> A;
-string digits = "";
+unsigned int Z, I, M, L;
 
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
+unsigned int f(unsigned int x) {
+    return (Z * x + I) % M;
 }
 
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
+PII floydCycleFinding(unsigned int x0)
 {
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
+    // 1st part: Finding k*mu, here's speed is 2x than tortoise
+    unsigned int T = f(x0), H = f(f(x0));
+    while(T != H) {
+        T = f(T);
+        H = f(f(H));
     }
+
+    // 2nd part: Finding mu
+    H = x0;
+    unsigned int mu = 0;
+    while(T != H) {
+        T = f(T);
+        H = f(H);
+        mu++;
+    }
+
+    // 3rd part: Finding lambda
+    unsigned int lambda = 1;
+    H = f(T);
+    while(T != H) {
+        H = f(H);
+        lambda++;
+    }
+    return PII(mu, lambda);
 }
 
+/**
+    This file is a solution of UVA 350 problem which is a direct application of floyd cycle finding algorithm
+**/
 int main()
 {
-    READ("input.txt");
+    //READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
-    int TC, tc;
+    int TC, tc = 1;
     double cl = clock();
 
-    calcS();
+    while(cin >> Z >> I >> M >> L) {
+        if(!Z && !I && !M && !L) break;
 
-    scanf("%d", &TC);
-    FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+        PII p = floydCycleFinding(L);
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+        printf("Case %d: %u\n", tc++, p.second);
     }
 
     cl = clock() - cl;
@@ -153,3 +139,20 @@ int main()
 
     return 0;
 }
+
+
+/**
+Input:
+7 5 12 4
+5173 3849 3279 1511
+9111 5309 6000 1234
+1079 2136 9999 1237
+0 0 0 0
+
+Output:
+Case 1: 6
+Case 2: 546
+Case 3: 500
+Case 4: 220
+
+**/

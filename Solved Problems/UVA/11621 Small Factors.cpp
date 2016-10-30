@@ -51,7 +51,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
+typedef unsigned long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -79,54 +79,24 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_LEN 1000001
+#define MAX_M ((unsigned int)(1 << 31))
 
-vector<ULL> A;
-string digits = "";
+unsigned int M;
+vector<unsigned int> C;
 
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
-}
-
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
+void preCalc()
 {
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
+    //cout << MAX_M << endl;
+    FOR(i, 0, 31) {
+        FOR(j, 0, 31) {
+            double x = pow(2.0, i) * pow(3.0, j);
+            if(x > MAX_M) break;
+            C.PB((unsigned int)x);
+        }
     }
+    sort(C.begin(), C.end());
+    //cout << C.size() << " " << C[C.size()-1] << endl;
+    //FOR(i, 0, C.size()-1) cout << C[i] << " ";
 }
 
 int main()
@@ -137,15 +107,14 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    calcS();
+    preCalc();
 
-    scanf("%d", &TC);
-    FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+    while(cin >> M) {
+        if(M == 0) break;
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+        int low = lower_bound(C.begin(), C.end(), M) - C.begin();
+
+        cout << C[low] << endl;
     }
 
     cl = clock() - cl;

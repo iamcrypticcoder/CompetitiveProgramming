@@ -51,7 +51,6 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
-typedef long long ULL;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -81,53 +80,15 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX_LEN 1000001
 
-vector<ULL> A;
-string digits = "";
+string S, SS;
+int Q;
+VI indexes[52];
 
-string intToString(int x) {
-    string ret = "";
-    while(x) {
-        ret += (x % 10) + '0';
-        x /= 10;
-    }
-    reverse(ret.begin(), ret.end());
-    return ret;
+int charIndex(char ch) {
+    if(isupper(ch)) return ch - 'A';
+    else return ch - 'a' + 26;
 }
 
-int digitCount(int x) {
-    if(x < 10)
-        return 1;
-    if(x < 100)
-        return 2;
-    if(x < 1000)
-        return 3;
-    if(x < 10000)
-        return 4;
-    if(x < 100000)
-        return 5;
-    if(x < 1000000)
-        return 6;
-    if(x < 10000000)
-        return 7;
-    if(x < 100000000)
-        return 8;
-}
-
-void calcS()
-{
-    A.PB(0);
-    A.PB(1);
-    digits += "1";
-    ULL lastSLen = 1;
-    int k = 2;
-    for(k=2; k <= 40000; k++) {
-        lastSLen = lastSLen + digitCount(k);
-        ULL sum = A[A.size()-1] + lastSLen;
-        A.PB(sum);
-        digits += intToString(k);
-        //cout << digits << endl;
-    }
-}
 
 int main()
 {
@@ -137,15 +98,30 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    calcS();
+    cin >> S >> Q;
 
-    scanf("%d", &TC);
-    FOR(tc, 1, TC) {
-        ULL x = src();
-        int low = lower_bound(A.begin(), A.end(), x) - A.begin();
+    FOR(i, 0, S.length()-1) {
+        indexes[charIndex(S[i])].push_back(i);
+    }
 
-        int remaining = x - A[low-1];
-        cout << digits[remaining - 1] << endl;
+    FOR(i, 0, Q-1) {
+        cin >> SS;
+        bool isMatched = true;
+        int firstCandidate = -1;
+        int lastCandidate = -1;
+        FOR(j, 0, SS.length()-1) {
+            int ch = charIndex(SS[j]);
+            int high = upper_bound(indexes[ch].begin(), indexes[ch].end(), lastCandidate) - indexes[ch].begin();
+            if(high < indexes[ch].size()) lastCandidate = indexes[ch][high];
+            else {
+                isMatched = false;
+                break;
+            }
+            if(j == 0) firstCandidate = lastCandidate;
+        }
+
+        if(isMatched) cout << "Matched " << firstCandidate << " " << lastCandidate << endl;
+        else cout << "Not matched" << endl;
     }
 
     cl = clock() - cl;
