@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,84 +73,38 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
-
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
-
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
+// This function returns (a^b) mod m.
+// Dont change LL to int. Otherwise it will return wrong ans
+// It fastest enough.
+// Used in 10006
+LL BigMod (LL a, LL n, LL b)
 {
-    return a.w < b.w;
+	if (n == 1 ) return a % b;
+	LL ans = BigMod(a,n / 2 ,b);
+	ans = (ans * ans) % b;
+	if (n % 2 == 1 ) return ans * a % b;
+	return ans; return ans;
 }
-
-void Kruscal()
-{
-	int p, q;
-
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
-}
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
-    READ("input.txt");
-    WRITE("output.txt");
+//    READ("input.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   LL x, y, n;
 
-   TC = src();
+   cin >> TC;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   FOR(tc, 1, TC) {
+      cin >> x >> y >> n;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
-      }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
-
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
-      }
-
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
-
-      edges.clear();
-      spanEdge.clear();
+      printf("%lld\n", BigMod(x, y, n));
    }
+   cin >> x;
+
 
    return 0;
 }

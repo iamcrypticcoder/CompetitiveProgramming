@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,83 +73,73 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+#define MAX_PRIME 31623       // sqrt(1e9) = 31622.7766
+bool Flag[MAX_PRIME + 10];    // Take 10 more extra elements
+vector<int> Primes;
+int totalPrimes;
 
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
-
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
+void Sieve()
 {
-    return a.w < b.w;
+   int i = 2, j;
+
+   int root = (int)sqrt(MAX_PRIME);
+   while( i <= root ) {
+      for(j = i+i; j <= MAX_PRIME; j += i) Flag[j] = 1;
+      for(++i; Flag[i]; i++);
+   }
+   Primes.push_back(2);
+	for(i = 3; i <= MAX_PRIME; i += 2)  // i+=2 ?? there is no consecutive prime except 2,3
+		if(Flag[i] == 0)
+			Primes.push_back(i);
+   totalPrimes = Primes.size();
+}
+bool IsPrime(long long N)
+{
+   if(N < 2) return 0;
+   if(N <= MAX_PRIME) return (!Flag[N]);
+   int root = sqrt((double)N);
+
+   for(int i=0; Primes[i] <= root && i < totalPrimes; i++)
+      if(N % Primes[i] == 0) return 0;
+   return 1;
 }
 
-void Kruscal()
+// This function returns (a^n) mod b.
+// Dont change LL to int. Otherwise it will return wrong ans
+// It fastest enough.
+// Used in 10006
+LL BigMod (LL a, LL n, LL b)
 {
-	int p, q;
-
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
+	if (n == 1 ) return a % b;
+	LL ans = BigMod(a,n / 2 ,b);
+	ans = (ans * ans) % b;
+	if (n % 2 == 1 ) return ans * a % b;
+	return ans; return ans;
 }
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
-    READ("input.txt");
-    WRITE("output.txt");
+//    READ("input.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   int p, a;
 
-   TC = src();
+   Sieve();
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   while(cin >> p >> a) {
+      if( !p && !a ) break;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
+      //cout << BigMod(a, p, p) << endl;
+
+      if(BigMod(a, p, p) == a) {
+         if(!IsPrime(p)) printf("yes\n");
+         else cout << "no\n";
       }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
+      else cout << "no\n";
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
-      }
-
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
-
-      edges.clear();
-      spanEdge.clear();
    }
 
    return 0;

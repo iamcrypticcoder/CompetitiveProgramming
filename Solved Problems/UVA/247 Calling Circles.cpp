@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,50 +73,68 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
-
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
 int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
+VVI G;
+VI color, dfsNum, dfsLow;
+int nodeNum = 0;
+stack<int> S;
+bool inStack[25+5];
+VI compNodes;
 
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
+VS names;
+MSI nodeMap;
 
-bool compEdge(EDGE a, EDGE b)
+void strongConnect(int u)
 {
-    return a.w < b.w;
+   dfsNum[u] = dfsLow[u] = nodeNum++;
+   color[u] = GRAY;
+   S.push(u);
+   inStack[u] = true;
+
+   FOR(i, 0, G[u].SZ-1) {
+      int v = G[u][i];
+      if(color[v] == WHITE) {
+         strongConnect(v);
+         dfsLow[u] = min(dfsLow[u], dfsLow[v]);
+      }
+      else if(inStack[v] == true) {
+         dfsLow[u] = min(dfsLow[u], dfsNum[v]);
+      }
+   }
+
+   if(dfsNum[u] == dfsLow[u]) {
+      int w = -1;
+      while(w != u) {
+         w = S.top();
+         S.pop();
+         inStack[w] = false;
+         compNodes.PB(w);
+      }
+      cout << names[compNodes[0]];
+      FOR(i, 1, compNodes.SZ-1) {
+         cout << ", " << names[compNodes[i]];
+      }
+      cout << endl;
+      compNodes.clear();
+   }
+
 }
 
-void Kruscal()
+void Tarjan()
 {
-	int p, q;
+   color = VI(NODES + 1, WHITE);
+   dfsNum = VI(NODES + 1);
+   dfsLow = VI(NODES + 1);
+   memset(inStack, false, sizeof inStack);
+   nodeNum = 1;
 
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
+   FOR(u, 1, NODES) {
+      if(color[u] == WHITE)
+         strongConnect(u);
+   }
 }
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
@@ -123,32 +142,33 @@ int main()
     WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   string str1, str2;
+   int u, v;
 
-   TC = src();
+   tc = 1;
+   while(cin >> NODES >> EDGES) {
+      if( !NODES && !EDGES ) break;
+      if(tc > 1) cout << endl;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+      names = VS(NODES + 1);
+      G = VVI(NODES + 1);
 
+      nodeNum = 0;
       FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
-      }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
-
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
+         cin >> str1 >> str2;
+         if(nodeMap.find(str1) == nodeMap.end())  nodeMap[str1] = (++nodeNum);
+         if(nodeMap.find(str2) == nodeMap.end())  nodeMap[str2] = (++nodeNum);
+         u = nodeMap[str1];
+         v = nodeMap[str2];
+         names[u] = str1;
+         names[v] = str2;
+         G[u].PB(v);
       }
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
+      printf("Calling circles for data set %d:\n", tc++);
+      Tarjan();
 
-      edges.clear();
-      spanEdge.clear();
+      nodeMap.clear();
    }
 
    return 0;

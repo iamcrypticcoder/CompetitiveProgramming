@@ -62,8 +62,7 @@ typedef map<int, int> MII;
 typedef map<char, int> MCI;
 typedef map<string, int> MSI;
 
-int GCD(int a,int b) {   while(b)b^=a^=b^=a%=b;  return a;   }
-int LCM(int a,int b) {   return a / GCD(a, b) * b;   }
+int GCD(int a,int b){   while(b)b^=a^=b^=a%=b;  return a;   }
 
 #define WHITE 0
 #define GRAY 1
@@ -75,78 +74,38 @@ int dy[] = {0, 0, -1, 1};
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 //---------------------------- GLOBAL VARIABLES ----------------------------
+#define MAX_PRIME 1000000
+bool Flag[MAX_PRIME + 10];    // Take 10 more extra elements
+vector<int> Primes;
+int totalPrimes;
 
-
-#define MAX_N 105
-
-struct Matrix {
-   LL mat[MAX_N][MAX_N];
-};
-
-int n, m, MOD;
-int matOrder;
-Matrix matA, matB;
-
-Matrix matMul(Matrix a, Matrix b)
+void Sieve()
 {
-   Matrix ans;
-   int i, j, k;
-   FOR(i, 0, matOrder-1)
-      FOR(j, 0, matOrder-1) {
-         ans.mat[i][j] = 0;
-         FOR(k, 0, matOrder-1) {
-            ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
-            //ans.mat[i][j] %= (1 << m);
-         }
-      }
-   return ans;
-}
+   int i = 2, j;
 
-// Using this function you will get Time: 0.216
-Matrix matPow(Matrix base, int p)
-{
-   Matrix ans;
-   int i, j;
-
-   FOR(i, 0, matOrder-1) FOR(j, 0, matOrder-1) ans.mat[i][j] = (i == j);
-
-   int count = 1;
-   while(p) {
-      //cout << count++ <<  endl;
-      if(p & 1) ans = matMul(ans, base);
-      base = matMul(base, base);
-      p >>= 1;
+   int root = (int)sqrt(MAX_PRIME);
+   while( i <= root ) {
+      for(j = i+i; j <= MAX_PRIME; j += i) Flag[j] = 1;
+      for(++i; Flag[i]; i++);
    }
-   return ans;
+   Primes.push_back(2);
+	for(i = 3; i <= MAX_PRIME; i += 2)  // i+=2 ?? there is no consecutive prime except 2,3
+		if(Flag[i] == 0)
+			Primes.push_back(i);
+   totalPrimes = Primes.size();
 }
-
-void showMat(Matrix m)
+bool IsPrime(long long N)
 {
-   FOR(i, 0, matOrder-1) {
-      FOR(j, 0, matOrder-1) cout << m.mat[i][j] << " ";
-      cout << endl;
-   }
+   if(N < 2) return 0;
+   if(N <= MAX_PRIME) return (!Flag[N]);
+   int root = sqrt((double)N);
+
+   for(int i=0; Primes[i] <= root && i < totalPrimes; i++)
+      if(N % Primes[i] == 0) return 0;
+   return 1;
 }
 
-// Using this function you will get Time: 0.008
-long long Fib(long long N)
-{
-   LL i = 1, j = 0, k = 0, h = 1;
-   LL t;
-
-   while(N > 0) {
-      if(N & 1) {
-         t = (j * h) % MOD;
-         j = ((i*h)%MOD + (j*k)%MOD + t%MOD) % MOD;
-         i = (i*k + t) % MOD;
-      }
-      t = SQR(h) % MOD;
-      h = (2*k*h + t) % MOD;
-      k = (SQR(k) + t) % MOD;
-      N = N/2;
-   }
-   return j;
-}
+int diff[5000];
 
 int main()
 {
@@ -154,25 +113,49 @@ int main()
 //    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
+   int L, U;
 
-   //cout << Fib(5);
-   // | 1 1 |
-   // | 1 0 |
-   matOrder = 2;
-   matA.mat[0][0] = 1; matA.mat[0][1] = 1;
-   matA.mat[1][0] = 1; matA.mat[1][1] = 0;
+   Sieve();
 
+   cin >> TC;
 
-   while(scanf("%d %d", &n , &m) != EOF) {
-      MOD = (1 << m);
-      matB = matPow(matA, n);
+   FOR(tc, 1, TC) {
 
-      //showMat(matB);
+      scanf("%d %d", &L, &U);
 
-      printf("%lld\n", matB.mat[0][1]);
+      int prevPrime = -1;
+      int curPrime = -1;
+      int maxOccur = -1;
+      int jChamp = -1;
+      bool isPossible = false;
 
-      printf("%lld\n", Fib(n));
+      memset(diff, 0, sizeof diff);
+
+      FOR(i, 0, totalPrimes-1) {
+         if(Primes[i] > U) break;
+         if(Primes[i] >= L) {
+            curPrime = Primes[i];
+            if(prevPrime != -1) {
+               diff[curPrime - prevPrime]++;
+               if(diff[curPrime - prevPrime] > maxOccur) {
+                  maxOccur = diff[curPrime - prevPrime];
+                  jChamp = curPrime - prevPrime;
+                  isPossible =  true;
+               }
+               else if(diff[curPrime - prevPrime] == maxOccur) {
+                  isPossible =  false;
+               }
+            }
+            prevPrime = curPrime;
+         }
+      }
+
+      if(isPossible) printf("The jumping champion is %d\n", jChamp);
+      else printf("No jumping champion\n");
+
    }
+
+
 
    return 0;
 }

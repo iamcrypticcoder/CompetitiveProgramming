@@ -50,6 +50,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
+typedef unsigned long long ULL;
 typedef vector<char> VC;
 typedef vector<vector<char> > VVC;
 typedef vector<int> VI;
@@ -76,102 +77,89 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 //---------------------------- GLOBAL VARIABLES ----------------------------
 
+int N;
+int solNum = 0;
+int temp[16], sol[16][400000][16], taken[16], left_diag[40], right_diag[40];
+bool bad[16][16];
+int totalSol[16];
 
-#define MAX_N 105
-
-struct Matrix {
-   LL mat[MAX_N][MAX_N];
-};
-
-int n, m, MOD;
-int matOrder;
-Matrix matA, matB;
-
-Matrix matMul(Matrix a, Matrix b)
+void NQueen(int col)
 {
-   Matrix ans;
-   int i, j, k;
-   FOR(i, 0, matOrder-1)
-      FOR(j, 0, matOrder-1) {
-         ans.mat[i][j] = 0;
-         FOR(k, 0, matOrder-1) {
-            ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
-            //ans.mat[i][j] %= (1 << m);
+   if(col == N+1)
+      memcpy(sol[N][++solNum], temp, sizeof temp);
+   else {
+      for(int row=1; row < N+1; row++) {
+         if( !taken[row] && !left_diag[row+col] && !right_diag[row-col+N] && !bad[row][col]) {
+            taken[row] = left_diag[row+col] = right_diag[row-col+N] = true;
+            temp[col] = row;
+            NQueen(col+1);
+            taken[row] = left_diag[row+col] = right_diag[row-col+N] = false;
          }
       }
-   return ans;
-}
-
-// Using this function you will get Time: 0.216
-Matrix matPow(Matrix base, int p)
-{
-   Matrix ans;
-   int i, j;
-
-   FOR(i, 0, matOrder-1) FOR(j, 0, matOrder-1) ans.mat[i][j] = (i == j);
-
-   int count = 1;
-   while(p) {
-      //cout << count++ <<  endl;
-      if(p & 1) ans = matMul(ans, base);
-      base = matMul(base, base);
-      p >>= 1;
    }
-   return ans;
 }
 
-void showMat(Matrix m)
+void showSolution(int N)
 {
-   FOR(i, 0, matOrder-1) {
-      FOR(j, 0, matOrder-1) cout << m.mat[i][j] << " ";
+   FOR(i, 1, totalSol[N]) {
+      printf("%d ", i);
+      FOR(j, 1, N) printf("%d ", sol[N][i][j]);
       cout << endl;
    }
 }
 
-// Using this function you will get Time: 0.008
-long long Fib(long long N)
+void GenAllSol()
 {
-   LL i = 1, j = 0, k = 0, h = 1;
-   LL t;
-
-   while(N > 0) {
-      if(N & 1) {
-         t = (j * h) % MOD;
-         j = ((i*h)%MOD + (j*k)%MOD + t%MOD) % MOD;
-         i = (i*k + t) % MOD;
-      }
-      t = SQR(h) % MOD;
-      h = (2*k*h + t) % MOD;
-      k = (SQR(k) + t) % MOD;
-      N = N/2;
+   FOR(n, 4, 14) {
+      N = n;
+      memset(taken, 0, sizeof taken);
+      memset(left_diag, 0, sizeof left_diag);
+      memset(right_diag, 0, sizeof right_diag);
+      solNum = 0;
+      NQueen(1);
+      totalSol[n] = solNum;
    }
-   return j;
 }
 
 int main()
 {
-//    READ("input.txt");
+    READ("input.txt");
 //    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
+   string line;
 
-   //cout << Fib(5);
-   // | 1 1 |
-   // | 1 0 |
-   matOrder = 2;
-   matA.mat[0][0] = 1; matA.mat[0][1] = 1;
-   matA.mat[1][0] = 1; matA.mat[1][1] = 0;
+   GenAllSol();
+   //cout << totalSol[14];
+   //showSolution(8);
 
+   tc = 1;
+   while(scanf("%d", &N) != EOF) {
+      getline(cin, line);
+      if(N == 0) break;
 
-   while(scanf("%d %d", &n , &m) != EOF) {
-      MOD = (1 << m);
-      matB = matPow(matA, n);
+      memset(bad, false, sizeof bad);
+      FOR(i, 1, N) {
+         getline(cin, line);
+         FOR(j, 0, line.SZ-1)
+            if(line[j] == '*') bad[i][j+1] = true;
+      }
 
-      //showMat(matB);
+      int c = 0;
+      FOR(i, 1, totalSol[N]) {
+         bool isPos = true;
+         FOR(j, 1, N) {
+            int row = sol[N][i][j];
+            int col = j;
+            if(bad[row][col] == true) {
+               isPos = false;
+               break;
+            }
+         }
+         if(isPos == true) c++;
+      }
 
-      printf("%lld\n", matB.mat[0][1]);
-
-      printf("%lld\n", Fib(n));
+      printf("Case %d: %d\n", tc++, c);
    }
 
    return 0;

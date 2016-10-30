@@ -72,19 +72,29 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL DECLARATIONS ----------------------------
+
+struct POINT {
+   double x, y;
+};
+
+double sqr_dist(POINT a, POINT b)
+{
+   return sqrt(SQR(a.x - b.x) + SQR(a.y - b.y));
+}
+
+vector<POINT> pnts;
 
 //---------------------------- KRUSKAL ALGO START --------------------------
 typedef struct {
     int u, v;
-    int w;
+    double w;
 } EDGE;
 
 int NODES, EDGES;
 vector<EDGE> edges;
 vector<EDGE> spanEdge;
-int minSpanCost;
+double minSpanCost;
 
 // -------------------- Disjoint Set Structure --------------------------------------
 int set[10001];
@@ -93,7 +103,7 @@ int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));
 void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
 // ----------------------------------------------------------------------------------
 
-bool compEdge(EDGE a, EDGE b)
+int compEdge(EDGE a, EDGE b)
 {
     return a.w < b.w;
 }
@@ -102,12 +112,12 @@ void Kruscal()
 {
 	int p, q;
 
-	minSpanCost = 0;
+   minSpanCost = 0.0;
 
 	for(int i=0; i < EDGES; i++) {
 		p = FindSet(edges[i].u);
 		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
+		if(p != q) {
 			spanEdge.push_back(edges[i]);
 			Union(p, q);
 			minSpanCost += edges[i].w;
@@ -117,39 +127,52 @@ void Kruscal()
 }
 //---------------------------- KRUSKAL ALGO END --------------------------
 
+
 int main()
 {
     READ("input.txt");
-    WRITE("output.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
    EDGE e;
+   int u, v;
 
-   TC = src();
+   while(cin >> NODES) {
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+      pnts = vector<POINT>(NODES+1);
+      FOR(i, 1, NODES) {
+         cin >> pnts[i].x >> pnts[i].y;
+      }
 
+      InitSet(NODES + 1);
+
+      // Union Existing Nodes
+      cin >> EDGES;
       FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
+         cin >> u >> v;
+         Union(u, v);
+      }
+
+      // Linking all nodes
+      FOR(i, 1, NODES) FOR(j, i+1, NODES) {
+         e.u = i;
+         e.v = j;
+         e.w = sqr_dist(pnts[i], pnts[j]);
          edges.PB(e);
       }
-      InitSet(NODES+1);
+      EDGES = edges.SZ;
+
       sort(edges.begin(), edges.end(), compEdge);
       Kruscal();
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
-      }
-
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
+      printf("%.2lf\n", minSpanCost);
 
       edges.clear();
       spanEdge.clear();
+      pnts.clear();
    }
+
+
 
    return 0;
 }

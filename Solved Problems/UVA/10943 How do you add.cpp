@@ -41,10 +41,10 @@ using namespace std;
 #define INF 99999999
 
 #define ALL_BITS ((1 << 31) - 1)
-#define NEG_BITS(mask) (mask ^ ALL_BITS)
+#define NEG_BITS(mask) (mask ^= ALL_BITS)
 #define TEST_BIT(mask, i) (mask & (1 << i))
-#define ON_BIT(mask, i) (mask | (1 << i))
-#define OFF_BIT(mask, i) (mask & NEG_BITS(1 << i))
+#define ON_BIT(mask, i) (mask |= (1 << i))
+#define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
 typedef unsigned long long ULL;
@@ -53,7 +53,7 @@ typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
 typedef vector<bool> VB;
 typedef vector< vector<bool> > VVB;
-typedef pair<int, int> PII;
+typedef pair<int, int> II;
 typedef map<int, int> MII;
 typedef map<char, int> MCI;
 typedef map<string, int> MSI;
@@ -64,59 +64,34 @@ int GCD(int a,int b){   while(b)b^=a^=b^=a%=b;  return a;   }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_NODES 11
+#define MOD 1000000
 
-int NODES;
-int dist[MAX_NODES][MAX_NODES];
-int DP[MAX_NODES][ 1 << MAX_NODES ];
-vector<PII> pnts;
+int N, K;
+int DP[101][101];
 
-int TSP(int pos, int mask)
+int ways(int N, int K)
 {
-    if(DP[pos][mask] != -1) return DP[pos][mask];
+    if(DP[N][K] != -1) return DP[N][K];
+    if(N == 0 || K == 1) return DP[N][K] = 1;
 
-    if(mask == (1 << NODES)-1) return dist[pos][0];
-
-    int ret = INF;
-    FOR(i, 0, NODES-1)
-        if(i != pos && TEST_BIT(mask, i) == 0)
-            ret = min(ret, dist[pos][i] + TSP(i, mask | (1 << i)));
-
-    return DP[pos][mask] = ret;
+    int ret = 0;
+    FOR(i, 0, N)
+        ret = (ret + ways(N - i, K - 1)) % MOD;
+    return DP[N][K] = ret;
 }
-
-
 int main()
 {
-    READ("input.txt");
+//    READ("input.txt");
 //    WRITE("output.txt");
 
     int TC, tc;
-    int a, b;
 
-    scanf("%d", &TC);
+    memset(DP, -1, sizeof DP);
 
-    FOR(tc, 1, TC) {
-        scanf("%d %d", &a, &b);
-        scanf("%d %d", &a, &b);
-
-        pnts.PB(PII(a, b));
-
-        scanf("%d", &NODES);
-        FOR(i, 1, NODES) {
-            scanf("%d %d", &a, &b);
-            pnts.PB(PII(a, b));
-        }
-        NODES = NODES + 1;      // Because of starting node
-
-        FOR(i, 0, pnts.SZ-1) FOR(j, 0, pnts.SZ-1)
-            dist[i][j] = abs(pnts[i].first - pnts[j].first) + abs(pnts[i].second - pnts[j].second);
-
-        memset(DP, -1, sizeof DP);
-        printf("The shortest path has length %d\n", TSP(0, 1));
-
-        pnts.clear();
+    while(cin >> N >> K) {
+        if( N == 0 && K == 0 ) break;
+        printf("%d\n", ways(N, K));
     }
-
     return 0;
 }
+

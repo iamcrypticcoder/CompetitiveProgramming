@@ -36,18 +36,23 @@ using namespace std;
 #define PQ priority_queue
 #define PB push_back
 #define SZ size()
+#define ff first
+#define ss second
 
+#define EPS 1e-9
 #define SQR(x) ((x)*(x))
 #define INF 99999999
 
 #define ALL_BITS ((1 << 31) - 1)
-#define NEG_BITS(mask) (mask ^ ALL_BITS)
+#define NEG_BITS(mask) (mask ^= ALL_BITS)
 #define TEST_BIT(mask, i) (mask & (1 << i))
-#define ON_BIT(mask, i) (mask | (1 << i))
-#define OFF_BIT(mask, i) (mask & NEG_BITS(1 << i))
+#define ON_BIT(mask, i) (mask |= (1 << i))
+#define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
 typedef unsigned long long ULL;
+typedef vector<char> VC;
+typedef vector<vector<char> > VVC;
 typedef vector<int> VI;
 typedef vector<vector<int> > VVI;
 typedef vector<string> VS;
@@ -58,65 +63,53 @@ typedef map<int, int> MII;
 typedef map<char, int> MCI;
 typedef map<string, int> MSI;
 
-int GCD(int a,int b){   while(b)b^=a^=b^=a%=b;  return a;   }
+int GCD(int a,int b) {   while(b)b^=a^=b^=a%=b;  return a;   }
+int LCM(int a,int b) {   return a / GCD(a, b) * b;   }
 
 #define WHITE 0
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_NODES 11
+int dx[] = {1, -1, 0, 0};
+int dy[] = {0, 0, -1, 1};
 
-int NODES;
-int dist[MAX_NODES][MAX_NODES];
-int DP[MAX_NODES][ 1 << MAX_NODES ];
-vector<PII> pnts;
+inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-int TSP(int pos, int mask)
+//---------------------------- GLOBAL VARIABLES ----------------------------
+
+int L, N;
+int arr[55];
+int DP[55][55];
+
+int cut(int left, int right)
 {
-    if(DP[pos][mask] != -1) return DP[pos][mask];
+   if(DP[left][right] != -1) return DP[left][right];
+   if(left == right -1) return DP[left][right-1] = 0;
 
-    if(mask == (1 << NODES)-1) return dist[pos][0];
+   int ret = INF;
+   FOR(i, left+1, right-1)
+      ret = min(ret, cut(left, i) + cut(i, right) + (arr[right] - arr[left]));
 
-    int ret = INF;
-    FOR(i, 0, NODES-1)
-        if(i != pos && TEST_BIT(mask, i) == 0)
-            ret = min(ret, dist[pos][i] + TSP(i, mask | (1 << i)));
-
-    return DP[pos][mask] = ret;
+   return DP[left][right] = ret;
 }
-
 
 int main()
 {
-    READ("input.txt");
+//    READ("input.txt");
 //    WRITE("output.txt");
+   int i, j, k;
+   int TC, tc;
 
-    int TC, tc;
-    int a, b;
+   while(scanf("%d", &L) != EOF) {
+      if(L == 0) break;
 
-    scanf("%d", &TC);
+      N = src();
+      FOR(i, 1, N) scanf("%d", &arr[i]);
+      arr[0] = 0; arr[N+1] = L;
 
-    FOR(tc, 1, TC) {
-        scanf("%d %d", &a, &b);
-        scanf("%d %d", &a, &b);
+      memset(DP, -1, sizeof DP);
+      printf("The minimum cutting is %d.\n", cut(0, N+1));
+   }
 
-        pnts.PB(PII(a, b));
-
-        scanf("%d", &NODES);
-        FOR(i, 1, NODES) {
-            scanf("%d %d", &a, &b);
-            pnts.PB(PII(a, b));
-        }
-        NODES = NODES + 1;      // Because of starting node
-
-        FOR(i, 0, pnts.SZ-1) FOR(j, 0, pnts.SZ-1)
-            dist[i][j] = abs(pnts[i].first - pnts[j].first) + abs(pnts[i].second - pnts[j].second);
-
-        memset(DP, -1, sizeof DP);
-        printf("The shortest path has length %d\n", TSP(0, 1));
-
-        pnts.clear();
-    }
-
-    return 0;
+   return 0;
 }

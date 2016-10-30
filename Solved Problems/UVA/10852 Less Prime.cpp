@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,83 +73,62 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+#define MAX_PRIME 10000
+bool Flag[MAX_PRIME + 10];    // Take 10 more extra elements
+vector<int> Primes;
+int totalPrimes;
 
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
-
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
+void Sieve()
 {
-    return a.w < b.w;
-}
+   int i = 2, j;
 
-void Kruscal()
+   int root = (int)sqrt(MAX_PRIME);
+   while( i <= root ) {
+      for(j = i+i; j <= MAX_PRIME; j += i) Flag[j] = 1;
+      for(++i; Flag[i]; i++);
+   }
+   Primes.push_back(2);
+	for(i = 3; i <= MAX_PRIME; i += 2)  // i+=2 ?? there is no consecutive prime except 2,3
+		if(Flag[i] == 0)
+			Primes.push_back(i);
+   totalPrimes = Primes.size();
+}
+bool IsPrime(long long N)
 {
-	int p, q;
+   if(N < 2) return 0;
+   if(N <= MAX_PRIME) return (!Flag[N]);
+   int root = sqrt((double)N);
 
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
+   for(int i=0; Primes[i] <= root && i < totalPrimes; i++)
+      if(N % Primes[i] == 0) return 0;
+   return 1;
 }
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
-    READ("input.txt");
-    WRITE("output.txt");
+//    READ("input.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   int N;
 
-   TC = src();
+   Sieve();
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   cin >> TC;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
+   FOR(tc, 1, TC) {
+      cin >> N;
+
+      int ans;
+      FOR(i, N/2 + 1, N) {
+         if(IsPrime(i)) {
+            ans = i;
+            break;
+         }
       }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
-
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
-      }
-
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
-
-      edges.clear();
-      spanEdge.clear();
+      cout << ans << endl;
    }
 
    return 0;

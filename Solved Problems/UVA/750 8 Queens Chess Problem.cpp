@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -49,6 +50,7 @@ using namespace std;
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
 typedef long long LL;
+typedef unsigned long long ULL;
 typedef vector<char> VC;
 typedef vector<vector<char> > VVC;
 typedef vector<int> VI;
@@ -61,7 +63,8 @@ typedef map<int, int> MII;
 typedef map<char, int> MCI;
 typedef map<string, int> MSI;
 
-int GCD(int a,int b){   while(b)b^=a^=b^=a%=b;  return a;   }
+int GCD(int a,int b) {   while(b)b^=a^=b^=a%=b;  return a;   }
+int LCM(int a,int b) {   return a / GCD(a, b) * b;   }
 
 #define WHITE 0
 #define GRAY 1
@@ -72,50 +75,35 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+int solNum = 1;
+int temp[10], sol[100][10], taken[10], left_diag[20], right_diag[20];
 
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
-
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
+void NQueen(int col)
 {
-    return a.w < b.w;
+   if(col == 9)
+      memcpy(sol[solNum++], temp, sizeof temp);
+   else {
+      for(int row=1; row < 9; row++) {
+         if( !taken[row] && !left_diag[row+col] && !right_diag[row-col+8]) {
+            taken[row] = left_diag[row+col] = right_diag[row-col+8] = true;
+            temp[col] = row;
+            NQueen(col+1);
+            taken[row] = left_diag[row+col] = right_diag[row-col+8] = false;
+         }
+      }
+   }
 }
 
-void Kruscal()
+void showSolution()
 {
-	int p, q;
-
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
+   FOR(i, 1, solNum-1) {
+      printf("%d ", i);
+      FOR(j, 1, 8) printf("%d ", sol[i][j]);
+      cout << endl;
+   }
 }
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
@@ -123,33 +111,35 @@ int main()
     WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   int r, c;
 
-   TC = src();
+	memset(taken, 0, sizeof taken);
+	memset(left_diag, 0, sizeof left_diag);
+	memset(right_diag, 0, sizeof right_diag);
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+	NQueen(1);
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
+	TC = src();
+
+	FOR(tc, 1, TC) {
+	   if(tc > 1) printf("\n");
+
+      scanf("%d %d", &r, &c);
+      printf("SOLN       COLUMN\n");
+      printf(" #      1 2 3 4 5 6 7 8\n\n");
+
+      int n = 0;
+      FOR(i, 1, solNum-1) {
+         if(sol[i][c] == r) {
+            printf("%2d     ", ++n);
+            FOR(j, 1, 8)
+               printf(" %d", sol[i][j]), printf(j == 8 ? "\n" : "");
+         }
       }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
-      }
+	}
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
 
-      edges.clear();
-      spanEdge.clear();
-   }
 
    return 0;
 }

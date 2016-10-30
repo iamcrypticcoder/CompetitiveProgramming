@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,84 +73,61 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+int NODES;
+int G[101][101];
+int source;
+int maxDist, maxDistNode;
 
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
-
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
+void Reset()
 {
-    return a.w < b.w;
+   FOR(i, 1, 100) FOR(j, 1, 100) {
+      if(i == j) { G[i][j] = 0; continue; };
+      G[i][j] = G[j][i] = -1;
+   }
+
 }
-
-void Kruscal()
-{
-	int p, q;
-
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
-}
-//---------------------------- KRUSKAL ALGO END --------------------------
-
 int main()
 {
     READ("input.txt");
-    WRITE("output.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   int u, v;
 
-   TC = src();
+   tc = 1;
+   while(cin >> NODES) {
+      if(NODES == 0) break;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+      cin >> source;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
-      }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
-
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
+      Reset();
+      while(cin >> u >> v) {
+         if(u == 0 && v == 0) break;
+         G[u][v] = 1;
       }
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
+      FOR(k, 1, NODES)
+         FOR(i, 1, NODES)
+            FOR(j, 1, NODES) {
+               if(G[i][k] != -1 && G[k][j] != -1)
+                  G[i][j] = max(G[i][j], G[i][k] + G[k][j]);
+            }
 
-      edges.clear();
-      spanEdge.clear();
+      maxDist = G[source][1];
+      maxDistNode = 1;
+      FOR(i, 2, NODES) {
+         if(G[source][i] > maxDist) {
+            maxDist = G[source][i];
+            maxDistNode = i;
+         }
+      }
+
+      printf("Case %d: The longest path from %d has length %d, finishing at %d.\n\n", tc++, source, maxDist, maxDistNode);
    }
+
+
 
    return 0;
 }

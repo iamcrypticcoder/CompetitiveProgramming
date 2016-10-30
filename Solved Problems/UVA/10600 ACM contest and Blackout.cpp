@@ -72,8 +72,7 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
 //---------------------------- KRUSKAL ALGO START --------------------------
 typedef struct {
@@ -84,7 +83,8 @@ typedef struct {
 int NODES, EDGES;
 vector<EDGE> edges;
 vector<EDGE> spanEdge;
-int minSpanCost;
+vector<int> spanEdgeIndexes;
+int minSpanCost, secondBestCost;
 
 // -------------------- Disjoint Set Structure --------------------------------------
 int set[10001];
@@ -93,62 +93,84 @@ int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));
 void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
 // ----------------------------------------------------------------------------------
 
-bool compEdge(EDGE a, EDGE b)
+int compEdge(EDGE a, EDGE b)
 {
     return a.w < b.w;
 }
 
-void Kruscal()
+int Kruscal()
 {
 	int p, q;
 
 	minSpanCost = 0;
 
 	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
+      p = FindSet(edges[i].u);
+      q = FindSet(edges[i].v);
+      if(p != q) {
+         spanEdge.push_back(edges[i]);
+         spanEdgeIndexes.push_back(i);
+         Union(p, q);
+         minSpanCost += edges[i].w;
+         if(spanEdge.size() == NODES - 1) break;
+      }
 	}
+}
+
+int secondBestMST(int excludedIndex)
+{
+   int p, q, ret = 0, edgeSeleted = 0;
+
+	for(int i=0; i < EDGES; i++) {
+	   if( i == excludedIndex ) continue;
+      p = FindSet(edges[i].u);
+      q = FindSet(edges[i].v);
+      if(p != q) {
+         edgeSeleted++;
+         Union(p, q);
+         ret += edges[i].w;
+         if(edgeSeleted == NODES - 1) return ret;
+      }
+	}
+	return INF;
 }
 //---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
     READ("input.txt");
-    WRITE("output.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
    EDGE e;
 
-   TC = src();
+   cin >> TC;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   FOR(tc, 1, TC) {
+      cin >> NODES >> EDGES;
 
       FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
+         cin >> e.u >> e.v >> e.w;
          edges.PB(e);
       }
-      InitSet(NODES+1);
+
+
+      InitSet(NODES + 1);
       sort(edges.begin(), edges.end(), compEdge);
       Kruscal();
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
+      // Finding Second Best MST
+      secondBestCost = INF;
+      FOR(i, 0, spanEdgeIndexes.SZ-1) {
+         InitSet(NODES + 1);
+         secondBestCost = min(secondBestCost, secondBestMST(spanEdgeIndexes[i]));
       }
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
+      printf("%d %d\n", minSpanCost, secondBestCost);
 
       edges.clear();
       spanEdge.clear();
+      spanEdgeIndexes.clear();
    }
 
    return 0;

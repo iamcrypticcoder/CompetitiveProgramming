@@ -76,102 +76,65 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 //---------------------------- GLOBAL VARIABLES ----------------------------
 
+int N, Q;
+char symbols[36][16][43];
+int res[16][43];
 
-#define MAX_N 105
-
-struct Matrix {
-   LL mat[MAX_N][MAX_N];
-};
-
-int n, m, MOD;
-int matOrder;
-Matrix matA, matB;
-
-Matrix matMul(Matrix a, Matrix b)
+int code(char ch)
 {
-   Matrix ans;
-   int i, j, k;
-   FOR(i, 0, matOrder-1)
-      FOR(j, 0, matOrder-1) {
-         ans.mat[i][j] = 0;
-         FOR(k, 0, matOrder-1) {
-            ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
-            //ans.mat[i][j] %= (1 << m);
-         }
-      }
-   return ans;
+   if(isdigit(ch)) return ch - '0' + 26;
+   else return ch - 'A';
 }
-
-// Using this function you will get Time: 0.216
-Matrix matPow(Matrix base, int p)
-{
-   Matrix ans;
-   int i, j;
-
-   FOR(i, 0, matOrder-1) FOR(j, 0, matOrder-1) ans.mat[i][j] = (i == j);
-
-   int count = 1;
-   while(p) {
-      //cout << count++ <<  endl;
-      if(p & 1) ans = matMul(ans, base);
-      base = matMul(base, base);
-      p >>= 1;
-   }
-   return ans;
-}
-
-void showMat(Matrix m)
-{
-   FOR(i, 0, matOrder-1) {
-      FOR(j, 0, matOrder-1) cout << m.mat[i][j] << " ";
-      cout << endl;
-   }
-}
-
-// Using this function you will get Time: 0.008
-long long Fib(long long N)
-{
-   LL i = 1, j = 0, k = 0, h = 1;
-   LL t;
-
-   while(N > 0) {
-      if(N & 1) {
-         t = (j * h) % MOD;
-         j = ((i*h)%MOD + (j*k)%MOD + t%MOD) % MOD;
-         i = (i*k + t) % MOD;
-      }
-      t = SQR(h) % MOD;
-      h = (2*k*h + t) % MOD;
-      k = (SQR(k) + t) % MOD;
-      N = N/2;
-   }
-   return j;
-}
-
 int main()
 {
-//    READ("input.txt");
+    READ("input.txt");
 //    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
+   string str, temp;
+   char ch;
+   int chCode;
 
-   //cout << Fib(5);
-   // | 1 1 |
-   // | 1 0 |
-   matOrder = 2;
-   matA.mat[0][0] = 1; matA.mat[0][1] = 1;
-   matA.mat[1][0] = 1; matA.mat[1][1] = 0;
+   //cout << code('0');
+   scanf("%d %d", &N, &Q);
+   cin >> str;
+   getline(cin, temp);
 
+   FOR(i, 0, N-1) {
+      int chCode = code(str[i]);
 
-   while(scanf("%d %d", &n , &m) != EOF) {
-      MOD = (1 << m);
-      matB = matPow(matA, n);
+      FOR(j, 0, 15) {
+         getline(cin, temp);
+         FOR(k, 0, 42) symbols[chCode][j][k] = temp[k];
+      }
+      getline(cin, temp);
+   }
 
-      //showMat(matB);
+   FOR(q, 1, Q) {
+      printf("Query %d: ", q);
 
-      printf("%lld\n", matB.mat[0][1]);
+      cin >> str;
 
-      printf("%lld\n", Fib(n));
+      // Overlapping
+      memset(res, 0, sizeof res);
+      FOR(i, 0, str.size()-1) {
+         chCode = code(str[i]);
+         FOR(j, 0, 15) FOR(k, 0, 42)
+            if(symbols[chCode][j][k] == '*') res[j][k]++;
+      }
+      // Checking Each Character
+      FOR(i, 0, str.size()-1) {
+         chCode = code(str[i]);
+         bool isPos = false;
+         FOR(j, 0, 15) FOR(k, 0, 42)
+            if(symbols[chCode][j][k] == '*' && res[j][k] == 1) {
+               isPos = true;
+               break;
+            }
+         if(isPos) printf("Y");
+         else printf("N");
+      }
+      printf("\n");
    }
 
    return 0;

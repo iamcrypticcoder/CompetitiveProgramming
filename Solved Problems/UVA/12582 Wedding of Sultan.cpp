@@ -77,102 +77,40 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 //---------------------------- GLOBAL VARIABLES ----------------------------
 
 
-#define MAX_N 105
-
-struct Matrix {
-   LL mat[MAX_N][MAX_N];
-};
-
-int n, m, MOD;
-int matOrder;
-Matrix matA, matB;
-
-Matrix matMul(Matrix a, Matrix b)
-{
-   Matrix ans;
-   int i, j, k;
-   FOR(i, 0, matOrder-1)
-      FOR(j, 0, matOrder-1) {
-         ans.mat[i][j] = 0;
-         FOR(k, 0, matOrder-1) {
-            ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
-            //ans.mat[i][j] %= (1 << m);
-         }
-      }
-   return ans;
-}
-
-// Using this function you will get Time: 0.216
-Matrix matPow(Matrix base, int p)
-{
-   Matrix ans;
-   int i, j;
-
-   FOR(i, 0, matOrder-1) FOR(j, 0, matOrder-1) ans.mat[i][j] = (i == j);
-
-   int count = 1;
-   while(p) {
-      //cout << count++ <<  endl;
-      if(p & 1) ans = matMul(ans, base);
-      base = matMul(base, base);
-      p >>= 1;
-   }
-   return ans;
-}
-
-void showMat(Matrix m)
-{
-   FOR(i, 0, matOrder-1) {
-      FOR(j, 0, matOrder-1) cout << m.mat[i][j] << " ";
-      cout << endl;
-   }
-}
-
-// Using this function you will get Time: 0.008
-long long Fib(long long N)
-{
-   LL i = 1, j = 0, k = 0, h = 1;
-   LL t;
-
-   while(N > 0) {
-      if(N & 1) {
-         t = (j * h) % MOD;
-         j = ((i*h)%MOD + (j*k)%MOD + t%MOD) % MOD;
-         i = (i*k + t) % MOD;
-      }
-      t = SQR(h) % MOD;
-      h = (2*k*h + t) % MOD;
-      k = (SQR(k) + t) % MOD;
-      N = N/2;
-   }
-   return j;
-}
+stack<int> S;
+int trails[26];      // 26 Letters
 
 int main()
 {
-//    READ("input.txt");
+    READ("input.txt");
 //    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
+   string str;
 
-   //cout << Fib(5);
-   // | 1 1 |
-   // | 1 0 |
-   matOrder = 2;
-   matA.mat[0][0] = 1; matA.mat[0][1] = 1;
-   matA.mat[1][0] = 1; matA.mat[1][1] = 0;
+   TC = src();
 
+   FOR(tc, 1, TC) {
+      cin >> str;
 
-   while(scanf("%d %d", &n , &m) != EOF) {
-      MOD = (1 << m);
-      matB = matPow(matA, n);
+      S.push(str[0] - 'A');
 
-      //showMat(matB);
+      memset(trails, 0, sizeof trails);
+      FOR(i, 1, str.SZ-1) {
+         int u = S.top();
+         int v = str[i] - 'A';
+         if(u == v) S.pop();
+         else {
+            S.push(v);
+            trails[u]++;
+            trails[v]++;
+         }
+      }
 
-      printf("%lld\n", matB.mat[0][1]);
-
-      printf("%lld\n", Fib(n));
+      printf("Case %d\n", tc);
+      FOR(i, 0, 25) {
+         if(trails[i]) printf("%c = %d\n", 'A' + i, trails[i]);
+      }
    }
-
    return 0;
 }

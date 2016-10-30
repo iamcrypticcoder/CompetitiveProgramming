@@ -7,6 +7,7 @@
     Rank :
 */
 
+#include <set>
 #include <map>
 #include <list>
 #include <cmath>
@@ -72,84 +73,88 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
 
-//---------------------------- KRUSKAL ALGO START --------------------------
-typedef struct {
-    int u, v;
-    int w;
-} EDGE;
+#define MAX_NODE 27
 
-int NODES, EDGES;
-vector<EDGE> edges;
-vector<EDGE> spanEdge;
-int minSpanCost;
+int N, M;
+bool G1[MAX_NODE][MAX_NODE];
+bool G2[MAX_NODE][MAX_NODE];
 
-// -------------------- Disjoint Set Structure --------------------------------------
-int set[10001];
-void InitSet(int N)     {   FOR(i, 1, N)    set[i] = i;     }
-int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));    }
-void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
-// ----------------------------------------------------------------------------------
-
-bool compEdge(EDGE a, EDGE b)
-{
-    return a.w < b.w;
-}
-
-void Kruscal()
-{
-	int p, q;
-
-	minSpanCost = 0;
-
-	for(int i=0; i < EDGES; i++) {
-		p = FindSet(edges[i].u);
-		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
-			spanEdge.push_back(edges[i]);
-			Union(p, q);
-			minSpanCost += edges[i].w;
-			if(spanEdge.size() == NODES - 1) break;
-		}
-	}
-}
-//---------------------------- KRUSKAL ALGO END --------------------------
 
 int main()
 {
     READ("input.txt");
-    WRITE("output.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
-   EDGE e;
+   char ch1, ch2;
+   int u, v;
 
-   TC = src();
+   cin >> TC;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   FOR(tc, 1, TC) {
+      if(tc > 1) cout << endl;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
-         edges.PB(e);
-      }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
+      memset(G1, false, sizeof G1);
+      memset(G2, false, sizeof G2);
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
+      cin >> N;
+      FOR(i, 1, N) {
+         cin >> ch1 >> ch2;
+         u = ch1 - 'A' + 1;
+         v = ch2 - 'A' + 1;
+         G1[u][v] = G1[v][u] = true;
       }
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
+      cin >> M;
+      FOR(i, 1, M) {
+         cin >> ch1 >> ch2;
+         u = ch1 - 'A' + 1;
+         v = ch2 - 'A' + 1;
+         G2[u][v] = G2[v][u] = true;
+      }
 
-      edges.clear();
-      spanEdge.clear();
+
+      FOR(k, 1, 26)
+         FOR(i, 1, 26)
+            FOR(j, 1, 26) {
+               G1[i][j] = G1[j][i] = G1[i][j] || (G1[i][k] && G1[k][j]);
+               G2[i][j] = G2[j][i] = G2[i][j] || (G2[i][k] && G2[k][j]);
+            }
+
+      /*
+      FOR(i, 1, 10) {
+         FOR(j, 1, 10)
+            cout << G1[i][j];
+         cout << endl;
+      }
+      cout << endl;
+
+      FOR(i, 1, 10) {
+         FOR(j, 1, 10)
+            cout << G2[i][j];
+         cout << endl;
+      }
+      */
+
+      bool isEqual = true;
+      FOR(i, 1, 26) {
+         FOR(j, 1, 26) {
+            if(G1[i][j] != G2[i][j]) {
+               isEqual = false;
+               break;
+            }
+         }
+         if(isEqual == false) break;
+      }
+
+      if(isEqual) cout << "YES\n";
+      else cout << "NO\n";
+
    }
+
+
 
    return 0;
 }

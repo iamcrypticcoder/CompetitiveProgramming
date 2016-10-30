@@ -76,39 +76,37 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 //---------------------------- GLOBAL VARIABLES ----------------------------
 
-
 #define MAX_N 105
-
 struct Matrix {
+   int rows, cols;
    LL mat[MAX_N][MAX_N];
 };
 
-int n, m, MOD;
-int matOrder;
-Matrix matA, matB;
+int D, N, MOD;
+Matrix matA, matB, matC;
 
 Matrix matMul(Matrix a, Matrix b)
 {
    Matrix ans;
    int i, j, k;
-   FOR(i, 0, matOrder-1)
-      FOR(j, 0, matOrder-1) {
+
+   ans.rows = a.rows; ans.cols = b.cols;
+   FOR(i, 0, ans.rows-1)
+      FOR(j, 0, ans.cols-1) {
          ans.mat[i][j] = 0;
-         FOR(k, 0, matOrder-1) {
-            ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
-            //ans.mat[i][j] %= (1 << m);
-         }
+         FOR(k, 0, a.cols-1)
+         ans.mat[i][j] = (ans.mat[i][j] += (a.mat[i][k] * b.mat[k][j]) % MOD) % MOD;
       }
    return ans;
 }
 
-// Using this function you will get Time: 0.216
 Matrix matPow(Matrix base, int p)
 {
    Matrix ans;
    int i, j;
-
-   FOR(i, 0, matOrder-1) FOR(j, 0, matOrder-1) ans.mat[i][j] = (i == j);
+   ans.rows = base.rows;
+   ans.cols = base.cols;
+   FOR(i, 0, ans.rows-1) FOR(j, 0, ans.cols-1) ans.mat[i][j] = (i == j);
 
    int count = 1;
    while(p) {
@@ -122,56 +120,41 @@ Matrix matPow(Matrix base, int p)
 
 void showMat(Matrix m)
 {
-   FOR(i, 0, matOrder-1) {
-      FOR(j, 0, matOrder-1) cout << m.mat[i][j] << " ";
+   FOR(i, 0, m.rows-1) {
+      FOR(j, 0, m.cols-1) cout << m.mat[i][j] << " ";
       cout << endl;
    }
 }
 
-// Using this function you will get Time: 0.008
-long long Fib(long long N)
-{
-   LL i = 1, j = 0, k = 0, h = 1;
-   LL t;
-
-   while(N > 0) {
-      if(N & 1) {
-         t = (j * h) % MOD;
-         j = ((i*h)%MOD + (j*k)%MOD + t%MOD) % MOD;
-         i = (i*k + t) % MOD;
-      }
-      t = SQR(h) % MOD;
-      h = (2*k*h + t) % MOD;
-      k = (SQR(k) + t) % MOD;
-      N = N/2;
-   }
-   return j;
-}
-
 int main()
 {
-//    READ("input.txt");
+    READ("input.txt");
 //    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
 
-   //cout << Fib(5);
-   // | 1 1 |
-   // | 1 0 |
-   matOrder = 2;
-   matA.mat[0][0] = 1; matA.mat[0][1] = 1;
-   matA.mat[1][0] = 1; matA.mat[1][1] = 0;
+   while(scanf("%d %d %d", &D, &N, &MOD) != EOF) {
+      if( !D && !N && !MOD ) break;
 
+      // Building Matrix using co-efficient
+      // Order or matA is D x D
+      matA.rows = matA.cols = D;
+      FOR(i, 0, D-1) scanf("%d", &matA.mat[0][i]);
+      FOR(i, 1, D-1) matA.mat[i][i-1] = 1;
 
-   while(scanf("%d %d", &n , &m) != EOF) {
-      MOD = (1 << m);
-      matB = matPow(matA, n);
+      // Building matrix using f(1), f(2), f(3) values;
+      // Order of matB is D x 1
+      matB.rows = D; matB.cols = 1;
+      FORD(i, D-1, 0) scanf("%d", &matB.mat[i][0]);
 
-      //showMat(matB);
-
-      printf("%lld\n", matB.mat[0][1]);
-
-      printf("%lld\n", Fib(n));
+      if(N > D) {
+         matC = matPow(matA, N - D);
+         matC = matMul(matC, matB);
+         printf("%d\n", matC.mat[0][0]);
+      }
+      else {
+         printf("%d\n", matB.mat[D - N][0]);
+      }
    }
 
    return 0;

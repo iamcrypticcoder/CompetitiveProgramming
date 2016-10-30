@@ -72,19 +72,31 @@ int dy[] = {0, 0, -1, 1};
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-// ------------------------- GLOBAL VARIABLES --------------------------------
-int airportCost;
+//---------------------------- GLOBAL VARIABLES ----------------------------
+
+struct POINT {
+   double x, y;
+};
+
+double sqr_dist(POINT a, POINT b)
+{
+   return sqrt(SQR(a.x - b.x) + SQR(a.y - b.y));
+}
+
+vector<POINT> pnts;
+int existEdge;
 
 //---------------------------- KRUSKAL ALGO START --------------------------
 typedef struct {
     int u, v;
-    int w;
+    double w;
 } EDGE;
 
 int NODES, EDGES;
 vector<EDGE> edges;
 vector<EDGE> spanEdge;
-int minSpanCost;
+vector<EDGE> newEdge;
+double minSpanCost;
 
 // -------------------- Disjoint Set Structure --------------------------------------
 int set[10001];
@@ -93,7 +105,7 @@ int FindSet(int u)      {   return set[u] == u ? u : (set[u] = FindSet(set[u]));
 void Union(int u, int v){   set[FindSet(u)] = FindSet(v); }
 // ----------------------------------------------------------------------------------
 
-bool compEdge(EDGE a, EDGE b)
+int compEdge(EDGE a, EDGE b)
 {
     return a.w < b.w;
 }
@@ -102,13 +114,14 @@ void Kruscal()
 {
 	int p, q;
 
-	minSpanCost = 0;
+   minSpanCost = 0.0;
 
 	for(int i=0; i < EDGES; i++) {
 		p = FindSet(edges[i].u);
 		q = FindSet(edges[i].v);
-		if(p != q && edges[i].w < airportCost) {
+		if(p != q) {
 			spanEdge.push_back(edges[i]);
+			newEdge.PB(edges[i]);
 			Union(p, q);
 			minSpanCost += edges[i].w;
 			if(spanEdge.size() == NODES - 1) break;
@@ -120,35 +133,60 @@ void Kruscal()
 int main()
 {
     READ("input.txt");
-    WRITE("output.txt");
+//    WRITE("output.txt");
    int i, j, k;
    int TC, tc;
+   POINT p;
    EDGE e;
+   int u, v;
 
-   TC = src();
+   cin >> TC;
 
-   FOR(tc, 1 ,TC) {
-      NODES = src();
-      EDGES = src();
-      airportCost = src();
+   FOR(tc, 1, TC) {
+      if(tc > 1) cout << endl;
 
-      FOR(i, 1, EDGES) {
-         scanf("%d %d %d", &e.u, &e.v, &e.w);
+      cin >> NODES;
+      pnts = vector<POINT>(NODES + 1);
+      FOR(i, 1, NODES) {
+         cin >> p.x >> p.y;
+         pnts[i] = p;
+      }
+      FOR(i, 1, NODES) FOR(j, i+1, NODES) {
+         e.u = i;
+         e.v = j;
+         e.w = sqr_dist(pnts[i], pnts[j]);
          edges.PB(e);
       }
-      InitSet(NODES+1);
-      sort(edges.begin(), edges.end(), compEdge);
-      Kruscal();
+      EDGES = edges.SZ;
 
-      int numOfSets = 0;
-      FOR(i, 1, NODES) {
-         if(set[i] == i) numOfSets++;
+      InitSet(NODES + 1);
+      cin >> existEdge;
+      FOR(i, 1, existEdge) {
+         cin >> e.u >> e.v;
+         int p = FindSet(e.u);
+         int q = FindSet(e.v);
+         if(p != q) {
+            Union(e.u, e.v);
+            spanEdge.PB(e);
+         }
+      }
+      if(spanEdge.SZ == NODES-1) {
+         cout << "No new highways need\n";
+      }
+      else {
+         sort(edges.begin(), edges.end(), compEdge);
+         Kruscal();
+
+         FOR(i, 0, newEdge.SZ-1) {
+            cout << newEdge[i].u << " " << newEdge[i].v << endl;
+         }
       }
 
-      printf("Case #%d: %d %d\n", tc, minSpanCost+numOfSets*airportCost, numOfSets);
 
       edges.clear();
       spanEdge.clear();
+      pnts.clear();
+      newEdge.clear();
    }
 
    return 0;
