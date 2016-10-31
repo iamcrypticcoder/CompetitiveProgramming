@@ -1,5 +1,5 @@
 /*
-    Solved By : Kazi Mahbubur Rahman (MASUD)
+    Solved By : Kazi Mahbubur Rahman (MAHBUB)
                 Software Engineer,
                 Samsung R&D Institute Bangladesh (SRBD),
                 Dhaka, Bangladesh.
@@ -38,7 +38,7 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS 1e-9
+#define EPS 1e-6
 #define SQR(x) ((x)*(x))
 #define INF 99999999
 #define TO_DEG 57.29577951
@@ -79,28 +79,54 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_NM 500
+#define MAX 10000
 
-int N, M, Q;
-int h[MAX_NM + 7][MAX_NM + 7];
-int L, U;
+vector<string> events;
 
-int solution() {
-    int largestSide = 0;
-    FOR(i, 0, N-1) {
-        int low = lower_bound(h[i], h[i] + M, L) - h[i];
-        if(low > M-1) continue;
-        int x1 = i, y1 = low;
-        int k = largestSide;
-        while(1) {
-            int x2 = x1 + k, y2 = y1 + k;
-            if(x2 > N-1 || y2 > M-1) break;
-            if(h[x2][y2] > U) break;
-            largestSide = k+1;
-            k++;
+bool isPossible(double capacity) {
+    double fuelRemaining = capacity;
+    double consumption = 0.0;
+    int totalLeak = 0, prevPos = 0;
+
+    int pos, cost;
+    char s1[20], s2[20];
+
+    FOR(i, 0, events.size()-1) {
+        //cout << events[i] << endl;
+        int x = sscanf(events[i].c_str(), "%d %s %s %d", &pos, &s1, &s2, &cost);
+
+        int delta = pos - prevPos;
+        if(delta > 0) {
+            fuelRemaining = fuelRemaining - (consumption * delta);
+            if(totalLeak > 0) fuelRemaining -= (delta * totalLeak);
         }
+        if(fuelRemaining < 0.0) return false;
+
+        if(strcmp(s1, "Fuel") == 0) {
+            consumption = cost / 100.0;
+        } else if(strcmp(s1, "Leak") == 0) {
+            totalLeak++;
+        } else if(strcmp(s1, "Gas") == 0) {
+            fuelRemaining = capacity;
+        } else if(strcmp(s1, "Mechanic") == 0) {
+            totalLeak = 0;
+        } else if(strcmp(s1, "Goal") == 0) {
+
+        }
+
+        prevPos = pos;
     }
-    return largestSide;
+
+    return true;
+}
+
+double bisection(double l, double r) {
+    while(fabs(r-l) > EPS) {
+        double m = (l+r) / 2;
+        if(isPossible(m)) r = m;
+        else l = m;
+    }
+    return l;
 }
 
 int main()
@@ -112,23 +138,27 @@ int main()
 
     double cl = clock();
     cl = clock() - cl;
+    string tempStr;
+    char s1[20], s2[20];
+    int d, c; // Distance and Cost
 
-    while(scanf("%d %d", &N, &M) == 2) {
-        if(N == 0 && M == 0) break;
-
-        FOR(i, 0, N-1) FOR(j, 0, M-1) scanf("%d", &h[i][j]);
-
-        Q = src();
-        FOR(i, 1, Q) {
-            scanf("%d %d", &L, &U);
-
-            printf("%d\n", solution());
+    while(getline(cin, tempStr)) {
+        if(tempStr == "0 Fuel consumption 0") break;
+        events.PB(tempStr);
+        while(getline(cin, tempStr)) {
+            events.PB(tempStr);
+            int x = sscanf(tempStr.c_str(), "%d %s %s %d", &d, &s1, &s2, &c);\
+            if(strcmp(s1, "Goal") == 0) break;
         }
-        printf("-\n");
+        //cout << events.size() << endl;
+
+        printf("%.3lf\n", bisection(0.0, 10000.0));
+        //isPossible(80.0);
+
+        events.clear();
     }
 
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
-
