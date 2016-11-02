@@ -84,7 +84,7 @@ struct NODE {
 	int label, dist;
 
 	bool operator < (const NODE &b) const {
-		return dist < b.dist;
+		return dist > b.dist;
 	}
 };
 typedef vector<vector<PII> > VVP;

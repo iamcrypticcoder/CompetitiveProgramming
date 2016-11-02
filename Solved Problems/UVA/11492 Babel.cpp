@@ -88,7 +88,7 @@ struct NODE {
 	int label, dist, firstChar;
 
 	bool operator < (const NODE &b) const {
-		return dist < b.dist;
+		return dist > b.dist;
 	}
 };
 
