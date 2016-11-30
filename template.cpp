@@ -33,25 +33,30 @@ using namespace std;
 #define READ(x) freopen(x, "r", stdin)
 #define WRITE(x) freopen(x, "w", stdout)
 
+#define ff first
+#define ss second
 #define PQ priority_queue
 #define PB push_back
 #define SZ size()
 
-#define EPS 1e-9
-#define SQR(x) ((x)*(x))
-#define INF 2000000000
-#define TO_DEG 57.29577951
-#define PI 2*acos(0.0)
+#define EPS 		1e-9
+#define SQR(x) 		((x)*(x))
+#define INF 		2000000000
+#define TO_DEG 		57.29577951
+#define PI 			2*acos(0.0)
 
-#define ALL_BITS ((1 << 31) - 1)
-#define NEG_BITS(mask) (mask ^= ALL_BITS)
-#define TEST_BIT(mask, i) (mask & (1 << i))
-#define ON_BIT(mask, i) (mask |= (1 << i))
-#define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
+#define ALL_BITS					((1 << 31) - 1)
+#define NEG_BITS(mask)				(mask ^= ALL_BITS)
+#define TEST_BIT(mask, i)			(mask & (1 << i))
+#define ON_BIT(mask, i)				(mask |= (1 << i))
+#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
+#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
+#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
 
 typedef long long LL;
 typedef unsigned long long ULL;
 typedef pair<int, int> PII;
+typedef pair<double, double> PDD;
 typedef vector<bool> VB;
 typedef vector<int> VI;
 typedef vector<double> VD;
@@ -60,10 +65,10 @@ typedef vector<string> VS;
 typedef map<int, int> MII;
 typedef map<char, int> MCI;
 typedef map<string, int> MSI;
-typedef vector<vector<bool>> VVB;
-typedef vector<vector<int>> VVI;
-typedef vector<vector<double>> VVD;
-typedef vector<vector<PII>> VVPII;
+typedef vector<vector<bool> > VVB;
+typedef vector<vector<int> > VVI;
+typedef vector<vector<double> > VVD;
+typedef vector<vector<PII> > VVPII;
 
 int GCD(int a, int b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
 
@@ -73,7 +78,7 @@ int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
 
 // Represents all moves of a knight in a chessboard
 int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2 };
+int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
@@ -81,7 +86,7 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX_LEN 1000001
+#define MAX 1000001
 
 
 int main()
@@ -92,6 +97,8 @@ int main()
 	int TC, tc;
 	double cl = clock();
 
+	// Start your code here
+	
 	cl = clock() - cl;
 	fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
