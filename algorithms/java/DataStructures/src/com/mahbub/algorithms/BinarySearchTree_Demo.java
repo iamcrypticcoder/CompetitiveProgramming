@@ -1,4 +1,4 @@
-package com.mahbub.algorithm;
+package com.mahbub.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;

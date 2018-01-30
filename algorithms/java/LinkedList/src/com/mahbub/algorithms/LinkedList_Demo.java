@@ -1,4 +1,4 @@
-package com.mahbub.algorithm;
+package com.mahbub.algorithms;
 
 import java.util.Arrays;
 
@@ -13,6 +13,7 @@ public class LinkedList_Demo {
         linkedList.insertAtPos(25, 2);
         linkedList.insertAtPos(50, 5);
         System.out.println(Arrays.toString(linkedList.asArray()));
+        System.out.println("Middle Element: " + linkedList.getMiddle());
 
         linkedList.removeAtFirst();
         System.out.println(Arrays.toString(linkedList.asArray()));
@@ -125,6 +126,32 @@ public class LinkedList_Demo {
             ptr.next = ptr.next.next;
             size--;
             return true;
+        }
+
+        // Return middle element value
+        // http://www.geeksforgeeks.org/write-a-c-function-to-print-the-middle-of-the-linked-list/
+        // Complexity: O(n)
+        public int getMiddle() {
+            if(null == head) return -1;
+            Node slow = head;
+            Node fast = head.next;
+            while(null != fast && null != fast.next) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow.data;
+        }
+
+        // http://www.geeksforgeeks.org/pairwise-swap-elements-of-a-given-linked-list/
+        public void pairWiseSwap() {
+            Node ptr = head;
+            while(null != ptr) {
+                // Swap values of ptr and ptr.next
+                int t = ptr.data;
+                ptr.data = ptr.next.data;
+                ptr.next.data = t;
+                ptr = ptr.next.next;
+            }
         }
 
         // Complexity: O(size)

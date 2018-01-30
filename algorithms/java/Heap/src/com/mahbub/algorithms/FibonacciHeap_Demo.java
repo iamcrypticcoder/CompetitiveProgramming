@@ -1,4 +1,4 @@
-package com.mahbub.algorithm;
+package com.mahbub.algorithms;
 
 public class FibonacciHeap_Demo {
 

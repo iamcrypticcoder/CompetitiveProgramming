@@ -1,9 +1,11 @@
 package com.mahbub.algorithm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
-public class TreeTraversal_Demo {
+public class BinaryTreeTraversal_Demo {
 
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
@@ -24,11 +26,13 @@ public class TreeTraversal_Demo {
         System.out.println(builtTree.inOrderTraverse().toString());
         System.out.println(builtTree.preOrderTraverse().toString());
         System.out.println(builtTree.postOrderTraverse().toString());
+        System.out.println(builtTree.levelOrderTraverse().toString());
 
         builtTree = BinaryTree.buildTreeFromPostOrderInOrder(postOrder, inOrder);
         System.out.println(builtTree.inOrderTraverse().toString());
         System.out.println(builtTree.preOrderTraverse().toString());
         System.out.println(builtTree.postOrderTraverse().toString());
+        System.out.println(builtTree.levelOrderTraverse().toString());
     }
 
     static class BinaryTree {
@@ -58,6 +62,7 @@ public class TreeTraversal_Demo {
             BinaryTree tree = new BinaryTree(node, preOrder.length);
             return tree;
         }
+
         public static BinaryTree buildTreeFromPostOrderInOrder(int[] postOrder, int[] inOrder) {
             postIndex = postOrder.length-1;
             Node node = buildTreeFromPostOrderInOrder(postOrder, inOrder, 0, inOrder.length-1);
@@ -80,6 +85,19 @@ public class TreeTraversal_Demo {
         public List<Integer> postOrderTraverse() {
             List<Integer> list = new ArrayList<>();
             postOrderRecursive(root, list);
+            return list;
+        }
+
+        public List<Integer> levelOrderTraverse() {
+            List<Integer> list = new ArrayList<>();
+            Queue<Node> Q = new LinkedList<Node>();
+            Q.add(root);
+            while(!Q.isEmpty()) {
+                Node node = Q.poll();
+                list.add(node.data);
+                if(null != node.left) Q.add(node.left);
+                if(null != node.right) Q.add(node.right);
+            }
             return list;
         }
 
@@ -138,7 +156,6 @@ public class TreeTraversal_Demo {
             return -1;
         }
     }
-
 
     static class Node {
         int data;
