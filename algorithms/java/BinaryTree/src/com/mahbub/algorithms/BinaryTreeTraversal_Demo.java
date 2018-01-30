@@ -1,37 +1,48 @@
-package com.mahbub.algorithm;
+package com.mahbub.algorithms;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class BinaryTreeTraversal_Demo {
 
     public static void main(String[] args) {
-        BinaryTree tree = new BinaryTree();
-        Node root = tree.getRoot();
-        root.data = 10;
+        BinaryTree binaryTree = new BinaryTree();
+        Node root = new Node(10);
         root.left = new Node(20);
         root.right = new Node(30);
+        root.left.left = new Node(100);
+        root.left.right = new Node(200);
+        binaryTree.setRoot(root);
 
-        System.out.println(tree.inOrderTraverse().toString());
-        System.out.println(tree.preOrderTraverse().toString());
-        System.out.println(tree.postOrderTraverse().toString());
+        System.out.print("Preorder Recursive: ");
+        System.out.println(binaryTree.preOrderRecursive().toString());
+        System.out.print("Inorder Recursive: ");
+        System.out.println(binaryTree.inOrderRecursive().toString());
+        System.out.print("Postorder Recursive: ");
+        System.out.println(binaryTree.postOrderRecursive().toString());
+
+        System.out.print("Preorder Iterative: ");
+        System.out.println(binaryTree.preOrderIterative().toString());
+        System.out.print("Inorder Iterative: ");
+        System.out.println(binaryTree.inOrderIterative().toString());
+        System.out.print("Postorder Iterative: ");
+        System.out.println(binaryTree.postOrderIterative().toString());
+
+        // Construct binary tree
 
         int[] preOrder = new int[] { 10, 20, 40, 50, 30, 60, 70 };
         int[] inOrder = new int[] { 40, 20, 50, 10, 60, 30, 70 };
         int[] postOrder = new int[] { 40, 50, 20, 60, 70, 30, 10 };
 
         BinaryTree builtTree = BinaryTree.buildTreeFromPreOrderInOrder(preOrder, inOrder);
-        System.out.println(builtTree.inOrderTraverse().toString());
-        System.out.println(builtTree.preOrderTraverse().toString());
-        System.out.println(builtTree.postOrderTraverse().toString());
+        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.println(builtTree.preOrderRecursive().toString());
+        System.out.println(builtTree.postOrderRecursive().toString());
         System.out.println(builtTree.levelOrderTraverse().toString());
 
         builtTree = BinaryTree.buildTreeFromPostOrderInOrder(postOrder, inOrder);
-        System.out.println(builtTree.inOrderTraverse().toString());
-        System.out.println(builtTree.preOrderTraverse().toString());
-        System.out.println(builtTree.postOrderTraverse().toString());
+        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.println(builtTree.preOrderRecursive().toString());
+        System.out.println(builtTree.postOrderRecursive().toString());
         System.out.println(builtTree.levelOrderTraverse().toString());
     }
 
@@ -42,19 +53,16 @@ public class BinaryTreeTraversal_Demo {
         static int preIndex;
         static int postIndex;
 
-        public BinaryTree() {
-            root = new Node();
-            size = 1;
-        }
+        public BinaryTree() { }
 
-        public BinaryTree(Node node, int sz) {
-            root = node;
+        public BinaryTree(Node root, int sz) {
+            this.root = root;
             size = sz;
         }
 
-        public Node getRoot() {
-            return root;
-        }
+        public Node getRoot() { return root; }
+
+        public void setRoot(Node root) { this.root = root; }
 
         public static BinaryTree buildTreeFromPreOrderInOrder(int[] preOrder, int[] inOrder) {
             preIndex = 0;
@@ -70,19 +78,67 @@ public class BinaryTreeTraversal_Demo {
             return tree;
         }
 
-        public List<Integer> inOrderTraverse() {
+        public List<Integer> preOrderIterative() {
+            List<Integer> list = new ArrayList<>();
+            Stack<Node> nodeStack = new Stack<>();
+
+            nodeStack.push(root);
+
+            while (!nodeStack.empty()) {
+                Node node = nodeStack.pop();
+                list.add(node.key);
+
+                if (null != node.right) nodeStack.push(node.right);
+                if (null != node.left) nodeStack.push(node.left);
+            }
+            return list;
+        }
+
+        public List<Integer> inOrderIterative() {
+            List<Integer> list = new ArrayList<>();
+            Stack<Node> nodeStack = new Stack<>();
+            Node current = root;
+            nodeStack.push(current);
+            while (null != current.left) {
+                current = current.left;
+                nodeStack.push(current);
+            }
+
+            while(!nodeStack.empty()) {
+                current = nodeStack.pop();
+                list.add(current.key);
+
+                if (null != current.right) {
+                    current = current.right;
+                    nodeStack.push(current);
+                    while (null != current.left) {
+                        current = current.left;
+                        nodeStack.push(current);
+                    }
+                }
+            }
+
+            return list;
+        }
+
+        // TODO: Need to implement
+        public List<Integer> postOrderIterative() {
+            return null;
+        }
+
+        public List<Integer> inOrderRecursive() {
             List<Integer> list = new ArrayList<>();
             inOrderRecursive(root, list);
             return list;
         }
 
-        public List<Integer> preOrderTraverse() {
+        public List<Integer> preOrderRecursive() {
             List<Integer> list = new ArrayList<>();
             preOrderRecursive(root, list);
             return list;
         }
 
-        public List<Integer> postOrderTraverse() {
+        public List<Integer> postOrderRecursive() {
             List<Integer> list = new ArrayList<>();
             postOrderRecursive(root, list);
             return list;
@@ -94,7 +150,7 @@ public class BinaryTreeTraversal_Demo {
             Q.add(root);
             while(!Q.isEmpty()) {
                 Node node = Q.poll();
-                list.add(node.data);
+                list.add(node.key);
                 if(null != node.left) Q.add(node.left);
                 if(null != node.right) Q.add(node.right);
             }
@@ -104,13 +160,13 @@ public class BinaryTreeTraversal_Demo {
         private void inOrderRecursive(Node node, List<Integer> list) {
             if(null == node) return;
             inOrderRecursive(node.left, list);
-            list.add(node.data);
+            list.add(node.key);
             inOrderRecursive(node.right, list);
         }
 
         private void preOrderRecursive(Node node, List<Integer> list) {
             if(null == node) return;
-            list.add(node.data);
+            list.add(node.key);
             preOrderRecursive(node.left, list);
             preOrderRecursive(node.right, list);
         }
@@ -119,7 +175,7 @@ public class BinaryTreeTraversal_Demo {
             if (null == node) return;
             postOrderRecursive(node.left, list);
             postOrderRecursive(node.right, list);
-            list.add(node.data);
+            list.add(node.key);
         }
 
         private static Node buildTreeFromPreOrderInOrder(int[] preOrder, int[] inOrder, int inStart, int inEnd)  {
@@ -129,7 +185,7 @@ public class BinaryTreeTraversal_Demo {
 
             if(inStart == inEnd) return node;
 
-            int pos = searchCharPos(inOrder, inStart, inEnd, node.data);
+            int pos = searchCharPos(inOrder, inStart, inEnd, node.key);
 
             node.left = buildTreeFromPreOrderInOrder(preOrder, inOrder, inStart, pos-1);
             node.right = buildTreeFromPreOrderInOrder(preOrder, inOrder, pos+1, inEnd);
@@ -143,7 +199,7 @@ public class BinaryTreeTraversal_Demo {
 
             if(inStart == inEnd) return node;
 
-            int pos = searchCharPos(inOrder, inStart, inEnd, node.data);
+            int pos = searchCharPos(inOrder, inStart, inEnd, node.key);
 
             node.right = buildTreeFromPostOrderInOrder(postOrder, inOrder, pos+1, inEnd);
             node.left = buildTreeFromPostOrderInOrder(postOrder, inOrder, inStart, pos-1);
@@ -158,17 +214,13 @@ public class BinaryTreeTraversal_Demo {
     }
 
     static class Node {
-        int data;
+        int key;
         Node left, right;
 
-        public Node() {
-            data = 0;
-            left = right = null;
-        }
+        public Node() {}
 
-        public Node(int d) {
-            data = d;
-            left = right = null;
+        public Node(int key) {
+            this.key = key;
         }
     }
 }
