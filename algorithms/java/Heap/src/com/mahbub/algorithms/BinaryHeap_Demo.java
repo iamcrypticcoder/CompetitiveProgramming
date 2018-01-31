@@ -57,7 +57,7 @@ public class BinaryHeap_Demo {
             }
         }
 
-        // Complexity: O(lg n)
+        // Complexity: O(1)
         public int getMin() {
             return heapArr[1];
         }
@@ -78,6 +78,7 @@ public class BinaryHeap_Demo {
             return root;
         }
 
+        // Complexity: O(lg n)
         public void decreaseItem(int index, int newVal) {
             heapArr[index] = newVal;
             int parentNode = parent(index);

@@ -37,13 +37,11 @@ public class BinaryTreeTraversal_Demo {
         System.out.println(builtTree.inOrderRecursive().toString());
         System.out.println(builtTree.preOrderRecursive().toString());
         System.out.println(builtTree.postOrderRecursive().toString());
-        System.out.println(builtTree.levelOrderTraverse().toString());
 
         builtTree = BinaryTree.buildTreeFromPostOrderInOrder(postOrder, inOrder);
         System.out.println(builtTree.inOrderRecursive().toString());
         System.out.println(builtTree.preOrderRecursive().toString());
         System.out.println(builtTree.postOrderRecursive().toString());
-        System.out.println(builtTree.levelOrderTraverse().toString());
     }
 
     static class BinaryTree {
@@ -141,19 +139,6 @@ public class BinaryTreeTraversal_Demo {
         public List<Integer> postOrderRecursive() {
             List<Integer> list = new ArrayList<>();
             postOrderRecursive(root, list);
-            return list;
-        }
-
-        public List<Integer> levelOrderTraverse() {
-            List<Integer> list = new ArrayList<>();
-            Queue<Node> Q = new LinkedList<Node>();
-            Q.add(root);
-            while(!Q.isEmpty()) {
-                Node node = Q.poll();
-                list.add(node.key);
-                if(null != node.left) Q.add(node.left);
-                if(null != node.right) Q.add(node.right);
-            }
             return list;
         }
 
