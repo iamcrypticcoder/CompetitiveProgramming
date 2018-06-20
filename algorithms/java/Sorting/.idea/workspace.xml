@@ -21,20 +21,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MergeSort_Demo.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MergeSort_Demo.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/MergeSort_Demo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="25" />
+            <state relative-caret-position="465">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QuickSort_Demo.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="QuickSort_Demo.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/QuickSort_Demo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+            <state relative-caret-position="425">
+              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -62,14 +62,14 @@
       <list>
         <option value="$PROJECT_DIR$/src/com/mahbub/algorithm/BubbleSort_Demo.java" />
         <option value="$PROJECT_DIR$/src/com/mahbub/algorithm/InsertionSort_Demo.java" />
-        <option value="$PROJECT_DIR$/src/com/mahbub/algorithm/MergeSort_Demo.java" />
         <option value="$PROJECT_DIR$/src/com/mahbub/algorithm/QuickSort_Demo.java" />
+        <option value="$PROJECT_DIR$/src/com/mahbub/algorithm/MergeSort_Demo.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="627" />
-    <option name="y" value="84" />
+    <option name="x" value="521" />
+    <option name="y" value="50" />
     <option name="width" value="1351" />
     <option name="height" value="929" />
   </component>
@@ -116,7 +116,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.QuickSort_Demo">
+  <component name="RunManager" selected="Application.MergeSort_Demo">
     <configuration name="BubbleSort_Demo" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.mahbub.algorithm.BubbleSort_Demo" />
       <module name="Sorting" />
@@ -188,8 +188,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.QuickSort_Demo" />
         <item itemvalue="Application.MergeSort_Demo" />
+        <item itemvalue="Application.QuickSort_Demo" />
         <item itemvalue="Application.InsertionSort_Demo" />
         <item itemvalue="Application.BubbleSort_Demo" />
       </list>
@@ -206,7 +206,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="626" y="88" width="1351" height="929" extended-state="0" />
+    <frame x="521" y="50" width="1351" height="929" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" />
@@ -215,7 +215,7 @@
       <window_info anchor="bottom" id="Messages" />
       <window_info anchor="right" id="Palette&#9;" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.099415205" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.35906434" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" />
@@ -275,17 +275,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/MergeSort_Demo.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/QuickSort_Demo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="10" column="4" lean-forward="true" selection-start-line="10" selection-start-column="4" selection-end-line="10" selection-end-column="25" />
+        <state relative-caret-position="425">
+          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/QuickSort_Demo.java">
+    <entry file="file://$PROJECT_DIR$/src/com/mahbub/algorithm/MergeSort_Demo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="5" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
+        <state relative-caret-position="465">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
         </state>
       </provider>
     </entry>
