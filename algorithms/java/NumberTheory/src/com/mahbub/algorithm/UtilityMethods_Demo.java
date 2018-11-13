@@ -93,6 +93,23 @@ public class UtilityMethods_Demo {
         return ret;
     }
 
+    // Find Euler's totient phi function which is given a number N find of co-primes less N
+    // Complexity: O(sqrt(N))
+    static int phi(int n) {
+        if (n == 1) return 0;
+        int ret = n;
+
+        for (int p = 2; p * p <= n; p++) {
+            if (n % p == 0) {
+                while (n % p == 0) n /= p;
+                ret = ret * (p - 1) / p;
+            }
+        }
+        if (n > 1) ret = ret * (n-1) / n;
+
+        return ret;
+    }
+    
     public static void main(String[] args) {
         long[] xy = new long[2];
         System.out.println(extendedEuclid(11, 3, xy));
@@ -104,5 +121,9 @@ public class UtilityMethods_Demo {
 
         System.out.println(ncr(10, 4, 97) + " = " + ncr2(10, 4, 97));
         System.out.println(ncr(12345678, 123456, MOD) + " = " + ncr2(12345678, 123456, MOD));
+        
+        for (int i = 1; i < 144; i++) {
+            System.out.println(i + ": " + phi(i));
+        }
     }
 }
