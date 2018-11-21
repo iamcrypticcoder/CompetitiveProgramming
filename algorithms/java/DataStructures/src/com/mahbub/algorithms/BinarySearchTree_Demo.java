@@ -2,6 +2,7 @@ package com.mahbub.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * Created by mahbub on 6/21/17.
@@ -64,17 +65,68 @@ public class BinarySearchTree_Demo {
 
         /**
          * Check weather a binary tree is BST or not
-         * Call with root and INT_MIN
+         * Call with root and INT_MIN and INT_MAX
          * @param node
-         * @param lastValue
+         * @param minValue
+         * @param maxValue
          */
-        public boolean isBST(Node node, int lastValue) {
-            if(null == node) return true;
-            isBST(node.left, lastValue);
-            if(node.key < lastValue) return false;
-            lastValue = node.key;
-            isBST(node.right, lastValue);
-            return true;
+        public static boolean isBST(Node node, int minValue, int maxValue) {
+            if (null == node) return true;
+            if (node.key < minValue || node.key > maxValue) return false;
+            return (isBST(node.left, minValue, node.key-1) && isBST(node.right, node.key+1, maxValue));
+        }
+
+        /**
+         * Create BST from pre order traversal.
+         * Set static var currentIndex to 0 before calling this method
+         * @param preOrder
+         * @param minValue
+         * @param maxValue
+         * @return Root node of BST
+         */
+        static int currentIndex;
+        public static Node createBSTFromPreOrderTraversal(int[] preOrder, int minValue, int maxValue) {
+            if (currentIndex >= preOrder.length) return null;
+
+            int key = preOrder[currentIndex];
+
+            // If key isn't in range of min and max value
+            if (key <= minValue || key >= maxValue) return null;
+
+            Node node = new Node(key);
+            currentIndex = currentIndex + 1;
+
+            node.left = createBSTFromPreOrderTraversal(preOrder, minValue, key);
+            node.right = createBSTFromPreOrderTraversal(preOrder, key, maxValue);
+
+            return node;
+        }
+
+        /**
+         * Create BST from pre order traversal.
+         * @param preOrder
+         * @return Root node of BST
+         */
+        public static Node createBSTFromPreOrderTraversal(int[] preOrder) {
+            Stack<Node> S = new Stack<>();
+            Node root = new Node(preOrder[0]);
+            S.push(root);
+
+            for (int i = 1; i < preOrder.length; i++) {
+                // It means this value should be placed in left subtree
+                if (preOrder[i] < S.peek().key) {
+                    S.peek().left = new Node(preOrder[i]);
+                    S.push(S.peek().left);
+                } else {
+                    Node tmp = null;
+                    while (!S.empty() && preOrder[i] > S.peek().key) {
+                        tmp = S.pop();
+                    }
+                    tmp.right = new Node(preOrder[i]);
+                    S.push(tmp.right);
+                }
+            }
+            return root;
         }
 
         /**
@@ -89,6 +141,68 @@ public class BinarySearchTree_Demo {
             if (node.key < n1 && node.key < n2) return findLCA(node.right, n1, n2);
             else if (node.key > n1 && node.key > n2) return findLCA(node.left, n1, n2);
             return node;
+        }
+
+        /**
+         * Merge two BST with minimum space complexity.
+         * @param root1
+         * @param root2
+         * @return Sorted list of merged BST
+         */
+        public static List<Integer> mergeBST(Node root1, Node root2) {
+            List<Integer> retList = new ArrayList<>();
+            Stack<Node> s1 = new Stack<>();
+            Stack<Node> s2 = new Stack<>();
+            Node node1 = root1, node2 = root2;
+
+            while (null != node1 || null != node2 ||
+                    !s1.isEmpty() || !s2.isEmpty()) {
+
+                if (null != node1 || null != node2) {
+                    if (null != node1) {
+                        s1.push(node1);
+                        node1 = node1.left;
+                    }
+                    if (null != node2) {
+                        s2.push(node2);
+                        node2 = node2.left;
+                    }
+                    continue;
+                }
+
+                if (s1.isEmpty()) {
+                    while (!s2.isEmpty()) {
+                        node2 = s2.pop();
+                        retList.add(node2.key);
+                    }
+                    break;
+                }
+
+                if (s2.isEmpty()) {
+                    while (!s1.isEmpty()) {
+                        node1 = s1.pop();
+                        retList.add(node1.key);
+                    }
+                    break;
+                }
+
+                node1 = s1.peek();
+                node2 = s2.peek();
+
+                if (node1.key < node2.key) {
+                    retList.add(node1.key);
+                    node1 = node1.right;
+                    s1.pop();
+                    node2 = null;
+                } else {
+                    retList.add(node2.key);
+                    node2 = node2.right;
+                    s2.pop();
+                    node1 = null;
+                }
+            }
+
+            return retList;
         }
 
         public List<Integer> inOrderTraverse() {
