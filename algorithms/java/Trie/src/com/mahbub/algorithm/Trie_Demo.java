@@ -1,4 +1,4 @@
-package com.mahbub.algorithms;
+package com.mahbub.algorithm;
 
 /**
  * Created by mahbub on 6/21/17.
@@ -6,7 +6,7 @@ package com.mahbub.algorithms;
 public class Trie_Demo {
 
     public static void main(String[] args) {
-        MTrie trie = new MTrie();
+        Trie trie = new Trie();
 
         // Insert test
         trie.insertKey("my");
@@ -34,13 +34,13 @@ public class Trie_Demo {
         System.out.println();
     }
 
-    static class MTrie {
+    static class Trie {
         public static final int ALPHABET_SIZE = 26;
 
         private TrieNode root;
         private int keyCount;
 
-        public MTrie() {
+        public Trie() {
             root = new TrieNode(false);
             keyCount = 0;
         }
@@ -57,7 +57,7 @@ public class Trie_Demo {
                 node = node.childs[value];
             }
 
-            node.isLeaf = true;
+            node.isKey = true;
             return true;
         }
 
@@ -73,11 +73,11 @@ public class Trie_Demo {
             }
 
             // If the given key isn't a key
-            if(!node.isLeaf) return false;
+            if(!node.isKey) return false;
 
             // if key node has any other child mark isLeaf == false and return
             if(childCount(node) > 0) {
-                node.isLeaf = false;
+                node.isKey = false;
                 return true;
             }
 
@@ -103,7 +103,7 @@ public class Trie_Demo {
                 node = node.childs[value];
             }
 
-            return node.isLeaf;
+            return node.isKey;
         }
 
         private static int charValue(char ch) {
@@ -121,15 +121,15 @@ public class Trie_Demo {
     static class TrieNode {
         TrieNode parent;
         TrieNode childs[];
-        boolean isLeaf;
+        boolean isKey;
 
         public TrieNode() {
-            childs = new TrieNode[MTrie.ALPHABET_SIZE];
+            childs = new TrieNode[Trie.ALPHABET_SIZE];
         }
 
-        public TrieNode(boolean isLeaf) {
-            childs = new TrieNode[MTrie.ALPHABET_SIZE];
-            this.isLeaf = isLeaf;
+        public TrieNode(boolean isKey) {
+            childs = new TrieNode[Trie.ALPHABET_SIZE];
+            this.isKey = isKey;
         }
     }
 }
