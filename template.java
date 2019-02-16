@@ -25,6 +25,48 @@ public class A {
 
     static final int MAX = 100000;
 
+    // Bitwise Operations
+    public static final int ALL_BITS = (1 << 31) - 1;
+    public static int NEG_BITS(int n) {
+        return n ^ ALL_BITS;
+    }
+    public static boolean TEST_BIT(int n, int i) {
+        return (n & (1 << i)) != 0;
+    }
+    public static int ON_BIT(int n, int i) {
+        return n | (1 << i);
+    }
+    public static int OFF_BIT(int n, int i) {
+        return n & NEG_BITS(1 << i);
+    }
+    public static int TOGGLE_BIT(int n, int i) {
+        return n ^ (1 << 31);
+    }
+    public static boolean IS_POWER_TWO(int n) {
+        return (n & (n - 1)) == 0;
+    }
+    public static int OFF_LOWEST_SET_BIT(int n) {
+        return n & (n - 1);
+    }
+    public static int LOWEST_SET_BIT_POSITION(int n) {
+        return n ^ (n & (n - 1));
+    }
+    public static int DEVIDE_BY_POWER_TWO(int n, int p) {
+        return n & (p - 1);
+    }
+    public static int bitCountRange(int N, int l, int r) {
+        int mask = ((1 << (r+1)) - 1) ^ ((1 << l) - 1);
+        return Integer.bitCount(N & mask);
+    }
+    public static int getLeftmostBit(int N) {
+        int m = 0;
+        while (N > 1) {
+            N = N >> 1;
+            m++;
+        }
+        return m;
+    }
+    
     static long sqr(int x) { return x*x; }
 
     static int gcd(int a, int b) {
@@ -40,7 +82,7 @@ public class A {
     static int lcm(int a, int b) {
         return a / gcd(a, b) * b;
     }
-
+    
     public static void main(String[] args) {
         Scanner scanner = inputFromSystem();
 
