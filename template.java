@@ -43,7 +43,7 @@ public class A {
         return n ^ (1 << 31);
     }
     public static boolean IS_POWER_TWO(int n) {
-        return (n & (n - 1)) == 0;
+        return n > 0 && (n & (n - 1)) == 0;
     }
     public static int OFF_LOWEST_SET_BIT(int n) {
         return n & (n - 1);
@@ -65,6 +65,9 @@ public class A {
             m++;
         }
         return m;
+    }
+    public static boolean isAlternatingBits(int n) {
+        return Integer.bitCount(((n >> 1) ^ n) + 1) == 1;
     }
     
     static long sqr(int x) { return x*x; }
