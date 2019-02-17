@@ -3,26 +3,33 @@ package com.mahbub.algorithm;
 public class PhiUsingSieve_Demo {
 
     static final int MAX = 10000000;
+    static int phi[];
 
-    static int[] phi = new int[MAX + 1];
+    public static void main(String args[]) {
+        generatePhi(MAX);
+        printPhi(20);
+    }
 
-    static void generatePhiUsingSieve() {
+    public static void generatePhi(int N) {
+        phi = new int[N + 1];
         phi[1] = 0;
-        for (int i = 2; i <= MAX; i++) {
-            // If still not calculated
+        for (int i = 2; i <= N; i++) {
             if (phi[i] == 0) {
                 phi[i] = i - 1;
-                for (int j = (i << 1); j <= MAX; j += i) {
-                    if (phi[j] == 0) phi[j] = j;
-                    phi[j] = phi[j] * (i - 1) / i;
+                for (int j = (i << 1); j <= N; j += i) {
+                    if(phi[j] == 0) phi[j] = j;
+                    phi[j] = phi[j] / i * (i-1);
                 }
             }
         }
     }
 
-    public static void main(String args[]) {
-        generatePhiUsingSieve();
-        for (int i = 1; i <= 50; i++)
-            System.out.println(i + " = " + phi[i]);
+    static void printPhi(int n) {
+        System.out.println("Printing \uD835\uDF11 values up to " + n + ":");
+        System.out.println(" n   \uD835\uDF11(n)");
+        System.out.println("====================");
+        for (int i = 1; i <= n; i++) {
+            System.out.printf("%2d    %d\n", i, phi[i]);
+        }
     }
 }
