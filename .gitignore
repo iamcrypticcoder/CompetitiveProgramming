@@ -42,3 +42,8 @@ algorithms/cpp/Heap/.idea/Heap.iml
 algorithms/cpp/Heap/.idea/modules.xml
 algorithms/cpp/Heap/.idea/workspace.xml
 algorithms/cpp/Heap/cmake-build-debug
+algorithms/cpp/StackQueue/cmake-build-debug
+algorithms/cpp/StackQueue/.idea/encodings.xml
+algorithms/cpp/StackQueue/.idea/modules.xml
+algorithms/cpp/StackQueue/.idea/StackQueue.iml
+algorithms/cpp/StackQueue/.idea/workspace.xml
