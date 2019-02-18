@@ -18,7 +18,7 @@ public class Sieve_Demo {
     }
 
     // Generate prime up to N
-    static void generatePrime(int N) {
+    static void sieveNormal(int N) {
         flag = new boolean[N + 7];
         primes = new ArrayList<>();
         int i = 2;
@@ -32,6 +32,23 @@ public class Sieve_Demo {
         }
     }
 
+    // Optimized sieve
+    static void sieveOptimized(int N) {
+        flag = new boolean[N + 7];
+        primes = new ArrayList<>();
+
+        for (int i = 3; i*i < N; i += 2) {
+            if (!flag[i]) {
+                for (int j = i*i; j <= N; j += 2*i)
+                    flag[j] = true;
+            }
+        }
+
+        primes.add(2);
+        for (int i = 3; i <= N; i += 2)
+            if (!flag[i]) primes.add(i);
+    }
+    
     static boolean isPrime(long n) {
         if (n == 0 || n == 1) return false;
         if (n <= MAX_PRIME) return flag[(int)n];
@@ -92,7 +109,7 @@ public class Sieve_Demo {
     }
     
     public static void main(String args[]) {
-        generatePrime(MAX_PRIME);
+        sieveOptimized(MAX_PRIME);
         System.out.println("Total Primes: " + primes.size());
         //for (int x : primes) System.out.println(x);
 
