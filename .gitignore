@@ -37,3 +37,8 @@ algorithms/cpp/DynamicProgramming/cmake-build-debug
 algorithms/cpp/Math/cmake-build-debug
 algorithms/cpp/String/cmake-build-debug
 algorithms/cpp/AdHoc/cmake-build-debug
+algorithms/cpp/Heap/.idea/encodings.xml
+algorithms/cpp/Heap/.idea/Heap.iml
+algorithms/cpp/Heap/.idea/modules.xml
+algorithms/cpp/Heap/.idea/workspace.xml
+algorithms/cpp/Heap/cmake-build-debug
