@@ -36,3 +36,4 @@ algorithms/cpp/Graph/cmake-build-debug
 algorithms/cpp/DynamicProgramming/cmake-build-debug
 algorithms/cpp/Math/cmake-build-debug
 algorithms/cpp/String/cmake-build-debug
+algorithms/cpp/AdHoc/cmake-build-debug
