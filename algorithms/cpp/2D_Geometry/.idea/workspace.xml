@@ -2,24 +2,24 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="2D_Geometry" targetName="angle_2d" />
-      <config projectName="2D_Geometry" targetName="closest_pair_DnC" />
-      <config projectName="2D_Geometry" targetName="triangle_area" />
       <config projectName="2D_Geometry" targetName="are_intersect" />
-      <config projectName="2D_Geometry" targetName="utility_methods" />
-      <config projectName="2D_Geometry" targetName="intersect_area" />
-      <config projectName="2D_Geometry" targetName="convex_hull_amc" />
-      <config projectName="2D_Geometry" targetName="are_same_line" />
       <config projectName="2D_Geometry" targetName="rectangle_area" />
-      <config projectName="2D_Geometry" targetName="intersection_point" />
-      <config projectName="2D_Geometry" targetName="polygon_area" />
+      <config projectName="2D_Geometry" targetName="utility_methods" />
+      <config projectName="2D_Geometry" targetName="convex_hull_amc" />
       <config projectName="2D_Geometry" targetName="struct" />
-      <config projectName="2D_Geometry" targetName="rotate_2d" />
+      <config projectName="2D_Geometry" targetName="intersect_area" />
+      <config projectName="2D_Geometry" targetName="closest_pair_DnC" />
       <config projectName="2D_Geometry" targetName="dist_2d" />
-      <config projectName="2D_Geometry" targetName="closest_pair_sweep_line" />
       <config projectName="2D_Geometry" targetName="convex_hull_grahams" />
+      <config projectName="2D_Geometry" targetName="polygon_area" />
       <config projectName="2D_Geometry" targetName="is_point_inside" />
+      <config projectName="2D_Geometry" targetName="rotate_2d" />
+      <config projectName="2D_Geometry" targetName="triangle_area" />
       <config projectName="2D_Geometry" targetName="polygon_perimeter" />
+      <config projectName="2D_Geometry" targetName="are_same_line" />
+      <config projectName="2D_Geometry" targetName="closest_pair_sweep_line" />
+      <config projectName="2D_Geometry" targetName="angle_2d" />
+      <config projectName="2D_Geometry" targetName="intersection_point" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -69,8 +69,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/intersect_area.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" column="17" lean-forward="true" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+            <state relative-caret-position="114">
+              <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -262,18 +262,17 @@
       <workItem from="1550514903200" duration="1008000" />
       <workItem from="1550516081615" duration="154000" />
       <workItem from="1550516255229" duration="32000" />
-      <workItem from="1550516335789" duration="215000" />
+      <workItem from="1550516335789" duration="402000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2006000" />
+    <option name="totallyTimeSpent" value="2193000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24232633" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24232633" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -288,7 +287,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.3290938" />
-      <window_info active="true" anchor="bottom" id="Messages" order="12" visible="true" weight="0.32876712" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32876712" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -414,7 +413,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile" />
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/2D_Geometry.cbp" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake" />
     <entry file="file://$PROJECT_DIR$/angle_2d.cpp">
       <provider selected="true" editor-type-id="text-editor">
@@ -444,10 +442,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/2D_Geometry.cbp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3732" />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/intersect_area.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" column="17" lean-forward="true" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        <state relative-caret-position="114">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
         </state>
       </provider>
     </entry>
