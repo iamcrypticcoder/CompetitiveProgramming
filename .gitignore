@@ -34,3 +34,5 @@ algorithms/cpp/NumberTheory/cmake-build-debug
 algorithms/cpp/Sorting/cmake-build-debug
 algorithms/cpp/Graph/cmake-build-debug
 algorithms/cpp/DynamicProgramming/cmake-build-debug
+algorithms/cpp/Math/cmake-build-debug
+algorithms/cpp/String/cmake-build-debug
