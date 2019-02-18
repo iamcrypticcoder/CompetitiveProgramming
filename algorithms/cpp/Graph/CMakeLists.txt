@@ -1,0 +1,17 @@
+cmake_minimum_required(VERSION 3.13)
+project(Graph)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(articulation_point articulation_point.cpp)
+add_executable(bellman_ford bellman_ford.cpp)
+add_executable(bfs bfs.cpp)
+add_executable(bipartite_check bipartite_check.cpp)
+add_executable(dfs dfs.cpp)
+add_executable(dijkstra dijkstra.cpp)
+add_executable(kruskal kruskal.cpp)
+add_executable(minimax minimax.cpp)
+add_executable(prim prim.cpp)
+add_executable(second_best_spanning_tree second_best_spanning_tree.cpp)
+add_executable(tarjan tarjan.cpp)
+add_executable(topological_sort topological_sort.cpp)
