@@ -81,125 +81,33 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX_PRIME 10000000
 
-bool flag[MAX_PRIME+7];
+ULL bitFlag[MAX_PRIME / 64 + 7];
 VI primes;
 
-struct powerPrime {
-    LL p;
-    int a;      // p^a
-};
-
-void sieve()
+void sieveBitwise()
 {
-    LL i = 2, j;
-    while(i*i <= MAX_PRIME) {
-        for(j = i*i; j <= MAX_PRIME; j += i) flag[j] = 1;
-        while(flag[++i]);
+    for (int i = 3; i*i <= MAX_PRIME; i += 2) {
+        if ((bitFlag[i/64] & (1LL << (i%64))) == 0) {
+            for (ULL j = i*i; j <= MAX_PRIME; j += 2*i) {
+                bitFlag[(j/64)] |= (1L << (j%64));
+            }
+        }
     }
     primes.PB(2);
-    for(i = 3; i < MAX_PRIME; i += 2)
-        if(flag[i] == 0) primes.PB(i);
+    for (ULL i = 3; i <= MAX_PRIME; i += 2)
+        if ((bitFlag[i/64] & (1L << (i%64))) == 0) primes.PB(i);
 }
 
-bool isPrime(LL n)
-{
-    if(n == 0 || n == 1) return 0;
-    if(n <= MAX_PRIME) return (!flag[n]);
+bool isPrime(ULL n) {
+    if (n < 2) return false;
+    if ((n & 1) == 0) return false;
+    if(n <= MAX_PRIME) return !(bitFlag[n/64] & (1L << (n%64)));
     int root = sqrt((double)n);
     for(int i = 0; primes[i] <= root; i++)
         if(n % primes[i] == 0) return false;
     return true;
 }
 
-vector<LL> factorize(LL n)
-{
-    vector<LL> ret;
-    int root = sqrt((double)n);
-    for(int i=0; primes[i] <= root; i++) {
-        while(!(n % primes[i])) { n /= primes[i]; ret.PB(primes[i]); }
-    }
-    if(n != 1) ret.PB(n);
-    if(n == 1 && ret.size() == 0) ret.PB(1);
-    return ret;
-}
-
-vector<powerPrime> factorizeAsPower(long long n)
-{
-    vector<powerPrime> ret;
-    powerPrime pp;
-    int root = sqrt((double)n), power;
-    for(int i=0; primes[i] <= root; i++) {
-        int power = 0;
-        while(!(n % primes[i])) { n /= primes[i]; power++; }
-        if(power > 0) {
-            pp.p = primes[i], pp.a = power;
-            ret.PB(pp);
-        }
-    }
-    if(n != 1) {
-        pp.p = n, pp.a = 1;
-        ret.PB(pp);
-    }
-    if(n == 1 && ret.size() == 0) {
-        pp.p = 1, pp.a = 1;
-        ret.PB(pp);
-    }
-    return ret;
-}
-
-// This function tells us how many prime P we will get after factorizing N!.
-int primeFreq(int p, int N)
-{
-    int c = 0, i = 0;
-    while(++i) {
-        int t = N / (double)pow((double)p, (double)i);
-        if(t == 0) break;
-        c += t;
-    }
-    return c;
-}
-
-int countDivisors(long long n)
-{
-    if(n == 0) return 0;
-    int ret = 1;
-    int root = (int)sqrt((double)n);
-    for(int i=0; primes[i] <= root; i++) {
-        int power = 0;
-        while(!(n % primes[i])) { n /= primes[i]; power++; }
-        if(power > 0) ret *= (power + 1);
-    }
-    if(n != 1) ret *= 2;
-    return ret;
-}
-
-LL sumDivisors(long long n)
-{
-    if(n == 0) return 0;
-    LL ret = 1;
-    int root = (int)sqrt((double)n);
-    for(int i=0; primes[i] <= root; i++) {
-        int power = 0;
-        while(!(n % primes[i])) { n /= primes[i]; power++; }
-        if(power > 0) {
-            ret *= ((LL)(pow(primes[i], power + 1) + 0.5) - 1) / (primes[i] - 1);
-        }
-    }
-    if(n != 1) ret *= ((LL)(pow(n, 2.0) + 0.5) - 1) / (n - 1);
-    return ret;
-}
-
-LL eulerPhi(long long n)
-{
-    LL ret = n;
-    int root = (int)sqrt((double)n);
-    for(int i=0; primes[i] <= root; i++) {
-        if(!(n % primes[i])) ret -= (ret / primes[i]);
-        while(n % primes[i] == 0) n /= primes[i];
-    }
-    if(n != 1) ret -= (ret / n);
-    return ret;
-}
 
 int main()
 {
@@ -211,11 +119,11 @@ int main()
     double cl = clock();
     cl = clock() - cl;
 
-    sieve();
+    sieveBitwise();
 
     /*
     cout << primes.size() << endl;
-    FOR(i, 0, primes.size()-1) cout << primes[i] << endl;
+    FOR(i, 0, 20) cout << primes[i] << endl;
     cout << isPrime(100000004987) << endl;
     */
 
