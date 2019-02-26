@@ -1,0 +1,257 @@
+\documentclass[a4paper,12pt]{article}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\begin{document}
+
+\title{gcdSum(n) and lcmSum(n)}
+\author{iamcrypticcoder}
+\date{}
+\maketitle
+   
+
+\section{GCD SUM FUNCTION}
+Given a positive integer $n$, $gcdSum(n)$ function is like:
+
+$$gcdSum(n) = \sum_{i=1}^n gcd(i, n)$$
+\\
+Example: n = 6
+
+\begin{center}
+gcd(1, 6) = 1\\
+gcd(2, 6) = 2\\
+gcd(3, 6) = 3\\
+gcd(4, 6) = 2\\
+gcd(5, 6) = 1\\
+gcd(6, 6) = 6\\
+---------------------\\
+gcdSum(6) = 15
+\end{center}
+
+Notice that gcd of each pair $(i, n)$ must be one of the divisors of $n$. 
+
+For $n = 6$, divisors are 1, 2, 3, 6. So we can think in reverse way, for each divisors how many pairs $(i, n)$ exist. For example, when n = 6, the divisor 2 has 2 pairs (2, 6) and (4, 6). So lets calculate $gcdSum(n)$ in another way. We will denote each divisor by $d$.
+\\
+\\
+Example: n = 6
+\begin{center}
+Divisor d = 1 has 2 pairs. So, 1 * 2 = 2\\
+Divisor d = 2 has 2 pairs. So, 2 * 2 = 4\\
+Divisor d = 3 has 1 pairs. So, 3 * 1 = 3\\
+Divisor d = 6 has 1 pairs. So, 6 * 1 = 6\\
+------------------------------------------------------\\
+gcdSum(6) = 15
+\end{center}
+
+Now the problem turns into counting pairs of $(i, n)$ for a specific divisor $d$.
+There is a nice theorem using ETF (Euler Totient Function) to count this.
+\\
+
+\begin{theorem}
+Given a positive integer $n$ and let $d$ is a divisor of n, then number of pairs $(i, n)$ where $1 <=  i <= n$ and $gcd(i, n) = d$ is: $$\phi({\frac{n}{d}})$$
+\end{theorem}
+
+\bigskip
+\bigskip
+\bigskip
+
+So, again lets check for n = 6
+\begin{center}
+$$d = 1: \phi(\frac{6}{1}) * 1 = 2 * 1 = 2$$
+$$d = 2: \phi(\frac{6}{2}) * 2 = 2 * 2 = 4$$
+$$d = 3: \phi(\frac{6}{3}) * 3 = 1 * 3 = 3$$
+$$d = 6: \phi(\frac{6}{6}) * 6 = 1 * 6 = 6$$
+---------------------------------------------
+$$gcdSum(6) = 15$$
+\end{center}
+
+Finally we can write,
+$$gcdSum(n) = \sum_{i=1}^n gcd(i, n) = \sum_{d|n} \phi(\frac{n}{d}) * d$$
+ 
+In above formula, we have to find all divisors of $n$ to get the result of $gcdSum(n)$. Theoretically, we have to traverse from 1 to $\sqrt{n}$ to get all divisors. We can find more efficient formula which doesn't need to generate divisors but only prime factors.\\
+
+
+Lets check $gcdSum(n)$ for only positive prime integer like $gcdSum(p)$:\\ 
+When n is prime, all pairs except the pair (p, p) has gcd value 1. For example, n = 5,
+\begin{center}
+gcd(1, 5) = 1\\
+gcd(2, 5) = 1\\
+gcd(3, 5) = 1\\
+gcd(4, 5) = 1\\
+gcd(5, 5) = 5\\
+---------------------\\
+So, gcdSum(p) = (p-1) + p = 2p - 1
+\end{center}
+
+Now, lets check $gcdSum(n)$ for power of a prime like $gcdSum(p^a)$:\\
+At first an example for $n = 3^3$,
+
+\begin{center}
+gcd(1, $3^3$) = 1\\
+gcd(2, $3^3$) = 1\\
+gcd(3, $3^3$) = 3\\
+...\\
+gcd(4, $3^3$) = 1\\
+gcd(5, $3^3$) = 1\\
+gcd(6, $3^3$) = 3\\
+...\\
+gcd($3^2$, $3^3$) = $3^2$\\
+...\\
+gcd(12, $3^3$) = 3\\
+gcd(13, $3^3$) = 3\\
+...\\
+gcd($3^3$, $3^3$) = $3^2$\\
+\end{center} 
+
+Notice that in case of $n = p^a$, divisors of $n$ will be $1, p, p^2, ... p^a$. So,
+\begin{center}
+$$d = 1: \phi(\frac{p^a}{1}) * 1 = \phi(p^a)$$
+$$d = p: \phi(\frac{p^a}{p}) * p = \phi(p^{a-1})*p$$
+$$d = p^2: \phi(\frac{p^a}{p^2}) * p^2 = \phi(p^{a-2})*p^2$$
+...
+$$d = p^a: \phi(\frac{p^a}{p^a}) * p^a = \phi(1)*p^a$$
+------------------------------------------------\\
+$$gcdSum(p^a) = \phi(p^a) + \phi(p^{a-1})*p + \phi(p^{a-2})*p^2 + \phi(1)*p^a$$
+
+\bigskip
+\bigskip
+
+We know, $\phi(p^a) = p^a - p^{a-1}$
+$$gcdSum(p^a) = (p^a - p^{a-1}) + (p^a - p^{a-1}) + (p^a - p^{a-1}) + ... + p^a$$
+$$gcdSum(p^a) = a * (p^a - p^{a-1}) + p^a$$
+$$gcdSum(p^a) = (a + 1) * p^a - p^{a-1}$$
+\end{center}\\
+
+\bigskip
+\bigskip
+
+When n is composite integer and n is prime factorized as following:
+
+$$n = p_1^{a_1} * p_2^{a_2} * ... * p_m^{a_m}$$ 
+
+$$gcdSum(n) = gcdSum(p_1^{a_1}) * gcdSum(p_2^{a_2}) ... gcdSum(p_m^{a_m})$$
+
+$$gcdSum(n) = \sum_{i=1}^n gcd(i, n) = \prod (a_i + 1) * p_i^{a_i} - p_i^{a_i-1}$$
+
+\bigskip
+\bigskip
+
+*It can be proved that gcdSum(N) is multiplicative like euler 𝜑 function.
+
+
+\section{LCM SUM FUNCTION}
+Given a positive integer $n$, $lcmSum(n)$ function is like:
+
+$$lcmSum(n) = \sum_{i=1}^n lcm(i, n)$$
+\\
+
+Example: n = 6
+
+\begin{center}
+lcm(1, 6) = 6\\
+lcm(2, 6) = 6\\
+lcm(3, 6) = 6\\
+lcm(4, 6) = 12\\
+lcm(5, 6) = 30\\
+lcm(6, 6) = 6\\
+---------------------\\
+lcmSum(6) = 66
+\end{center}
+
+Notice that when $i$ is a divisor of $n$ lcm is $n$. So number of divisors of $n$ multiplied with $n$ is a part of the final answer. But we can't find the value of $lcm(i, n)$ when $i$ isn't a divisor of $n$. Anyway as we know the relationship between gcd and lcm which is: 
+
+\bigskip
+$$a * b = gcd(a, b) * lcm(a, b)$$ 
+\bigskip
+
+Now we can write the $lcmSum(n)$ function in a different way like following:
+
+\bigskip
+$$lcmSum(n) = \sum_{i=1}^n \frac{i . n}{gcd(i, n)}$$
+\bigskip
+
+
+Still there is $i$ exist which we want to remove so that overall complexity to find $lcmSum()$ will be reduced. We will use above identity later. 
+
+\bigskip
+
+For now, let's discard $lcm(n, n)$ from the $lcmSum(n)$ function. We have to solve following function first. 
+
+\bigskip
+$$X = \sum_{i=1}^{n-1} lcm(i, n)$$
+\begin{equation}
+X = lcm(1, n) + lcm(2, n) + ... + lcm(n-1, n)
+\end{equation}
+\bigskip
+
+Reverse the term of above function:
+\begin{equation}
+X = lcm(n-1, n) + lcm(n-2, n) + ... + lcm(1, n)
+\end{equation}
+\bigskip
+
+Sum $(1)$ and $(2)$:
+$$2X = lcm(1, n) + lcm(n-1, n) + lcm(2, n) + lcm(n-2, n) + ... + lcm(n-1, n) + lcm(1, n)$$
+\begin{equation}
+2X = \sum_{i=1}^{n-1} [lcm(i, n) + lcm(n-i, n)]
+\end{equation}
+\bigskip
+
+\begin{lemma}
+$$lcm(a, n) + lcm(n-a, n) = \frac{ an } { \gcd(a, n)} + \frac{ (n-a)n} { \gcd(n-a, n)} = \frac{ n\times n} { \gcd(a,n) }$$
+\end{lemma}
+Notice that gcd(a,n) and gcd(n-a, n) are equal.
+\bigskip
+
+\begin{lemma}
+$$\sum_{i = 1}^{n} \frac{n}{\gcd(i,n)} = \sum_{d \mid n} \frac{n}{d} \times \phi(\frac{n}{d}) = \sum_{d\mid n} \phi(d) . d$$
+\end{lemma}
+Notice that we can prove this lemma using Theorem 1.
+\bigskip
+
+\begin{lemma}
+$$\sum_{i = 1}^{n-1} \frac{n}{\gcd(i,n)} = \sum_{d \mid n, d \neq n} \frac{n}{d} \times \phi(\frac{n}{d}) = \sum_{d\mid n, d \neq 1} \phi(d) . d$$
+\end{lemma}
+Notice since it goes up to $n-1$, gcd(i,n) won't be n. So we shouldn't consider d = n.
+\bigskip
+
+
+Now we can rewrite eq 3:
+$$2X = \sum_{i=1}^{n-1} \frac{ n\times n} { \gcd(i,n) }$$
+$$2X = n \times \sum_{i=1}^{n-1} \frac{n} { \gcd(i,n) }$$
+$$2X = n \times \sum_{d | n, d \neq 1} \phi(d) . d$$
+
+$$2X = n \times \sum_{d\mid n, d \neq 1} \phi(d) . d$$
+When $d = 1, \phi(d) \times 1 = 1$, if we subtract 1 then we shouldn't mention $d \neq 1$ below the sum function. right?
+
+$$2X = n \times (\sum_{d\mid n} \phi(d) . d - 1)$$
+$$X = \frac{n}{2} \times (\sum_{d\mid n} \phi(d) . d - 1)$$
+
+Now we can put back the discarded term $lcm(n, n) = n$ again and calculate $lcmSum(n)$ finally,
+$$lcmSum(n) = X + lcm(n, n)$$
+$$lcmSum(n) = \frac{n}{2} \times (\sum_{d\mid n} \phi(d) . d - 1) + n$$
+$$lcmSum(n) = \frac{n}{2} \times \sum_{d\mid n} \phi(d) . d - \frac{n}{2} + n$$
+$$lcmSum(n) = \frac{n}{2} \times \sum_{d\mid n} \phi(d) . d + \frac{n}{2}$$
+$$lcmSum(n) = \frac{n}{2} \times (\sum_{d\mid n} \phi(d) . d + 1)$$
+
+Ah...Cool... Isn't it?
+
+\bigskip
+\bigskip
+\bigskip
+\bigskip
+
+Refs:
+
+1. https://cs.uwaterloo.ca/journals/JIS/VOL4/BROUGHAN/gcdsum.pdf
+\bigskip
+
+2. https://math.stackexchange.com/questions/761670/how-to-find-this-lcm-sum-function-textlcm1-n-textlcm2-n-cdots-t
+\bigskip
+
+3. https://www.quora.com/How-can-I-solve-the-problem-GCD-Extreme-GCDEX-on-SPOJ
+
+\end{document}
+
+
