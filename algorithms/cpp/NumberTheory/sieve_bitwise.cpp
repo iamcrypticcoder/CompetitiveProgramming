@@ -100,7 +100,7 @@ void sieveBitwise()
 
 bool isPrime(ULL n) {
     if (n < 2) return false;
-    if ((n & 1) == 0) return false;
+    if (n != 2 && (n & 1) == 0) return false;
     if(n <= MAX_PRIME) return !(bitFlag[n/64] & (1L << (n%64)));
     int root = sqrt((double)n);
     for(int i = 0; primes[i] <= root; i++)
