@@ -62,3 +62,5 @@ algorithms/cpp/BinaryTree/.idea/BinaryTree.iml
 algorithms/cpp/BinaryTree/.idea/encodings.xml
 algorithms/cpp/BinaryTree/.idea/modules.xml
 algorithms/cpp/BinaryTree/.idea/workspace.xml
+algorithms/cpp/DataStructures/cmake-build-debug
+algorithms/cpp/SegmentTree/cmake-build-debug
