@@ -2,7 +2,13 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="SegmentTree" targetName="segment_tree_rmq" />
+      <config projectName="SegmentTree" targetName="segment_tree_concise" />
+      <config projectName="SegmentTree" targetName="D.XeniaandBitOperations" />
+      <config projectName="SegmentTree" targetName="Test" />
+      <config projectName="SegmentTree" targetName="GSS3" />
+      <config projectName="SegmentTree" targetName="FREQUENT-Frequentvalues" />
+      <config projectName="SegmentTree" targetName="Multiplesof3" />
+      <config projectName="SegmentTree" targetName="GSS1" />
       <config projectName="SegmentTree" targetName="segment_tree_rmq_lazy" />
       <config projectName="SegmentTree" targetName="segment_tree_rsq_lazy" />
     </generated>
@@ -14,19 +20,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bcc9c8c-2679-4096-89d3-10ec7cc46d0a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/DataStructures.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../DataStructures/disjoint_set.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/problems/Multiples of 3.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,27 +37,12 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
+        <entry file="file://$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="170" column="35" selection-start-line="170" selection-start-column="35" selection-end-line="170" selection-end-column="35" />
-              <folding>
-                <element signature="e#119#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="198" />
-              <folding>
-                <element signature="e#119#133#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="152">
+              <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -76,18 +61,25 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" />
         <option value="$PROJECT_DIR$/segment_tree_rmq.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_concise.cpp" />
+        <option value="$PROJECT_DIR$/problems/Multiples of 3.cpp" />
         <option value="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" />
+        <option value="$PROJECT_DIR$/problems/Test.cpp" />
+        <option value="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/input.txt" />
+        <option value="$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp" />
+        <option value="$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="85" />
-    <option name="y" value="42" />
-    <option name="width" value="1534" />
-    <option name="height" value="914" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1280" />
+    <option name="height" value="721" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -101,6 +93,11 @@
             <path>
               <item name="SegmentTree" type="b2602c69:ProjectViewProjectNode" />
               <item name="SegmentTree" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SegmentTree" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SegmentTree" type="462c0819:PsiDirectoryNode" />
+              <item name="problems" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -124,8 +121,38 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.segment_tree_rmq_lazy">
-    <configuration name="segment_tree_rmq" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq">
+  <component name="RunManager" selected="Application.FREQUENT-Frequentvalues">
+    <configuration name="D.XeniaandBitOperations" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="D.XeniaandBitOperations" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="D.XeniaandBitOperations">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FREQUENT-Frequentvalues" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="FREQUENT-Frequentvalues" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="FREQUENT-Frequentvalues">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GSS1" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="GSS1" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="GSS1">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GSS3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="GSS3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="GSS3">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Multiplesof3" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="Multiplesof3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="Multiplesof3">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="Test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="Test">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_concise" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_concise" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_concise">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -141,9 +168,15 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.segment_tree_rmq" />
+      <item itemvalue="Application.D.XeniaandBitOperations" />
+      <item itemvalue="Application.FREQUENT-Frequentvalues" />
+      <item itemvalue="Application.GSS1" />
+      <item itemvalue="Application.GSS3" />
+      <item itemvalue="Application.Multiplesof3" />
+      <item itemvalue="Application.segment_tree_concise" />
       <item itemvalue="Application.segment_tree_rmq_lazy" />
       <item itemvalue="Application.segment_tree_rsq_lazy" />
+      <item itemvalue="Application.Test" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -156,37 +189,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1551537614039</updated>
-      <workItem from="1551537615293" duration="3995000" />
+      <workItem from="1551537615293" duration="9889000" />
+      <workItem from="1551606548204" duration="1335000" />
+      <workItem from="1551618733837" duration="11268000" />
+      <workItem from="1551643309667" duration="1002000" />
+      <workItem from="1551644539827" duration="54000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3995000" />
+    <option name="totallyTimeSpent" value="23548000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="85" y="42" width="1534" height="914" extended-state="0" />
+    <frame x="0" y="23" width="1280" height="721" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20844504" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23909532" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Messages" weight="0.3673966" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="CMake" weight="0.08150852" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.229927" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.35279804" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31160572" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.34022257" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.44038156" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.29411766" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="XDebuggerManager">
@@ -202,34 +239,55 @@
           <line>160</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_concise.cpp</url>
+          <line>102</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp</url>
+          <line>146</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp</url>
+          <line>152</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp</url>
+          <line>154</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp</url>
+          <line>194</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="st" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="watch">
+      <expression>
+        <expression-string>st</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/main.cpp" />
+    <entry file="file://$PROJECT_DIR$/segment_tree_rmq.cpp" />
+    <entry file="file://$PROJECT_DIR$/segment_tree_concise.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_rmq.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="98" column="33" selection-start-line="98" selection-start-column="33" selection-end-line="98" selection-end-column="33" />
-          <folding>
-            <element signature="e#119#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="198" lean-forward="true" selection-start-line="198" selection-end-line="198" />
+        <state relative-caret-position="1748">
+          <caret line="92" selection-start-line="92" selection-end-line="92" selection-end-column="20" />
           <folding>
             <element signature="e#119#133#0" expanded="true" />
           </folding>
@@ -238,11 +296,87 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="170" column="35" selection-start-line="170" selection-start-column="35" selection-end-line="170" selection-end-column="35" />
+        <state relative-caret-position="549">
+          <caret line="179" column="5" selection-start-line="179" selection-start-column="5" selection-end-line="179" selection-end-column="5" />
           <folding>
             <element signature="e#119#133#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/output.txt.cpp">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///Library/Developer/CommandLineTools/usr/include/c++/v1/algorithm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="2710" column="11" selection-start-line="2710" selection-start-column="11" selection-end-line="2710" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/Multiples of 3.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="27" lean-forward="true" selection-end-line="104" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/Test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="114" column="17" lean-forward="true" selection-end-line="122" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="28" column="20" selection-end-line="161" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-69">
+          <caret line="115" selection-start-line="115" selection-end-line="115" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/input.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1957">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1718">
+          <caret line="191" column="8" selection-start-line="191" selection-start-column="8" selection-end-line="191" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
         </state>
       </provider>
     </entry>
