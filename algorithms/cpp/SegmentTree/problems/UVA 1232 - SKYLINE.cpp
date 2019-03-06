@@ -1,8 +1,8 @@
 /*
-    Problem Link: https://www.codechef.com/problems/MULTQ3/
+    Problem Link: https://uva.onlinejudge.org/external/125/12532.pdf
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-	Time :
-	Rank :
+	Time : 0.150
+	Rank : 891
 	Complexity:
 */
 
@@ -87,11 +87,12 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX (1 << 17)
+#define MAX 100000
+
 
 int main()
 {
-    //READ("input.txt");
+    READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;

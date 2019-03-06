@@ -1,7 +1,6 @@
 /*
-    Problem Link: https://www.spoj.com/problems/GSS3/
+    Problem Link: https://www.spoj.com/problems/FREQUENT/
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-    Status : AC
 	Time :
 	Rank :
 	Complexity:
@@ -88,87 +87,48 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 50000
-
-struct Node {
-    int sum, bestLeftSum, bestRightSum, bestSum;
-    void createLeaf(int val) {
-        sum = bestLeftSum = bestRightSum = bestSum = val;
-    }
-    void combine(Node &a, Node &b) {
-        sum = a.sum + b.sum;
-        bestLeftSum = max(a.bestLeftSum, a.sum + b.bestLeftSum);
-        bestRightSum = max(b.bestRightSum, a.bestRightSum + b.sum);
-        bestSum = max(max(a.bestSum, b.bestSum), a.bestRightSum + b.bestLeftSum);
-    }
-};
-
-int N, M;
-int A[MAX + 7];
-Node st[3 * MAX + 7]; // Note: Using 2*MAX it got RTE. So 3*MAX used
+#define MAX 1000000
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
-void build(int node, int l, int r) {
-    if (l == r) {
-        st[node].createLeaf(A[l]);
-        return;
-    }
+struct Node {
 
-    int mid = (l + r) >> 1;
-    build(left(node), l, mid);
-    build(right(node), mid + 1, r);
-    st[node].combine(st[left(node)], st[right(node)]);
+};
+
+int N, Q;
+int A[MAX + 7];
+Node st[2 * MAX + 7];
+
+void build(int p, int l, int r) {
+
 }
 
-void update(int node, int l, int r, int pos, int val) {
-    if (l == r) {
-        st[node].createLeaf(val);
-        return;
-    }
+Node query(int p, int l, int r, int i, int j) {
 
-    int mid = (l + r) >> 1;
-    if (pos <= mid) update(left(node), l, mid, pos, val);
-    else update(right(node), mid+1, r, pos, val);
-
-    st[node].combine(st[left(node)], st[right(node)]);
-}
-
-Node query(int node, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[node];
-
-    int mid = (l + r) >> 1;
-    if (j <= mid) return query(left(node), l, mid, i, j);
-    if (i > mid) return query(right(node), mid + 1, r, i, j);
-
-    Node ret;
-    Node lNode = query(left(node), l, mid, i, mid);
-    Node rNode = query(right(node), mid+1, r, mid+1, j);
-    ret.combine(lNode, rNode);
-    return ret;
 }
 
 int main()
 {
+    READ("input.txt");
+    //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
-    N = src();
-    FOR(i, 0, N-1) A[i] = src();
-    build(1, 0, N-1);
+    int x, y;
 
-    M = src();
-    FOR(i, 0, M-1) {
-        int cmd = src();
-        int x = src();
-        int y = src();
-        if (cmd == 0) {
-            update(1, 0, N-1, x-1, y);
-        } else {
-            Node result = query(1, 0, N - 1, x - 1, y - 1);
-            printf("%d\n", result.bestSum);
+    while (scanf("%d", &N) == 1) {
+        if (N == 0) break;
+        Q = src();
+        FOR(i, 0, N-1) A[i] = src();
+        build(1, 0, N-1);
+
+        FOR(i, 1, Q) {
+            scanf("%d %d", &x, &y);
+            Node node = query(1, 0, N-1, x-1, y-1);
+            //printf("%d - %d = %d\n", x, y, node.best.ss);
+            //printf("%d\n", node.best.ss);
         }
     }
 

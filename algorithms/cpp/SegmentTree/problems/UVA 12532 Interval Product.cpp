@@ -1,9 +1,8 @@
 /*
-    Problem Link: https://www.spoj.com/problems/GSS3/
+    Problem Link: https://uva.onlinejudge.org/external/125/12532.pdf
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-    Status : AC
-	Time :
-	Rank :
+	Time : 0.150
+	Rank : 891
 	Complexity:
 */
 
@@ -88,88 +87,89 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 50000
-
-struct Node {
-    int sum, bestLeftSum, bestRightSum, bestSum;
-    void createLeaf(int val) {
-        sum = bestLeftSum = bestRightSum = bestSum = val;
-    }
-    void combine(Node &a, Node &b) {
-        sum = a.sum + b.sum;
-        bestLeftSum = max(a.bestLeftSum, a.sum + b.bestLeftSum);
-        bestRightSum = max(b.bestRightSum, a.bestRightSum + b.sum);
-        bestSum = max(max(a.bestSum, b.bestSum), a.bestRightSum + b.bestLeftSum);
-    }
-};
-
-int N, M;
-int A[MAX + 7];
-Node st[3 * MAX + 7]; // Note: Using 2*MAX it got RTE. So 3*MAX used
+#define MAX 100000
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
-void build(int node, int l, int r) {
+struct Node {
+    int result;
+    void createLeaf(int v) {
+        result = (v == 0 ? 0 : (v > 0 ? 1 : -1));
+    }
+    void combine(Node &a, Node &b) {
+        result = a.result * b.result;
+    }
+};
+
+int N, K;
+int X[MAX + 7];
+Node st[2 * MAX + 7];
+
+void build(int p, int l, int r) {
     if (l == r) {
-        st[node].createLeaf(A[l]);
+        st[p].createLeaf(X[l]);
         return;
     }
 
     int mid = (l + r) >> 1;
-    build(left(node), l, mid);
-    build(right(node), mid + 1, r);
-    st[node].combine(st[left(node)], st[right(node)]);
+    build(left(p), l, mid);
+    build(right(p), mid+1, r);
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
-void update(int node, int l, int r, int pos, int val) {
-    if (l == r) {
-        st[node].createLeaf(val);
+void updateSingle(int p, int l, int r, int i, int v) {
+    if(l == r) {
+        st[p].createLeaf(v);
         return;
     }
 
     int mid = (l + r) >> 1;
-    if (pos <= mid) update(left(node), l, mid, pos, val);
-    else update(right(node), mid+1, r, pos, val);
-
-    st[node].combine(st[left(node)], st[right(node)]);
+    if (i <= mid) updateSingle(left(p), l, mid, i, v);
+    else updateSingle(right(p), mid+1, r, i, v);
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
-Node query(int node, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[node];
+Node query(int p, int l, int r, int i, int j) {
+    if (i == l && j == r) return st[p];
 
     int mid = (l + r) >> 1;
-    if (j <= mid) return query(left(node), l, mid, i, j);
-    if (i > mid) return query(right(node), mid + 1, r, i, j);
+    if (j <= mid) return query(left(p), l, mid, i, j);
+    if (i > mid) return query(right(p), mid+1, r, i, j);
 
     Node ret;
-    Node lNode = query(left(node), l, mid, i, mid);
-    Node rNode = query(right(node), mid+1, r, mid+1, j);
+    Node lNode = query(left(p), l, mid, i, mid);
+    Node rNode = query(right(p), mid + 1, r, mid+1, j);
     ret.combine(lNode, rNode);
     return ret;
 }
 
 int main()
 {
+    READ("input.txt");
+    //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
-    N = src();
-    FOR(i, 0, N-1) A[i] = src();
-    build(1, 0, N-1);
+    char cmd;
+    int a, b;
 
-    M = src();
-    FOR(i, 0, M-1) {
-        int cmd = src();
-        int x = src();
-        int y = src();
-        if (cmd == 0) {
-            update(1, 0, N-1, x-1, y);
-        } else {
-            Node result = query(1, 0, N - 1, x - 1, y - 1);
-            printf("%d\n", result.bestSum);
+    while(scanf("%d %d", &N, &K) == 2) {
+        FOR(i, 0, N - 1) X[i] = src();
+        build(1, 0, N - 1);
+
+        FOR(q, 1, K) {
+            cin >> cmd;
+            scanf("%d %d", &a, &b);
+            if (cmd == 'C') {
+                updateSingle(1, 0, N - 1, a - 1, b);
+            } else {
+                Node node = query(1, 0, N - 1, a - 1, b - 1);
+                printf("%c", node.result == 0 ? '0' : (node.result > 0 ? '+' : '-'));
+            }
         }
+        printf("\n");
     }
 
     cl = clock() - cl;

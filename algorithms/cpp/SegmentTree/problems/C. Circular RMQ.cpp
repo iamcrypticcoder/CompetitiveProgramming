@@ -1,9 +1,8 @@
 /*
-    Problem Link: https://www.spoj.com/problems/GSS3/
+    Problem Link: https://codeforces.com/contest/52/problem/C
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-    Status : AC
 	Time :
-	Rank :
+	Rank : Wrong Answer
 	Complexity:
 */
 
@@ -88,87 +87,128 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 50000
+#define MAX 1<<18
+
+inline int left(int p) { return p << 1; }
+inline int right(int p) { return (p << 1) + 1; }
 
 struct Node {
-    int sum, bestLeftSum, bestRightSum, bestSum;
-    void createLeaf(int val) {
-        sum = bestLeftSum = bestRightSum = bestSum = val;
+    LL val;
+    void createLeaf(LL v) {
+        val = v;
+    }
+    void raise(LL v) {
+        val += v;
     }
     void combine(Node &a, Node &b) {
-        sum = a.sum + b.sum;
-        bestLeftSum = max(a.bestLeftSum, a.sum + b.bestLeftSum);
-        bestRightSum = max(b.bestRightSum, a.bestRightSum + b.sum);
-        bestSum = max(max(a.bestSum, b.bestSum), a.bestRightSum + b.bestLeftSum);
+        val = min(a.val, b.val);
     }
 };
 
 int N, M;
 int A[MAX + 7];
-Node st[3 * MAX + 7]; // Note: Using 2*MAX it got RTE. So 3*MAX used
+Node st[3 * MAX + 7];
+LL lazy[3 * MAX + 7];
 
-inline int left(int p) { return p << 1; }
-inline int right(int p) { return (p << 1) + 1; }
-
-void build(int node, int l, int r) {
+void build(int p, int l, int r) {
     if (l == r) {
-        st[node].createLeaf(A[l]);
+        st[p].createLeaf(A[l]);
         return;
     }
 
     int mid = (l + r) >> 1;
-    build(left(node), l, mid);
-    build(right(node), mid + 1, r);
-    st[node].combine(st[left(node)], st[right(node)]);
+    build(left(p), l, mid);
+    build(right(p), mid+1, r);
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
-void update(int node, int l, int r, int pos, int val) {
-    if (l == r) {
-        st[node].createLeaf(val);
+void pushUp(int p) {
+    st[p].combine(st[left(p)], st[right(p)]);
+}
+
+void pushDown(int p, int l, int r) {
+    if (lazy[p] == 0) return;
+
+    st[left(p)].raise(lazy[p]);
+    st[right(p)].raise(lazy[p]);
+    lazy[left(p)] = lazy[right(p)] = lazy[p];
+    lazy[p] = 0;
+}
+
+void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
+    if (i == l && j == r) {
+        st[p].raise(val);
+        if (l != r) lazy[p] += val;
         return;
     }
 
-    int mid = (l + r) >> 1;
-    if (pos <= mid) update(left(node), l, mid, pos, val);
-    else update(right(node), mid+1, r, pos, val);
+    pushDown(p, l, r);
 
-    st[node].combine(st[left(node)], st[right(node)]);
+    int mid = (l + r) >> 1;
+    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
+    else if (i > mid) updateRangeLazy(right(p), mid+1, r, i, j, val);
+    else {
+        updateRangeLazy(left(p), l, mid, i, mid, val);
+        updateRangeLazy(right(p), mid+1, r, mid+1, j, val);
+    }
+
+    pushUp(p);
 }
 
-Node query(int node, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[node];
+Node queryLazy(int p, int l, int r, int i, int j) {
+    if (i == l && j == r) return st[p];
+
+    pushDown(p, l, r);
 
     int mid = (l + r) >> 1;
-    if (j <= mid) return query(left(node), l, mid, i, j);
-    if (i > mid) return query(right(node), mid + 1, r, i, j);
-
-    Node ret;
-    Node lNode = query(left(node), l, mid, i, mid);
-    Node rNode = query(right(node), mid+1, r, mid+1, j);
-    ret.combine(lNode, rNode);
-    return ret;
+    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
+    else if (i > mid) return queryLazy(right(p), mid+1, r, i, j);
+    else {
+        Node ret;
+        Node lNode = queryLazy(left(p), l, mid, i, mid);
+        Node rNode = queryLazy(right(p), mid + 1, r, mid + 1, j);
+        ret.combine(lNode, rNode);
+        return ret;
+    }
 }
 
 int main()
 {
+    READ("input.txt");
+    //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
+    string line;
+    int l, r, v;
+
     N = src();
     FOR(i, 0, N-1) A[i] = src();
+    memset
     build(1, 0, N-1);
 
     M = src();
-    FOR(i, 0, M-1) {
-        int cmd = src();
-        int x = src();
-        int y = src();
-        if (cmd == 0) {
-            update(1, 0, N-1, x-1, y);
+    getline(cin, line);
+    FOR(q, 1, M) {
+        getline(cin, line);
+        stringstream ss(line);
+        ss >> i >> j;
+        if (ss >> v) {
+            if (i <= j) updateRangeLazy(1, 0, N-1, i, j, v);
+            else {
+                updateRangeLazy(1, 0, N-1, i, N-1, v);
+                updateRangeLazy(1, 0, N-1, 0, j, v);
+            }
         } else {
-            Node result = query(1, 0, N - 1, x - 1, y - 1);
-            printf("%d\n", result.bestSum);
+            if (i <= j) {
+                Node node = queryLazy(1, 0, N-1, i, j);
+                printf("%lld\n", node.val);
+            } else {
+                Node n1 = queryLazy(1, 0, N - 1, i, N-1);
+                Node n2 = queryLazy(1, 0, N - 1, 0, j);
+                printf("%lld\n", min(n1.val, n2.val));
+            }
         }
     }
 

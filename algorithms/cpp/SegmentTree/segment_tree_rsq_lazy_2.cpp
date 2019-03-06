@@ -88,119 +88,126 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX 1000000
 
+struct Node {
+    LL sum;
+    void createLeaf(int val) {
+        sum = val;
+    }
+    void combine(Node &a, Node &b) {
+        sum = a.sum + b.sum;
+    }
+};
+
 int N;
 int A[MAX];
-LL st[3 * MAX];        // Sum could be huge. So keep data type LL for safe. can't use ULL because -1 is being used
+Node st[3 * MAX];
 int lazy[3 * MAX];
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
-// Complexity: O(2n-1) = O(n)
-void build(int p, int L, int R) {
-    if (L == R) {
-        st[p] = A[L];
+void build(int p, int l, int r) {
+    if (l == r) {
+        st[p].createLeaf(A[l]);
         return;
     }
 
-    build(left(p), L, (L + R) / 2);
-    build(right(p), (L + R) / 2 + 1, R);
+    int mid = (l + r) >> 1;
+    build(left(p), l, mid);
+    build(right(p), mid+1, r);
 
-    st[p] = st[left(p)] + st[right(p)];
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
-// Complexity: O(lg n)
-LL query(int p, int L, int R, int i, int j) {
-    if (i > R || j < L) return -1;
-    if (L >= i && R <= j) return st[p];
+Node query(int p, int l, int r, int i, int j) {
+    if (i == l && j == r) return st[p];
 
-    LL p1 = query(left(p), L, (L + R) / 2, i, j);
-    LL p2 = query(right(p), (L + R) / 2 + 1, R, i, j);
+    int mid = (l + r) >> 1;
+    if (j <= mid) return query(left(p), l, mid, i, j);
+    if (i > mid) return query(right(p), mid + 1, r, i, j);
 
-    if (p1 == -1) return p2;
-    if (p2 == -1) return p1;
-
-    return (p1 + p2);
+    Node ret;
+    Node lNode = query(left(p), l, mid, i, mid);
+    Node rNode = query(right(p), mid+1, r, mid+1, j);
+    ret.combine(lNode, rNode);
+    return ret;
 }
 
-// Complexity: O(lg n)
-void updateSingle(int p, int L, int R, int pos, int val) {
-    if (L == R) {
-        A[pos] = st[p] = val;
+void updateSingle(int p, int l, int r, int pos, int val) {
+    if (l == r) {
+        st[p].createLeaf(val);
         return;
     }
-    int mid = (L + R) / 2;
-    if (pos <= mid) updateSingle(left(p), L, mid, pos, val);
-    else updateSingle(right(p), mid + 1, R, pos, val);
 
-    st[p] = st[left(p)] + st[right(p)];
+    int mid = (l + r) >> 1;
+    if (pos <= mid) updateSingle(left(p), l, mid, pos, val);
+    else updateSingle(right(p), mid+1, r, pos, val);
+
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
-// Complexity: O(n)
-// Update value by val from pos1 to pos2 and modify whole tree
-void updateRange(int p, int L, int R, int pos1, int pos2, int val) {
-    if (pos1 > R || pos2 < L) return;
-    if (L == R) {
-        A[L] = st[p] = val;
+void updateRange(int p, int l, int r, int i, int j, int val) {
+    if (i > l || j < r) return;
+    if (l == r) {
+        A[l] = val;
+        st[p].createLeaf(val);
         return;
     }
-    int mid = (L + R) / 2;
-    updateRange(left(p), L, mid, pos1, pos2, val);
-    updateRange(right(p), mid + 1, R, pos1, pos2, val);
+    int mid = (l + r) >> 1;
+    updateRange(left(p), l, mid, i, j, val);
+    updateRange(right(p), mid + 1, r, i, j, val);
 
-    st[p] = st[left(p)] + st[right(p)];
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
 // Update value of parent (p) from it's child
 void pushUp(int p) {
-    st[p] = st[left(p)] + st[right(p)];
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
 // Populate lazy value of parent (p) to it's child reset it's own lazy value
-void pushDown(int p, int L, int R) {
+void pushDown(int p, int l, int r) {
     if (lazy[p] == 0) return;
 
-    int mid = (L + R) >> 1;
-    st[left(p)] = (ULL)(mid - L + 1) * lazy[p];
-    st[right(p)] = (ULL)(R - mid) * lazy[p];
+    int mid = (l + r) >> 1;
+    st[left(p)].createLeaf((LL)(mid - l + 1) * lazy[p]);
+    st[right(p)].createLeaf((LL)(r - mid) * lazy[p]);
     lazy[left(p)] = lazy[right(p)] = lazy[p];
     lazy[p] = 0;
 }
 
-// Complexity: O(n)
-// Update value by val from pos1 to pos2 and modify whole tree
-void updateRangeLazy(int p, int L, int R, int pos1, int pos2, int val) {
-    if (pos1 > R || pos2 < L) return;		// Current segment is not within range [pos1 .. pos2]
-
-    // If segment is fully within range
-    if (L >= pos1 && R <= pos2) {
-        st[p] = (LL)(R - L + 1) * val;
-        if (L != R) lazy[p] = val;
+void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
+    if (i == l && j == r) {
+        st[p].createLeaf((LL)(r - l + 1) * val);
+        if (l != r) lazy[p] = val;
         return;
     }
 
-    pushDown(p, L, R);
+    int mid = (l + r) >> 1;
+    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
+    if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
 
-    int mid = (L + R) >> 1;
-    updateRangeLazy(left(p), L, mid, pos1, pos2, val);
-    updateRangeLazy(right(p), mid + 1, R, pos1, pos2, val);
+    pushDown(p, l, r);
+
+    updateRangeLazy(left(p), l, mid, i, mid, val);
+    updateRangeLazy(right(p), mid+1, r, mid+1, j, val);
     pushUp(p);
 }
 
-// Complexity:
-// Query for Lazy Update
-LL queryLazy(int p, int L, int R, int pos1, int pos2) {
-    if (pos1 > R || pos2 < L) return 0;		// Current segment is not within range [pos1 .. pos2]
+Node queryLazy(int p, int l, int r, int i, int j) {
+    if (i == l && j == r) return st[p];
 
-    // If segment is fully within range
-    if (L >= pos1 && R <= pos2) return st[p];
+    int mid = (l + r) >> 1;
+    if (j <= mid) return query(left(p), l, mid, i, j);
+    if (i > mid) return query(right(p), mid + 1, r, i, j);
 
-    pushDown(p, L, R);
+    pushDown(p, l, r);
 
-    int mid = (L + R) >> 1;
-    LL p1 = queryLazy(left(p), L, mid, pos1, pos2);
-    LL p2 = queryLazy(right(p), mid + 1, R, pos1, pos2);
-    return (p1 + p2);
+    Node ret;
+    Node lNode = query(left(p), l, mid, i, mid);
+    Node rNode = query(right(p), mid+1, r, mid+1, j);
+    ret.combine(lNode, rNode);
+    return ret;
 }
 
 int main()
@@ -211,20 +218,22 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 8, 7, 3, 9, 5, 1, 10 };
-    N = 1000000;
-    FOR(i, 0, N - 1) A[i] = 10000;
+    int arr[10] = { 8, 7, 3, 9, 5, 1, 10, 4, 1, 6 };
+    N = 10;
+    FOR(i, 0, N - 1) A[i] = arr[i];
 
     memset(st, 0, sizeof(st));
     memset(st, 0, sizeof(lazy));
 
     build(1, 0, N-1);
 
-    cout << query(1, 0, N-1, 0, N-1) << endl;
+    Node node = query(1, 0, N-1, 0, N-1)l
+    cout << node.sum << endl;
 
     updateRangeLazy(1, 0, N-1, 0, 2, 1);
 
-    cout << queryLazy(1, 0, N-1, 0, 2) << endl;
+    node = queryLazy(1, 0, N-1, 0, 2);
+    cout << node.sum << endl;
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

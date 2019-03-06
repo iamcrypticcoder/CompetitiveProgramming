@@ -1,6 +1,7 @@
 /*
     Problem Link: https://www.spoj.com/problems/GSS1/
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
+    Status : AC
 	Time :
 	Rank :
 	Complexity:
@@ -104,7 +105,7 @@ struct Node {
 
 int N, M;
 int A[MAX + 7];
-Node st[3*MAX + 7];
+Node st[3 * MAX + 7];
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }

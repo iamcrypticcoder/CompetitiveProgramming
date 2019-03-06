@@ -1,6 +1,7 @@
 /*
     Problem Link: https://codeforces.com/contest/339/problem/D
 	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
+    Status : AC
 	Time :
 	Rank :
 	Complexity:
@@ -87,17 +88,80 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 1000000
+#define MAX (1 << 17)
+
+inline int left(int p) { return p << 1; }
+inline int right(int p) { return (p << 1) + 1; }
+
+struct Node {
+    int result, depth;
+    void createLeaf(int val) {
+        depth = 1;
+        result = val;
+    }
+    void combine(Node &a, Node &b) {
+        depth = a.depth + 1;
+        if (depth % 2 == 0) {
+            result = a.result | b.result;
+        } else {
+            result = a.result ^ b.result;
+        }
+    }
+};
+
+int N, M;
+int A[MAX + 7];
+Node st[2 * MAX + 7];
+
+void build(int p, int l, int r) {
+    if (l == r) {
+        st[p].createLeaf(A[l]);
+        return;
+    }
+
+    int mid = (l + r) >> 1;
+    build(left(p), l, mid);
+    build(right(p), mid + 1, r);
+    st[p].combine(st[left(p)], st[right(p)]);
+}
+
+void updateSingle(int p, int l, int r, int pos, int val) {
+    if (l == r) {
+        st[p].createLeaf(val);
+        return;
+    }
+    int mid = (l + r) / 2;
+    if (pos <= mid) updateSingle(left(p), l, mid, pos, val);
+    else updateSingle(right(p), mid + 1, r, pos, val);
+
+    st[p].combine(st[left(p)], st[right(p)]);
+}
+
+Node query() {
+    return st[1];
+}
 
 int main()
 {
-    //READ("input.txt");
+    READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
 
+    N = src();
+    M = src();
+
+    FOR(i, 0, (1 << N) - 1) A[i] = src();
+    build(1, 0, (1 << N) - 1);
+
+    FOR(q, 1, M) {
+        int p, b;
+        scanf("%d %d", &p, &b);
+        updateSingle(1, 0, (1 << N) - 1, p-1, b);
+        printf("%d\n", query().result);
+    }
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 

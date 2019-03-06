@@ -120,7 +120,7 @@ int query(int p, int L, int R, int i, int j) {
     if (p1 == -1) return p2;
     if (p2 == -1) return p1;
 
-    return (A[p1] <= A[p2] ? p1 : p2);
+    return (A[p1] >= A[p2] ? p1 : p2);
 }
 
 // Complexity: O(lg n)
