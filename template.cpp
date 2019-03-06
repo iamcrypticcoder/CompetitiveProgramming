@@ -1,8 +1,10 @@
 /*
+	Problem Link :
 	Solved By : Kazi Mahbubur Rahman (cryptic.coder)
-	Time :		
-	Rank :		
-	Complexity: 
+	Status : [AC, WA, TLE, RTE] 
+	Time :	
+	Rank :
+	Complexity:
 */
 
 #define _CRT_SECURE_NO_WARNINGS
