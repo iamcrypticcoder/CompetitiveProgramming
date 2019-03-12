@@ -1,6 +1,6 @@
 /*
 	Problem Link :
-	Solved By : Kazi Mahbubur Rahman (cryptic.coder)
+	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
 	Status : [AC, WA, TLE, RTE] 
 	Time :	
 	Rank :
