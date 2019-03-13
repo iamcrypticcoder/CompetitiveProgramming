@@ -25,6 +25,7 @@
 #include <cstring>
 #include <sstream>
 #include <iostream>
+#include <limits.h>
 #include <algorithm>
 
 using namespace std;
