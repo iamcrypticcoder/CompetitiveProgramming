@@ -185,12 +185,12 @@ void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
 
     int mid = (l + r) >> 1;
     if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-
-    pushDown(p, l, r);
-
-    updateRangeLazy(left(p), l, mid, i, mid, val);
-    updateRangeLazy(right(p), mid+1, r, mid+1, j, val);
+    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
+    else {
+        pushDown(p, l, r);
+        updateRangeLazy(left(p), l, mid, i, mid, val);
+        updateRangeLazy(right(p), mid+1, r, mid+1, j, val);
+    }
     pushUp(p);
 }
 
