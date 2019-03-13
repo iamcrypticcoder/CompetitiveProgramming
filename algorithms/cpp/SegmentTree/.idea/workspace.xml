@@ -2,23 +2,28 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="SegmentTree" targetName="D.XeniaandBitOperations" />
-      <config projectName="SegmentTree" targetName="UVA1232" />
+      <config projectName="SegmentTree" targetName="segment_tree_rsq_2d" />
       <config projectName="SegmentTree" targetName="C.CircularRMQ" />
-      <config projectName="SegmentTree" targetName="HISTOGRA" />
       <config projectName="SegmentTree" targetName="Multiplesof3" />
-      <config projectName="SegmentTree" targetName="GSS3" />
-      <config projectName="SegmentTree" targetName="segment_tree_concise" />
-      <config projectName="SegmentTree" targetName="ANDROUND" />
-      <config projectName="SegmentTree" targetName="FREQUENT-Frequentvalues" />
-      <config projectName="SegmentTree" targetName="GSS1" />
-      <config projectName="SegmentTree" targetName="12532IntervalProduct" />
-      <config projectName="SegmentTree" targetName="Test" />
-      <config projectName="SegmentTree" targetName="segment_tree_rmq_lazy" />
-      <config projectName="SegmentTree" targetName="segment_tree_rsq_lazy" />
+      <config projectName="SegmentTree" targetName="D.XeniaandBitOperations" />
       <config projectName="SegmentTree" targetName="RPLN" />
-      <config projectName="SegmentTree" targetName="segment_tree_rsq_lazy_2" />
+      <config projectName="SegmentTree" targetName="12532IntervalProduct" />
       <config projectName="SegmentTree" targetName="POSTERS" />
+      <config projectName="SegmentTree" targetName="segment_tree_rsq_lazy" />
+      <config projectName="SegmentTree" targetName="HISTOGRA" />
+      <config projectName="SegmentTree" targetName="segment_tree_kth_zero" />
+      <config projectName="SegmentTree" targetName="segment_tree_rsq" />
+      <config projectName="SegmentTree" targetName="segment_tree_rmq" />
+      <config projectName="SegmentTree" targetName="segment_tree_rmq_lazy" />
+      <config projectName="SegmentTree" targetName="UVA1232-SKYLINE" />
+      <config projectName="SegmentTree" targetName="ANDROUND" />
+      <config projectName="SegmentTree" targetName="persistent_segment_tree" />
+      <config projectName="SegmentTree" targetName="segment_tree_rmq_frequency" />
+      <config projectName="SegmentTree" targetName="segment_tree_save_entire_subarray" />
+      <config projectName="SegmentTree" targetName="GSS3" />
+      <config projectName="SegmentTree" targetName="GSS1" />
+      <config projectName="SegmentTree" targetName="FREQUENT-Frequentvalues" />
+      <config projectName="SegmentTree" targetName="segment_tree_concise" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -28,23 +33,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bcc9c8c-2679-4096-89d3-10ec7cc46d0a" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/problems/ANDROUND - AND Rounds.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/C. Circular RMQ.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/HISTOGRA - Largest Rectangle in a Histogram.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/MULTQ3 - Multiples of 3.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/POSTERS - Election Posters.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/RPLN - Negative Score.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/UVA 1232 - SKYLINE.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/problems/UVA 12532 Interval Product.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/segment_tree_rsq_lazy_2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistent_segment_tree.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_kth_zero.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_rmq.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_rsq.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_rsq_2d.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_save_entire_subarray.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/Multiples of 3.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rsq_lazy_2.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rmq_frequency.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,19 +56,73 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/problems/HISTOGRA - Largest Rectangle in a Histogram.cpp">
+        <entry file="file://$PROJECT_DIR$/segment_tree_concise.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
+            <state relative-caret-position="549">
+              <caret line="110" column="1" lean-forward="true" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/segment_tree_rmq.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="562">
+              <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/segment_tree_rmq_frequency.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="419">
+              <caret line="180" column="37" lean-forward="true" selection-start-line="180" selection-start-column="37" selection-end-line="180" selection-end-column="37" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+        <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+            <state relative-caret-position="710">
+              <caret line="163" column="1" lean-forward="true" selection-start-line="163" selection-start-column="1" selection-end-line="163" selection-end-column="1" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/segment_tree_rsq.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-330">
+              <caret line="105" column="31" selection-start-line="105" selection-start-column="31" selection-end-line="105" selection-end-column="31" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="900">
+              <caret line="147" column="1" lean-forward="true" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+              <folding>
+                <element signature="e#119#133#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -88,15 +141,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/segment_tree_rmq.cpp" />
-        <option value="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" />
         <option value="$PROJECT_DIR$/segment_tree_concise.cpp" />
-        <option value="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" />
         <option value="$PROJECT_DIR$/problems/Test.cpp" />
         <option value="$PROJECT_DIR$/segment_tree_rsq_lazy_2.cpp" />
         <option value="$PROJECT_DIR$/problems/Multiples of 3.cpp" />
         <option value="$PROJECT_DIR$/problems/12532 Interval Product.cpp" />
-        <option value="$PROJECT_DIR$/cmake-build-debug/input.txt" />
         <option value="$PROJECT_DIR$/problems/MULTQ3 - Multiples of 3.cpp" />
         <option value="$PROJECT_DIR$/problems/UVA 1232 - SKYLINE.cpp" />
         <option value="$PROJECT_DIR$/problems/C. Circular RMQ.cpp" />
@@ -105,15 +154,23 @@
         <option value="$PROJECT_DIR$/problems/UVA 12532 Interval Product.cpp" />
         <option value="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" />
         <option value="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" />
+        <option value="$PROJECT_DIR$/persistent_segment_tree.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_rsq.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/segment_tree_rmq_lazy.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_rmq_frequency.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_save_entire_subarray.cpp" />
+        <option value="$PROJECT_DIR$/cmake-build-debug/input.txt" />
+        <option value="$PROJECT_DIR$/segment_tree_rsq_2d.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_kth_zero.cpp" />
+        <option value="$PROJECT_DIR$/segment_tree_rmq.cpp" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="x" value="-1280" />
-    <option name="y" value="171" />
-    <option name="width" value="1280" />
-    <option name="height" value="800" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -121,6 +178,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -137,7 +195,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -156,7 +213,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Multiplesof3">
+  <component name="RunManager" selected="Application.segment_tree_rsq_2d">
     <configuration name="12532IntervalProduct" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="12532IntervalProduct" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="12532IntervalProduct">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -212,12 +269,12 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="Test" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="Test">
+    <configuration name="UVA1232-SKYLINE" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="UVA1232-SKYLINE" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="UVA1232-SKYLINE">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UVA1232-SKYLINE" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="UVA1232-SKYLINE" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="UVA1232-SKYLINE">
+    <configuration name="persistent_segment_tree" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="persistent_segment_tree" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="persistent_segment_tree">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -227,7 +284,32 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="segment_tree_kth_zero" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_kth_zero" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_kth_zero">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq_frequency" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_frequency" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_frequency">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="segment_tree_rmq_lazy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_lazy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_lazy">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rsq" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rsq_2d" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_2d" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_2d">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -237,7 +319,7 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rsq_lazy_2" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_lazy_2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_lazy_2">
+    <configuration name="segment_tree_save_entire_subarray" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_save_entire_subarray" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_save_entire_subarray">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -252,13 +334,18 @@
       <item itemvalue="Application.GSS3" />
       <item itemvalue="Application.HISTOGRA" />
       <item itemvalue="Application.Multiplesof3" />
+      <item itemvalue="Application.persistent_segment_tree" />
       <item itemvalue="Application.POSTERS" />
       <item itemvalue="Application.RPLN" />
       <item itemvalue="Application.segment_tree_concise" />
+      <item itemvalue="Application.segment_tree_kth_zero" />
+      <item itemvalue="Application.segment_tree_rmq" />
+      <item itemvalue="Application.segment_tree_rmq_frequency" />
       <item itemvalue="Application.segment_tree_rmq_lazy" />
+      <item itemvalue="Application.segment_tree_rsq" />
+      <item itemvalue="Application.segment_tree_rsq_2d" />
       <item itemvalue="Application.segment_tree_rsq_lazy" />
-      <item itemvalue="Application.segment_tree_rsq_lazy_2" />
-      <item itemvalue="Application.Test" />
+      <item itemvalue="Application.segment_tree_save_entire_subarray" />
       <item itemvalue="Application.UVA1232-SKYLINE" />
     </list>
   </component>
@@ -278,33 +365,37 @@
       <workItem from="1551643309667" duration="1002000" />
       <workItem from="1551644539827" duration="149000" />
       <workItem from="1551799812623" duration="15258000" />
-      <workItem from="1551888501683" duration="13524000" />
+      <workItem from="1551888501683" duration="13827000" />
+      <workItem from="1551980850239" duration="2966000" />
+      <workItem from="1552067522778" duration="6106000" />
+      <workItem from="1552221628560" duration="11915000" />
+      <workItem from="1552495308272" duration="600000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52425000" />
+    <option name="totallyTimeSpent" value="74315000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1280" y="171" width="1280" height="800" extended-state="0" />
+    <frame x="0" y="0" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27221325" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.28328007" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.16575342" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3041096" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.23663366" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.29726028" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.3808219" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.34356436" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="CMake" order="12" visible="true" weight="0.26712328" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.22475247" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -316,12 +407,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
-          <line>172</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
-          <line>160</line>
+          <line>124</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -389,6 +475,26 @@
           <line>109</line>
           <option name="timeStamp" value="31" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
+          <line>133</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_rmq_frequency.cpp</url>
+          <line>180</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_kth_zero.cpp</url>
+          <line>136</line>
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_rsq_2d.cpp</url>
+          <line>152</line>
+          <option name="timeStamp" value="41" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -432,27 +538,10 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.cpp" />
-    <entry file="file://$PROJECT_DIR$/segment_tree_rmq.cpp" />
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/output.txt.cpp">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/problems/Test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="114" column="17" lean-forward="true" selection-end-line="122" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_concise.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="503">
-          <caret line="110" column="1" lean-forward="true" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
-          <folding>
-            <element signature="e#119#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/Test.cpp" />
     <entry file="file:///Library/Developer/CommandLineTools/usr/include/c++/v1/algorithm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -460,82 +549,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="106" lean-forward="true" selection-start-line="106" selection-end-line="106" />
-          <folding>
-            <element signature="e#119#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy_2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="100" column="6" selection-end-line="241" selection-end-column="1" />
-          <folding>
-            <element signature="e#119#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="135" column="39" selection-start-line="135" selection-start-column="39" selection-end-line="135" selection-end-column="39" />
-          <folding>
-            <element signature="e#119#133#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/input.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/UVA 1232 - SKYLINE.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="99" column="4" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/problems/C. Circular RMQ.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" column="23" selection-start-line="4" selection-start-column="23" selection-end-line="4" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="113" column="9" selection-start-line="113" selection-start-column="9" selection-end-line="113" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="115" column="15" lean-forward="true" selection-start-line="115" selection-start-column="15" selection-end-line="115" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/UVA 12532 Interval Product.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="138" lean-forward="true" selection-start-line="138" selection-end-line="138" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="107" column="68" selection-start-line="107" selection-start-column="68" selection-end-line="107" selection-end-column="68" />
         </state>
       </provider>
     </entry>
@@ -553,7 +570,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy_2.cpp" />
+    <entry file="file://$PROJECT_DIR$/persistent_segment_tree.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="155" column="4" selection-start-line="155" selection-start-column="4" selection-end-line="155" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="13" column="75" selection-start-line="13" selection-start-column="75" selection-end-line="13" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/problems/ANDROUND - AND Rounds.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/UVA 12532 Interval Product.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="15" lean-forward="true" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/UVA 1232 - SKYLINE.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="515">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/RPLN - Negative Score.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
@@ -567,10 +620,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/problems/RPLN - Negative Score.cpp">
+    <entry file="file://$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
+        <state relative-caret-position="-885">
+          <caret line="42" column="24" lean-forward="true" selection-start-line="42" selection-start-column="24" selection-end-line="42" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Library/Developer/CommandLineTools/usr/include/c++/v1/iterator">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="802" selection-start-line="802" selection-end-line="802" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_save_entire_subarray.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="114" column="27" lean-forward="true" selection-start-line="114" selection-start-column="27" selection-end-line="114" selection-end-column="27" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/input.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rsq_2d.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="267">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="887">
+          <caret line="144" column="1" lean-forward="true" selection-start-line="144" selection-start-column="1" selection-end-line="144" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -581,10 +679,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+    <entry file="file://$PROJECT_DIR$/segment_tree_kth_zero.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
+        <state relative-caret-position="1146">
+          <caret line="125" column="4" lean-forward="true" selection-start-line="125" selection-start-column="4" selection-end-line="125" selection-end-column="4" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_concise.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="549">
+          <caret line="110" column="1" lean-forward="true" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rmq.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="562">
+          <caret line="118" lean-forward="true" selection-start-line="118" selection-end-line="118" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rmq_frequency.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="180" column="37" lean-forward="true" selection-start-line="180" selection-start-column="37" selection-end-line="180" selection-end-column="37" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="147" column="1" lean-forward="true" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rsq.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <caret line="105" column="31" selection-start-line="105" selection-start-column="31" selection-end-line="105" selection-end-column="31" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="163" column="1" lean-forward="true" selection-start-line="163" selection-start-column="1" selection-end-line="163" selection-end-column="1" />
+          <folding>
+            <element signature="e#119#133#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

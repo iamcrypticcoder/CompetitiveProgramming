@@ -88,79 +88,57 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX 1000000
 
-struct Node {
-    LL res = LONG_LONG_MAX;
-    void setRes(LL val) {
-        res = val;
-    }
-    void combine(Node &a, Node &b) {
-        res = min(a.res, b.res);
-    }
-};
-
-int N;
-int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
-
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
+// Frequency of zero and kth zero
+struct Node {
+    int index = -1, cnt = 0;
+    void createLeaf(int i, int c) {
+        index = i;
+        cnt = c;
+    }
+    void combine(Node &a, Node &b) {
+        cnt = a.cnt + b.cnt;
+    }
+};
+
+uint N;
+int A[MAX + 7];
+Node st[3*MAX + 7];
+
 void build(int p, int l, int r) {
     if (l == r) {
-        st[p].setRes(A[l]);
+        st[p].createLeaf(l, A[l] == 0 ? 1 : 0);
         return;
     }
     int mid = (l + r) >> 1;
-    build(left(p), l, mid);
+    build(left(p), l , mid);
     build(right(p), mid+1, r);
     st[p].combine(st[left(p)], st[right(p)]);
 }
 
-void pushUp(int p) {
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushDown(int p, int l, int r) {
-    if(lazy[p] == INT_MIN) return;
-
-    st[left(p)].setRes(min(st[left(p)].res, (LL)lazy[p]));
-    st[right(p)].setRes(min(st[right(p)].res, (LL)lazy[p]));
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
-}
-
-void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
-    if (i == l && j == r) {
-        st[p].setRes(min(st[p].res, (LL)val));
-        if (l != r) lazy[p] = val;
-        return;
-    }
-    pushDown(p, l, r);
-    int mid = (l + r) >> 1;
-    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-    else {
-        updateRangeLazy(left(p), l, mid, i, mid, val);
-        updateRangeLazy(right(p), mid + 1, r, mid + 1, j, val);
-    }
-    pushUp(p);
-}
-
-Node queryLazy(int p, int l, int r, int i, int j) {
+Node queryCount(int p, int l, int r, int i, int j) {
     if (i == l && j == r) return st[p];
 
-    pushDown(p, l, r);
-
     int mid = (l + r) >> 1;
-    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
-    if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
+    if (j <= mid) return queryCount(left(p), l, mid, i, j);
+    if (i > mid) return queryCount(right(p), mid+1, r, i, j);
 
     Node ret;
-    Node ln = queryLazy(left(p), l, mid, i, mid);
-    Node rn = queryLazy(right(p), mid + 1, r, mid+1, j);
-    ret.combine(ln, rn);
+    Node lNode = queryCount(left(p), l, mid, i, mid);
+    Node rNode = queryCount(right(p), mid+1, r, mid+1, j);
+    ret.combine(lNode, rNode);
     return ret;
+}
+
+Node* queryKthZero(int p, int l, int r, int k) {
+    if (k > st[p].cnt) return NULL;
+    if (l == r) return &st[p];
+    int mid = (l + r) >> 1;
+    Node lNode = st[left(p)];
+    if (lNode.cnt >= k) return queryKthZero(left(p), l, mid, k);
+    else return queryKthZero(right(p), mid+1, r, k - lNode.cnt);
 }
 
 int main()
@@ -171,22 +149,20 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 1, 2, 3, 4, 5, 6, 7 };
-    N = 7;
-    FOR(i, 0, N - 1) A[i] = arr[i];
-
-    // Don't forget lazy initialization
-    FOR(i, 0, 3*MAX - 1) lazy[i] = INT_MIN;
+    int arr[8] = { 1, 0, 2, 3, 0, 0, 0, 4 };
+    N = 8;
+    FOR(i, 0, N-1) A[i] = arr[i];
 
     build(1, 0, N-1);
 
-    Node node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    Node node = queryCount(1, 0, N-1, 1, 4);
+    cout << node.cnt << endl;
 
-    updateRangeLazy(1, 0, N-1, 5, 6, -100);
-
-    node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    FOR(k, 1, 5) {
+        Node *tmp = queryKthZero(1, 0, N-1, k);
+        if (tmp == NULL) cout << "There is no k zeros" << endl;
+        else cout << tmp->index << endl;
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

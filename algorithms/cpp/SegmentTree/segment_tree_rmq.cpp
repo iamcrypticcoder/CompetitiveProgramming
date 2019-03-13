@@ -23,6 +23,7 @@
 #include <cstring>
 #include <sstream>
 #include <iostream>
+#include <limits.h>
 #include <algorithm>
 
 using namespace std;
@@ -89,8 +90,8 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define MAX 1000000
 
 struct Node {
-    LL res = LONG_LONG_MAX;
-    void setRes(LL val) {
+    ULL res = LONG_LONG_MAX;
+    void setRes(ULL val) {
         res = val;
     }
     void combine(Node &a, Node &b) {
@@ -99,9 +100,8 @@ struct Node {
 };
 
 int N;
-int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
+int A[MAX + 7];
+Node st[3 * MAX + 7];
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
@@ -117,50 +117,30 @@ void build(int p, int l, int r) {
     st[p].combine(st[left(p)], st[right(p)]);
 }
 
-void pushUp(int p) {
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushDown(int p, int l, int r) {
-    if(lazy[p] == INT_MIN) return;
-
-    st[left(p)].setRes(min(st[left(p)].res, (LL)lazy[p]));
-    st[right(p)].setRes(min(st[right(p)].res, (LL)lazy[p]));
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
-}
-
-void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
-    if (i == l && j == r) {
-        st[p].setRes(min(st[p].res, (LL)val));
-        if (l != r) lazy[p] = val;
-        return;
-    }
-    pushDown(p, l, r);
-    int mid = (l + r) >> 1;
-    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-    else {
-        updateRangeLazy(left(p), l, mid, i, mid, val);
-        updateRangeLazy(right(p), mid + 1, r, mid + 1, j, val);
-    }
-    pushUp(p);
-}
-
-Node queryLazy(int p, int l, int r, int i, int j) {
+Node query(int p, int l, int r, int i, int j) {
     if (i == l && j == r) return st[p];
 
-    pushDown(p, l, r);
-
     int mid = (l + r) >> 1;
-    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
-    if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
+    if (j <= mid) return query(left(p), l, mid, i, j);
+    if (i > mid) return query(right(p), mid + 1, r, i, j);
 
     Node ret;
-    Node ln = queryLazy(left(p), l, mid, i, mid);
-    Node rn = queryLazy(right(p), mid + 1, r, mid+1, j);
-    ret.combine(ln, rn);
+    Node lNode = query(left(p), l, mid, i, mid);
+    Node rNode = query(right(p), mid+1, r, mid+1, j);
+    ret.combine(lNode, rNode);
     return ret;
+}
+
+void updateSingle(int p, int l, int r, int i, int val) {
+    if (l == r) {
+        st[p].setRes(val);
+        return;
+    }
+    int mid = (l + r) >> 1;
+    if (i <= mid) updateSingle(left(p), l, mid, i, val);
+    else updateSingle(right(p), mid+1, r, i, val);
+
+    st[p].combine(st[left(p)], st[right(p)]);
 }
 
 int main()
@@ -171,21 +151,18 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 1, 2, 3, 4, 5, 6, 7 };
+    int arr[7] = { 8, 7, 3, 9, 5, 1, 10 };
     N = 7;
     FOR(i, 0, N - 1) A[i] = arr[i];
 
-    // Don't forget lazy initialization
-    FOR(i, 0, 3*MAX - 1) lazy[i] = INT_MIN;
-
     build(1, 0, N-1);
 
-    Node node = queryLazy(1, 0, N-1, 0, N-1);
+    Node node = query(1, 0, N-1, 0, N-1);
     cout << node.res << endl;
 
-    updateRangeLazy(1, 0, N-1, 5, 6, -100);
+    updateSingle(1, 0, N-1, 5, 0);
 
-    node = queryLazy(1, 0, N-1, 0, N-1);
+    node = query(1, 0, N-1, 0, N-1);
     cout << node.res << endl;
 
     cl = clock() - cl;

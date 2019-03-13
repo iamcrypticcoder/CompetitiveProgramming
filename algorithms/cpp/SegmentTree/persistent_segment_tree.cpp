@@ -1,7 +1,8 @@
 /*
-	Solved By : Kazi Mahbubur Rahman (cryptic.coder)
-	Time :
-	Rank :
+    Problem Link: https://uva.onlinejudge.org/external/125/12532.pdf
+	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
+	Time : 0.150
+	Rank : 891
 	Complexity:
 */
 
@@ -86,81 +87,58 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 1000000
-
-struct Node {
-    LL res = LONG_LONG_MAX;
-    void setRes(LL val) {
-        res = val;
-    }
-    void combine(Node &a, Node &b) {
-        res = min(a.res, b.res);
-    }
-};
-
-int N;
-int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
+#define MAX 100000
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
-void build(int p, int l, int r) {
-    if (l == r) {
-        st[p].setRes(A[l]);
-        return;
+// Node for Segment Tree RSQ
+struct Node {
+    int val;
+    int ln, rn;
+    Node() {
+        ln = rn = -1;
     }
-    int mid = (l + r) >> 1;
-    build(left(p), l, mid);
-    build(right(p), mid+1, r);
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushUp(int p) {
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushDown(int p, int l, int r) {
-    if(lazy[p] == INT_MIN) return;
-
-    st[left(p)].setRes(min(st[left(p)].res, (LL)lazy[p]));
-    st[right(p)].setRes(min(st[right(p)].res, (LL)lazy[p]));
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
-}
-
-void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
-    if (i == l && j == r) {
-        st[p].setRes(min(st[p].res, (LL)val));
-        if (l != r) lazy[p] = val;
-        return;
+    void combine(Node &a, Node &b) {
+        val = a.val + b.val;
     }
-    pushDown(p, l, r);
-    int mid = (l + r) >> 1;
-    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-    else {
-        updateRangeLazy(left(p), l, mid, i, mid, val);
-        updateRangeLazy(right(p), mid + 1, r, mid + 1, j, val);
-    }
-    pushUp(p);
+};
+
+int N, Q;
+int A[MAX + 7];
+Node st[8 * MAX + 7];       // Segment Tree node pool
+int nodeNum = -1;
+
+int newLeaf(int val) {
+    Node node = st[++nodeNum];
+    node.val = val;
+    return nodeNum;
 }
 
-Node queryLazy(int p, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[p];
+int newParent(int ln, int rn) {
+    Node node = st[++nodeNum];
+    node.ln = ln;
+    node.rn = rn;
+    node.combine(st[ln], st[rn]);
+    return nodeNum;
+}
 
-    pushDown(p, l, r);
-
+int build(int l, int r) {
+    if (l == r) return newLeaf(A[l]);
     int mid = (l + r) >> 1;
-    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
-    if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
+    return newParent(build(l, mid), build(mid+1, r));
+}
 
-    Node ret;
-    Node ln = queryLazy(left(p), l, mid, i, mid);
-    Node rn = queryLazy(right(p), mid + 1, r, mid+1, j);
-    ret.combine(ln, rn);
-    return ret;
+int updateSingle(int p, int l, int r, int i, int val) {
+    if (l == r) return newLeaf(st[p].val + val);
+    int mid = (l + r) >> 1;
+    if (i <= mid) {
+        int ln = updateSingle(st[p].ln, l, mid, i, val);
+        return newParent(ln, st[p].rn);
+    } else {
+        int rn = updateSingle(st[p].rn, mid+1, rn, i, val);
+        return newParent(st[p].ln, rn);
+    }
 }
 
 int main()
@@ -171,22 +149,11 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 1, 2, 3, 4, 5, 6, 7 };
+    int arr[7] = { 8, 7, 3, 9, 5, 1, 10 };
     N = 7;
     FOR(i, 0, N - 1) A[i] = arr[i];
 
-    // Don't forget lazy initialization
-    FOR(i, 0, 3*MAX - 1) lazy[i] = INT_MIN;
-
-    build(1, 0, N-1);
-
-    Node node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
-
-    updateRangeLazy(1, 0, N-1, 5, 6, -100);
-
-    node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

@@ -88,80 +88,50 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 #define MAX 1000000
 
-struct Node {
-    LL res = LONG_LONG_MAX;
-    void setRes(LL val) {
-        res = val;
-    }
-    void combine(Node &a, Node &b) {
-        res = min(a.res, b.res);
-    }
-};
-
-int N;
-int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
-
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
+// Frequency of zero and kth zero
+struct Node {
+    VI v;
+    void createLeaf(int x) {
+        v.PB(x);
+    }
+    void combine(Node &a, Node &b) {
+        merge(a.v.begin(), a.v.end(), b.v.begin(), b.v.end(), back_inserter(v));
+    }
+};
+
+uint N;
+int A[MAX + 7];
+Node st[3*MAX + 7];
+
 void build(int p, int l, int r) {
     if (l == r) {
-        st[p].setRes(A[l]);
+        st[p].createLeaf(A[l]);
         return;
     }
     int mid = (l + r) >> 1;
     build(left(p), l, mid);
     build(right(p), mid+1, r);
-    st[p].combine(st[left(p)], st[right(p)]);
+    st[p].combine(st[left(l)], st[right(r)]);
 }
 
-void pushUp(int p) {
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushDown(int p, int l, int r) {
-    if(lazy[p] == INT_MIN) return;
-
-    st[left(p)].setRes(min(st[left(p)].res, (LL)lazy[p]));
-    st[right(p)].setRes(min(st[right(p)].res, (LL)lazy[p]));
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
-}
-
-void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
-    if (i == l && j == r) {
-        st[p].setRes(min(st[p].res, (LL)val));
-        if (l != r) lazy[p] = val;
-        return;
+// https://cp-algorithms.com/data_structures/segment_tree.html#toc-tgt-6
+// Find the smallest number greater or equal to a specified number.
+int querySmallest(int p, int l, int r, int i, int j, int x) {
+    if (i == l && r == l) {
+        VI::iterator pos = lower_bound(st[p].v.begin(), st[p].v.end(), x);
+        if (pos != st[p].v.end()) return *pos;
+        return INT_MAX;
     }
-    pushDown(p, l, r);
     int mid = (l + r) >> 1;
-    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-    else {
-        updateRangeLazy(left(p), l, mid, i, mid, val);
-        updateRangeLazy(right(p), mid + 1, r, mid + 1, j, val);
-    }
-    pushUp(p);
+    if (j <= mid) return querySmallest(left(p), l, mid, i, j, x);
+    else if (i > mid) return querySmallest(right(p), mid+1, r, i, j, x);
+
+    return min(querySmallest(left(p), l, mid, i, mid, x), querySmallest(right(p), mid+1, r, mid+1, j, x));
 }
 
-Node queryLazy(int p, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[p];
-
-    pushDown(p, l, r);
-
-    int mid = (l + r) >> 1;
-    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
-    if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
-
-    Node ret;
-    Node ln = queryLazy(left(p), l, mid, i, mid);
-    Node rn = queryLazy(right(p), mid + 1, r, mid+1, j);
-    ret.combine(ln, rn);
-    return ret;
-}
 
 int main()
 {
@@ -171,22 +141,13 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 1, 2, 3, 4, 5, 6, 7 };
-    N = 7;
-    FOR(i, 0, N - 1) A[i] = arr[i];
-
-    // Don't forget lazy initialization
-    FOR(i, 0, 3*MAX - 1) lazy[i] = INT_MIN;
+    int arr[8] = { 6, 5, 5, 1, 10, 11, 3, 8 };
+    N = 8;
+    FOR(i, 0, N-1) A[i] = arr[i];
 
     build(1, 0, N-1);
 
-    Node node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
-
-    updateRangeLazy(1, 0, N-1, 5, 6, -100);
-
-    node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    cout << querySmallest(1, 0, N-1, 2, 5, 6) << endl;
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

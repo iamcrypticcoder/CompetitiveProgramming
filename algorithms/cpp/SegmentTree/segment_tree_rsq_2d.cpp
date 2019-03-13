@@ -1,5 +1,7 @@
 /*
-	Solved By : Kazi Mahbubur Rahman (cryptic.coder)
+    Problem Link: https://codeforces.com/contest/339/problem/D
+	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
+    Status : AC
 	Time :
 	Rank :
 	Complexity:
@@ -86,110 +88,83 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 1000000
-
-struct Node {
-    LL res = LONG_LONG_MAX;
-    void setRes(LL val) {
-        res = val;
-    }
-    void combine(Node &a, Node &b) {
-        res = min(a.res, b.res);
-    }
-};
-
-int N;
-int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
+#define MAX 1000
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
-void build(int p, int l, int r) {
-    if (l == r) {
-        st[p].setRes(A[l]);
+
+uint N, M;
+int A[MAX+7][MAX+7];
+ULL st[3*MAX+7][3*MAX+7];
+
+void buildY(int px, int lx, int rx, int py, int ly, int ry) {
+    if (ly == ry) {
+        st[px][py] = lx == rx ? A[lx][ly] : st[left(px)][py] + st[right(px)][py];
         return;
     }
-    int mid = (l + r) >> 1;
-    build(left(p), l, mid);
-    build(right(p), mid+1, r);
-    st[p].combine(st[left(p)], st[right(p)]);
+    int mid = (ly + ry) >> 1;
+    buildY(px, lx, rx, left(py), ly, mid);
+    buildY(px, lx, rx, right(py), mid+1, ry);
+    st[px][py] = st[px][left(py)] + st[px][right(py)];
 }
 
-void pushUp(int p) {
-    st[p].combine(st[left(p)], st[right(p)]);
-}
-
-void pushDown(int p, int l, int r) {
-    if(lazy[p] == INT_MIN) return;
-
-    st[left(p)].setRes(min(st[left(p)].res, (LL)lazy[p]));
-    st[right(p)].setRes(min(st[right(p)].res, (LL)lazy[p]));
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
-}
-
-void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
-    if (i == l && j == r) {
-        st[p].setRes(min(st[p].res, (LL)val));
-        if (l != r) lazy[p] = val;
-        return;
+void buildX(int px, int lx, int rx) {
+    if (lx != rx) {
+        int mid = (lx + rx) >> 1;
+        buildX(left(px), lx, mid);
+        buildX(right(px), mid+1, rx);
     }
-    pushDown(p, l, r);
-    int mid = (l + r) >> 1;
-    if (j <= mid) updateRangeLazy(left(p), l, mid, i, j, val);
-    else if (i > mid) updateRangeLazy(right(p), mid + 1, r, i, j, val);
-    else {
-        updateRangeLazy(left(p), l, mid, i, mid, val);
-        updateRangeLazy(right(p), mid + 1, r, mid + 1, j, val);
-    }
-    pushUp(p);
+    buildY(px, lx, rx, 1, 0, M-1);
 }
 
-Node queryLazy(int p, int l, int r, int i, int j) {
-    if (i == l && j == r) return st[p];
+int querySumY(int px, int py, int ly, int ry, int k, int l) {
+    if (k == ly && l == ry) return st[px][py];
 
-    pushDown(p, l, r);
+    int mid = (ly + ry) >> 1;
+    if (l <= mid) return querySumY(px, left(py), ly, mid, k, l);
+    else if (k > mid) return querySumY(px, right(py), mid+1, ry, k, l);
 
-    int mid = (l + r) >> 1;
-    if (j <= mid) return queryLazy(left(p), l, mid, i, j);
-    if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
+    return querySumY(px, left(py), ly, mid, k, mid) + querySumY(px, right(py), mid+1, ry, mid+1, l);
+}
 
-    Node ret;
-    Node ln = queryLazy(left(p), l, mid, i, mid);
-    Node rn = queryLazy(right(p), mid + 1, r, mid+1, j);
-    ret.combine(ln, rn);
-    return ret;
+int querySumX(int px, int lx, int rx, int i, int j, int k, int l) {
+    if (i == lx && j == rx) return querySumY(px, 1, 0, M-1, k, l);
+    int mid = (lx + rx) >> 1;
+    if (j >= mid) querySumX(left(px), lx, mid, i, j, k, l);
+    else if (i > mid) querySumX(right(px), mid+1, rx, i, j, k, l);
+
+    return querySumX(left(px), lx, mid, i, mid, k, l) + querySumX(right(px), mid+1, rx, mid+1, j, k, l);
 }
 
 int main()
 {
-    //READ("input.txt");
+    READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 1, 2, 3, 4, 5, 6, 7 };
-    N = 7;
-    FOR(i, 0, N - 1) A[i] = arr[i];
+    cin >> N >> M;
+    FOR(i, 0, N-1) FOR(j, 0, M-1) cin >> A[i][j];
 
-    // Don't forget lazy initialization
-    FOR(i, 0, 3*MAX - 1) lazy[i] = INT_MIN;
+    buildX(1, 0, N-1);
 
-    build(1, 0, N-1);
-
-    Node node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
-
-    updateRangeLazy(1, 0, N-1, 5, 6, -100);
-
-    node = queryLazy(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    cout << querySumX(1, 0, N-1, 1, 2, 1, 2) << endl;
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+/**
+
+Input:
+10  5  7 15
+9   6 17  3
+0  13  1 19
+11  8  2 14
+
+
+ **/
