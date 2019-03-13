@@ -42,19 +42,19 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS 		1e-9
-#define SQR(x) 		((x)*(x))
-#define INF 		2000000000
-#define TO_DEG 		57.29577951
-#define PI 			2*acos(0.0)
+#define EPS             1e-9
+#define SQR(x)          ((x)*(x))
+#define INF             2000000000
+#define TO_DEG          57.29577951
+#define PI              2*acos(0.0)
 
-#define ALL_BITS					((1 << 31) - 1)
-#define NEG_BITS(mask)				(mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)			(mask & (1 << i))
-#define ON_BIT(mask, i)				(mask |= (1 << i))
-#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
+#define ALL_BITS                                ((1 << 31) - 1)
+#define NEG_BITS(mask)                          (mask ^= ALL_BITS)
+#define TEST_BIT(mask, i)                       (mask & (1 << i))
+#define ON_BIT(mask, i)                         (mask |= (1 << i))
+#define OFF_BIT(mask, i)                        (mask &= NEG_BITS(1 << i))
+#define IS_POWER_TWO(x)                         (x && !(x & (x-1)))
+#define OFF_RIGHTMOST_SET_BIT(x)                (x & (x-1))
 
 typedef long long LL;
 typedef unsigned long long ULL;
@@ -83,7 +83,10 @@ int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
 int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
 int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
 
-inline int src() { int ret; scanf("%d", &ret); return ret; }
+inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
+inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
+inline int srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
+inline int srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
 
 #define WHITE 0
 #define GRAY 1
@@ -97,7 +100,7 @@ int main()
 	//READ("input.txt");
 	//WRITE("output.txt");
 	int i, j, k;
-	int TC, tc;
+	uint TC, tc;
 	double cl = clock();
 
 	// Start your code here
