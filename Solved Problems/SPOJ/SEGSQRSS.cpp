@@ -164,11 +164,12 @@ void updateRangeSet(int p, int l, int r, int i, int j, int x) {
         return;
     }
 
+    pushDown(p, l, r);
+
     int mid = (l + r) >> 1;
     if (j <= mid) updateRangeSet(left(p), l, mid, i, j, x);
     else if (i > mid) updateRangeSet(right(p), mid + 1, r, i, j, x);
     else {
-        pushDown(p, l, r);
         updateRangeSet(left(p), l, mid, i, mid, x);
         updateRangeSet(right(p), mid + 1, r, mid + 1, j, x);
     }
@@ -185,11 +186,12 @@ void updateRangeAdd(int p, int l, int r, int i, int j, int x) {
         return;
     }
 
+    pushDown(p, l, r);
+
     int mid = (l + r) >> 1;
     if (j <= mid) updateRangeAdd(left(p), l, mid, i, j, x);
     else if (i > mid) updateRangeAdd(right(p), mid + 1, r, i, j, x);
     else {
-        pushDown(p, l, r);
         updateRangeAdd(left(p), l, mid, i, mid, x);
         updateRangeAdd(right(p), mid + 1, r, mid + 1, j, x);
     }
