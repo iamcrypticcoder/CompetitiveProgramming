@@ -133,6 +133,28 @@ void buildX(int px, int lx, int rx) {
     buildY(px, lx, rx, 1, 0, M-1);
 }
 
+void updateY(int px, int lx, int rx, int py, int ly, int ry, int i, int j, int v) {
+    if (ly == ry) {
+        st[px][py] = (lx == rx) ? v : st[left(px)][py] + st[right(px)][py];
+        return;
+    }
+    int mid = (ly + ry) >> 1;
+    if (j <= mid) updateY(px, lx, rx, left(py), ly, mid, i, j, v);
+    else updateY(px, lx, rx, right(py), mid+1, ry, i, j, v);
+    st[px][py] = st[px][left(py)] + st[px][right(py)];
+}
+
+void updateX(int px, int lx, int rx, int i, int j, int v) {
+    if (lx == rx) {
+        updateY(px, lx, rx, 1, 0, M-1, i, j, v);
+        return;
+    }
+    int mid = (lx + rx) >> 1;
+    if (i <= mid) updateX(left(px), lx, mid, i, j, v);
+    else updateX(right(px), mid+1, rx, i, j, v);
+    updateY(px, lx, rx, 1, 0, M-1, i, j, v);
+}
+
 int querySumY(int px, int py, int ly, int ry, int k, int l) {
     if (k == ly && l == ry) return st[px][py];
 
