@@ -1,10 +1,10 @@
 /*
-    Problem Link: https://codeforces.com/contest/339/problem/D
-	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-    Status : AC
-	Time :
-	Rank :
-	Complexity:
+    Problem Link:
+    Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
+    Status :
+    Time :
+    Rank :
+    Complexity:
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -82,7 +82,10 @@ int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
 int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
 int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2 };
 
-inline int src() { int ret; scanf("%d", &ret); return ret; }
+inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
+inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
+inline int srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
+inline int srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
 
 #define WHITE 0
 #define GRAY 1
@@ -93,14 +96,24 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
+struct Query {
+    uint x1, y1, x2, y2;
+    Query () {}
+    Query (uint x1, uint y1, uint x2, uint y2) {
+        this->x1 = x1;
+        this->y1 = y1;
+        this->x2 = x2;
+        this->y2 = y2;
+    }
+};
 
-uint N, M;
+uint N, M, Q;
 int A[MAX+7][MAX+7];
 ULL st[3*MAX+7][3*MAX+7];
 
 void buildY(int px, int lx, int rx, int py, int ly, int ry) {
     if (ly == ry) {
-        st[px][py] = lx == rx ? A[lx][ly] : st[left(px)][py] + st[right(px)][py];
+        st[px][py] = (lx == rx) ? A[lx][ly] : st[left(px)][py] + st[right(px)][py];
         return;
     }
     int mid = (ly + ry) >> 1;
@@ -110,11 +123,13 @@ void buildY(int px, int lx, int rx, int py, int ly, int ry) {
 }
 
 void buildX(int px, int lx, int rx) {
-    if (lx != rx) {
-        int mid = (lx + rx) >> 1;
-        buildX(left(px), lx, mid);
-        buildX(right(px), mid+1, rx);
+    if (lx == rx) {
+        buildY(px, lx, rx, 1, 0, M-1);
+        return;
     }
+    int mid = (lx + rx) >> 1;
+    buildX(left(px), lx, mid);
+    buildX(right(px), mid+1, rx);
     buildY(px, lx, rx, 1, 0, M-1);
 }
 
@@ -123,7 +138,7 @@ int querySumY(int px, int py, int ly, int ry, int k, int l) {
 
     int mid = (ly + ry) >> 1;
     if (l <= mid) return querySumY(px, left(py), ly, mid, k, l);
-    else if (k > mid) return querySumY(px, right(py), mid+1, ry, k, l);
+    if (k > mid) return querySumY(px, right(py), mid+1, ry, k, l);
 
     return querySumY(px, left(py), ly, mid, k, mid) + querySumY(px, right(py), mid+1, ry, mid+1, l);
 }
@@ -131,8 +146,8 @@ int querySumY(int px, int py, int ly, int ry, int k, int l) {
 int querySumX(int px, int lx, int rx, int i, int j, int k, int l) {
     if (i == lx && j == rx) return querySumY(px, 1, 0, M-1, k, l);
     int mid = (lx + rx) >> 1;
-    if (j >= mid) querySumX(left(px), lx, mid, i, j, k, l);
-    else if (i > mid) querySumX(right(px), mid+1, rx, i, j, k, l);
+    if (j <= mid) return querySumX(left(px), lx, mid, i, j, k, l);
+    if (i > mid) return querySumX(right(px), mid+1, rx, i, j, k, l);
 
     return querySumX(left(px), lx, mid, i, mid, k, l) + querySumX(right(px), mid+1, rx, mid+1, j, k, l);
 }
@@ -147,10 +162,14 @@ int main()
 
     cin >> N >> M;
     FOR(i, 0, N-1) FOR(j, 0, M-1) cin >> A[i][j];
-
     buildX(1, 0, N-1);
 
-    cout << querySumX(1, 0, N-1, 1, 2, 1, 2) << endl;
+    cin >> Q;
+    FOR(q, 0, Q) {
+        uint x1, y1, x2, y2;
+        scanf("%u %u %u %u", &x1, &y1, &x2, &y2);
+        cout << querySumX(1, 0, N-1, x1, x2, y1, y2) << endl;
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
@@ -159,12 +178,14 @@ int main()
 }
 
 /**
-
 Input:
-10  5  7 15
-9   6 17  3
-0  13  1 19
-11  8  2 14
-
-
+4 4
+1 2 3 4
+5 6 7 8
+9 0 1 2
+3 4 5 6
+3
+0 0 0 0
+0 0 1 1
+0 0 2 2
  **/
