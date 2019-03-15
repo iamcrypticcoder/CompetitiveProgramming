@@ -155,7 +155,7 @@ void updateX(int px, int lx, int rx, int i, int j, int v) {
     updateY(px, lx, rx, 1, 0, M-1, i, j, v);
 }
 
-int querySumY(int px, int py, int ly, int ry, int k, int l) {
+ULL querySumY(int px, int py, int ly, int ry, int k, int l) {
     if (k == ly && l == ry) return st[px][py];
 
     int mid = (ly + ry) >> 1;
@@ -165,7 +165,7 @@ int querySumY(int px, int py, int ly, int ry, int k, int l) {
     return querySumY(px, left(py), ly, mid, k, mid) + querySumY(px, right(py), mid+1, ry, mid+1, l);
 }
 
-int querySumX(int px, int lx, int rx, int i, int j, int k, int l) {
+ULL querySumX(int px, int lx, int rx, int i, int j, int k, int l) {
     if (i == lx && j == rx) return querySumY(px, 1, 0, M-1, k, l);
     int mid = (lx + rx) >> 1;
     if (j <= mid) return querySumX(left(px), lx, mid, i, j, k, l);
