@@ -2,7 +2,7 @@
         Problem Link : https://www.spoj.com/problems/HORRIBLE/
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : AC
-        Time :
+        Time : 0.07
         Rank :
         Complexity:
 */
@@ -139,10 +139,12 @@ int main()
                 int v = srcUInt();
                 update(bit1, p, v);
                 update(bit1, q+1, -v);
-                update(bit2, p, -v * (LL)(p-1));
-                update(bit2, q+1, v * (LL)q);
+                update(bit2, p, v * (LL)(p-1));
+                update(bit2, q+1, -v * (LL)q);
             } else {
-                LL ans = read(bit1, q) * q + read(bit2, q) - read(bit1, p-1) * (p-1) - read(bit2, p-1);
+                LL tmp1 = read(bit1, q) * q - read(bit2, q);
+                LL tmp2 = read(bit1, p-1) * (p-1) - read(bit2, p-1);
+                LL ans = tmp1 - tmp2;
                 printf("%lld\n", ans);
             }
         }
