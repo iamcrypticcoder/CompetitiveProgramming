@@ -1,5 +1,5 @@
 /*
-	Solved By : Kazi Mahbubur Rahman (cryptic.coder)
+	Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
 	Time :
 	Rank :
 	Complexity:
@@ -90,6 +90,11 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 
 struct Node {
     ULL sum = 0;
+    int lazy = INT_MIN;
+    void resetNode() {
+        sum = 0;
+        lazy = INT_MIN;
+    }
     void setSum(ULL val) {
         sum = val;
     }
@@ -100,8 +105,7 @@ struct Node {
 
 int N;
 int A[MAX];
-Node st[3 * MAX];
-int lazy[3 * MAX];
+Node st[3 * MAX + 7];
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
@@ -122,18 +126,18 @@ void pushUp(int p) {
 }
 
 void pushDown(int p, int l, int r) {
-    if (lazy[p] == 0) return;
+    if (st[p].lazy == INT_MIN) return;
     int mid = (l + r) >> 1;
-    st[left(p)].setSum((ULL)(mid-l+1) * lazy[p]);
-    st[right(p)].setSum((ULL)(r-mid+1) * lazy[p]);
-    lazy[left(p)] = lazy[right(p)] = lazy[p];
-    lazy[p] = 0;
+    st[left(p)].setSum((ULL)(mid-l+1) * st[p].lazy);
+    st[right(p)].setSum((ULL)(r-mid+1) * st[p].lazy);
+    st[p].lazy = st[p].lazy = st[p].lazy;
+    st[p].lazy = 0;
 }
 
 void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
     if (i == l && j == r) {
         st[p].setSum((ULL)(r - l + 1) * val);
-        if (l != r) lazy[p] = val;
+        if (l != r) st[p].lazy = val;
         return;
     }
     pushDown(p, l, r);
@@ -175,8 +179,7 @@ int main()
     N = 7;
     FOR(i, 0, N - 1) A[i] = arr[i];
 
-    memset(st, 0, sizeof(st));
-    memset(st, 0, sizeof(lazy));
+    FOR(i, 0, 3*N) st[i].resetNode();
 
     build(1, 0, N-1);
 
