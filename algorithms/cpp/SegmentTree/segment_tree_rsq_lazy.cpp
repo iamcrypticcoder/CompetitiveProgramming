@@ -131,7 +131,7 @@ void pushDown(int p, int l, int r) {
     st[left(p)].setSum((ULL)(mid-l+1) * st[p].lazy);
     st[right(p)].setSum((ULL)(r-mid+1) * st[p].lazy);
     st[p].lazy = st[p].lazy = st[p].lazy;
-    st[p].lazy = 0;
+    st[p].lazy = INT_MIN;
 }
 
 void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
