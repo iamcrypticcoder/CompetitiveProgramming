@@ -91,68 +91,72 @@ inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
 
 #define MAX_N 30000
 #define MAX_Q 200000
-#define MAX_AN 1000007
+#define MAX_AN 1000000
 
 struct Query {
-    uint index;
-    uint l, r;
-
-    Query() { }
-    Query(uint index, uint l, uint r) {
-        this->index = index;
+    int idx, l, r;
+    Query() {}
+    Query(int idx, int l, int r) {
+        this->idx = idx;
         this->l = l;
         this->r = r;
     }
 };
 
 uint N, Q;
-uint A[MAX_N + 7];
+uint A[MAX_N +7];
 Query queries[MAX_Q + 7];
 uint queryResult[MAX_Q + 7];
-int blockSize;
+uint curDistinctCount;
+uint freq[MAX_AN + 7];
+uint blockSize;
 
 bool comp(Query a, Query b) {
     if (a.l/blockSize == b.l/blockSize) return a.r < b.r;
     return a.l/blockSize < b.l/blockSize;
 }
 
+void add(int idx) {
+    freq[A[idx]]++;
+    if(freq[A[idx]] == 1) curDistinctCount++;
+}
+void remove(int idx) {
+    freq[A[idx]]--;
+    if(freq[A[idx]] == 0) curDistinctCount--;
+}
+uint getAnswer() {
+    return curDistinctCount;
+}
+
 void processQuery() {
     blockSize = (uint)sqrt(N);
+    sort (queries, queries + Q, comp);
+    memset(freq, 0, sizeof freq);
+    curDistinctCount = 0;
 
-    sort(queries, queries + Q, comp);
+    int curL = 0;
+    int curR = -1;
 
-    int moLeft = 0, moRight = 0;
-    uint counter = 0;
-    int freq[MAX_AN] = { 0 };
+    for (int i = 0; i < Q; i++) {
+        Query q = queries[i];
 
-    for (int i = 0; i < Q; ++i) {
-        int l = queries[i].l, r = queries[i].r;
-
-        while (moLeft < l) {
-            freq[A[moLeft]]--;
-            if (freq[A[moLeft]] == 0) counter--;
-            moLeft++;
+        while (curL > q.l) {
+            curL--;
+            add(curL);
         }
-
-        while (moLeft > l) {
-            freq[A[moLeft-1]]++;
-            if (freq[A[moLeft-1]] == 1) counter++;
-            moLeft--;
+        while (curR < q.r) {
+            curR++;
+            add(curR);
         }
-
-        while (moRight <= r) {
-            freq[A[moRight]]++;
-            if (freq[A[moRight]] == 1) counter++;
-            moRight++;
+        while (curL < q.l) {
+            remove(curL);
+            curL++;
         }
-
-        while (moRight > r+1) {
-            freq[A[moRight-1]]--;
-            if (freq[A[moRight-1]] == 0) counter--;
-            moRight--;
+        while (curR > q.r) {
+            remove(curR);
+            curR--;
         }
-
-        queryResult[queries[i].index] = counter;
+        queryResult[q.idx] = getAnswer();
     }
 }
 
@@ -169,9 +173,9 @@ int main()
     FOR(i, 0, N-1) A[i] = srcUInt();
     Q = srcUInt();
     FOR(i, 0, Q-1) {
-        queries[i].index = i;
-        queries[i].l = srcUInt() - 1;
-        queries[i].r = srcUInt() - 1;
+        queries[i].idx = i;
+        queries[i].l = srcInt() - 1;
+        queries[i].r = srcInt() - 1;
     }
 
     processQuery();
