@@ -120,24 +120,28 @@ int buildMatchingMachine(vector<string> keys) {
 
     while (!q.empty()) {
         int state = q.front();
+        q.pop();
+        
         for (int ch = 0; ch < MAXC; ++ch) {
-            // Find failure state of removed state
-            int failure = f[state];
+            if (g[state][ch] != -1) {
+                // Find failure state of removed state
+                int failure = f[state];
 
-            // Find the deepest node labeled by proper
-            // suffix of string from root to current
-            // state.
-            while (g[failure][ch] == -1)
-                failure = f[failure];
+                // Find the deepest node labeled by proper
+                // suffix of string from root to current
+                // state.
+                while (g[failure][ch] == -1)
+                    failure = f[failure];
 
-            failure = g[failure][ch];
-            f[g[state][ch]] = failure;
+                failure = g[failure][ch];
+                f[g[state][ch]] = failure;
 
-            // Merge output values
-            out[g[state][ch]] |= out[failure];
+                // Merge output values
+                out[g[state][ch]] |= out[failure];
 
-            // Insert the next level node (of Trie) in Queue
-            q.push(g[state][ch]);
+                // Insert the next level node (of Trie) in Queue
+                q.push(g[state][ch]);
+            }
         }
     }
 
@@ -154,6 +158,7 @@ int findNextState(int curState, char nextInput) {
 
 void searchWords(vector<string> keys, string text) {
     buildMatchingMachine(keys);
+
     int curState = 0;
     for (int i = 0; i < text.length(); ++i) {
         curState = findNextState(curState, text[i]);
