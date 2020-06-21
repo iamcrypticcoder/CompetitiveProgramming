@@ -19,6 +19,7 @@ public class BinarySearch_Demo {
     // AC Problem(s): UVA 957
     // Returns an index pointing to the first element in the sorted array which does not compare less than val.
     static int stlLowerBound(int items[], int x) {
+        if (items.length == 0) return 0;
         int l = 0, r = items.length - 1;
         while (l < r) {
             int mid = l + (r - l) / 2;
@@ -33,6 +34,7 @@ public class BinarySearch_Demo {
     // AC Problem(s): UVA 957
     // Returns an index pointing to the first element in the sorted array which compares greater than x.
     static int stlUpperBound(int items[], int x) {
+        if (items.length == 0) return 0;
         int l = 0, r = items.length - 1;
         while (l < r) {
             int mid = l + (r - l) / 2;
