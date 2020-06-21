@@ -17,8 +17,8 @@ public class BinarySearch_Demo {
     }
 
     // AC Problem(s): UVA 957
-    // Return  position of x to be inserted in most left side of the array
-    static int lowerBound(int items[], int x) {
+    // Returns an index pointing to the first element in the sorted array which does not compare less than val.
+    static int stlLowerBound(int items[], int x) {
         int l = 0, r = items.length - 1;
         while (l < r) {
             int mid = l + (r - l) / 2;
@@ -31,15 +31,15 @@ public class BinarySearch_Demo {
     }
 
     // AC Problem(s): UVA 957
-    // Return position of x to be inserted in most right side of the array
-    static int upperBound(int items[], int x) {
+    // Returns an index pointing to the first element in the sorted array which compares greater than x.
+    static int stlUpperBound(int items[], int x) {
         int l = 0, r = items.length - 1;
         while (l < r) {
             int mid = l + (r - l) / 2;
             if (x < items[mid]) r = mid;
             else l = mid + 1;
         }
-        if (x == items[l]) return l + 1;
+        if (x >= items[l]) return l + 1;
         return l;
     }
 
@@ -49,8 +49,19 @@ public class BinarySearch_Demo {
 
         System.out.println(binarySearch(items, 20));
 
-        System.out.println(lowerBound(items, 14));
-        System.out.println(upperBound(items, 14));
+        System.out.println(stlUpperBound(new int[] {2, 2, 4, 4}, 0));
+        System.out.println(stlUpperBound(new int[] {2, 2, 4, 4}, 2));
+        System.out.println(stlUpperBound(new int[] {2, 2, 4, 4}, 3));
+        System.out.println(stlUpperBound(new int[] {2, 2, 4, 4}, 4));
+        System.out.println(stlUpperBound(new int[] {2, 2, 4, 4}, 5));
+        System.out.println(stlUpperBound(new int[] {2, 2, 2, 2}, 3));
+
+        System.out.println(stlLowerBound(new int[] {2, 2, 4, 4}, 0));
+        System.out.println(stlLowerBound(new int[] {2, 2, 4, 4}, 2));
+        System.out.println(stlLowerBound(new int[] {2, 2, 4, 4}, 3));
+        System.out.println(stlLowerBound(new int[] {2, 2, 4, 4}, 4));
+        System.out.println(stlLowerBound(new int[] {2, 2, 4, 4}, 5));
+        System.out.println(stlLowerBound(new int[] {2, 2, 2, 2}, 3));
 
     }
 }
