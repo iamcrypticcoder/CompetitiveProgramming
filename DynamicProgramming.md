@@ -279,3 +279,128 @@ static int bottomUpLis() {
     return lisLen;
 }
 ```
+
+### 4. Longest Common Subsequence (LCS)
+
+Given 2 strings X and Y find longest common subsequence between them. Example:
+
+```
+X = "AGGTAB"
+Y = "GXTXAYB"
+
+LCS = "GTAB"
+```
+
+Let length of string `X` is `m` and length of `Y` is `n`. Let `LCS(X[0..m-1], Y[0..n-1])` be the length of LCS of given string X and Y. Then recursive formula for `LCS(X[0..m-1], Y[0..n-1])` will be:
+
+```
+LCS(X[0..m-1], Y[0..n-1]) = 1 + LCS(X[1..m-1], Y[1..n-1])                                  if X[0] == Y[0]
+                          = max { LCS(X[0..m-1], Y[1..n-1]), LCS(X[1..m-1], Y[0..n-1]) }   if X[0] != Y[0]
+
+Example:    X = "AGGTAB"    Y = "GXTXAYB"
+
+Here, X[0] != Y[0]. So
+
+LCS("AGGTAB", "GXTXAYB") = max { LCS("GGTAB", "GXTXAYB"), LCS("AGGTAB", "XTXAYB") } 
+```
+
+To build LCS string we have to keep indexes where character matched between two strings. To do this 2D `track` table is maintained ususally. Track table for example strings are following:
+
+|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|---|---|---|---|---|---|---|---|
+| 0 |   | G | X | T | X | A | Y | B |
+| 1 | A |   |   |   |   |   |   |   |
+| 2 | G |   |   |   |   |   |   |   |
+| 3 | G | 1 | 3 |   |   |   |   |   |
+| 4 | T |   |   | 1 | 3 |   |   |   |
+| 5 | A |   |   |   |   | 1 | 3 |   |
+| 6 | B |   |   |   |   |   |   | 1 |
+
+
+Top-Down and Bottom-Up Solution:
+
+```java
+public class LCS {
+    public static void main(String[] args) {
+        System.out.println(findLCS("AGGTAB", "GXTXAYB"));
+        System.out.println(findLCS("", ""));
+        System.out.println(findLCS("A", "A"));
+        System.out.println(findLCS("AB", "BA"));
+    }
+
+    static String s1, s2;
+    static int[][] c;       // c[] is used to calculate the length.
+    static int[][] track;   // b[] is used to trace the LCS. '3' denotes left, '2' denotes up, '1' denotes upper-left
+
+    static String findLCS(String str1, String str2) {
+        s1 = str1;
+        s2 = str2;
+        int m = s1.length(), n = s2.length();
+
+        c = new int[m+1][n+1];
+        track = new int[m+1][n+1];
+        for (int[] row : c) Arrays.fill(row, -1);
+        for (int[] row : track) Arrays.fill(row, -1);
+
+        //topDownLCS(m, n);
+        bottomUpLCS(m, n);
+        StringBuilder sb = new StringBuilder();
+        makeLCSString(m, n, sb);
+        return sb.toString();
+    }
+
+    static void makeLCSString(int m, int n, StringBuilder sb) {
+        if (m == 0 || n == 0) return;
+
+        if (track[m][n] == 1) {
+            makeLCSString(m-1, n-1, sb);
+            sb.append(s1.charAt(m-1));
+        } else if (track[m][n] == 2) {
+            makeLCSString(m-1, n, sb);
+        } else {
+            makeLCSString(m, n-1, sb);
+        }
+    }
+
+    static int topDownLCS(int m, int n) {
+        if(c[m][n] != -1) return c[m][n];
+
+        if(m == 0 || n == 0) return (c[m][n] = 0);
+
+        if(s1.charAt(m-1) == s2.charAt(n-1)) {
+            track[m][n] = 1;
+            return c[m][n] = 1 + topDownLCS(m-1, n-1);
+        }
+
+        int maxVal = Math.max(topDownLCS(m-1, n), topDownLCS(m, n-1));
+        if(maxVal == c[m-1][n]) track[m][n] = 2;
+        else track[m][n] = 3;
+
+        return (c[m][n] = maxVal);
+    }
+
+    static int bottomUpLCS(int m, int n) {
+        for (int i = 0; i <= m; i++) c[i][0] = 0;
+        for (int i = 0; i <= n; i++) c[0][i] = 0;
+
+        for (int i = 1; i <= m; i++) for (int j = 1; j <= n; j++) {
+            if(s1.charAt(i-1) == s2.charAt(j-1)) {
+                c[i][j] = c[i-1][j-1] + 1;
+                track[i][j] = 1;                    // From upper-left
+            } else if(c[i-1][j] >= c[i][j-1]) {
+                c[i][j] = c[i-1][j];
+                track[i][j] = 2;                    // From north/up
+            } else {
+                c[i][j] = c[i][j-1];
+                track[i][j] = 3;                    // From west/left
+            }
+        }
+        
+        return c[m][n];
+    }
+}
+```
+
+
+
+
