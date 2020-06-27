@@ -1,6 +1,6 @@
 # Dynamic Programming Problems
 
-### 1: Maximum Apples
+### 1. Maximum Apples
 
 Given a 2D array of dimension `(m, n)` where each element indicates number of apples find a path from position `(0, 0)` to `(m-1, n-1)` so that maximum number of apples can be collected. From a position valid moves are to right, down and right-down direction. Example:
 
@@ -14,7 +14,8 @@ Path is: 1
          50 10 1
 ```
 
-Let `maxApple(i, j)` be maximum number of apples collected from position `(0, 0)` to `(i, j)`. 
+Let `maxApple(i, j)` be maximum number of apples collected from position `(0, 0)` to `(i, j)`.
+
 The recursive formula for `maxApple(i, j)`:
 
 ```
