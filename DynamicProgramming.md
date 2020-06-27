@@ -1,6 +1,63 @@
 # Dynamic Programming Problems
 
-### 1. Maximum Subarray 1D
+### 1: Maximum Apples
+
+Given a 2D array of dimension `(m, n)` where each element indicates number of apples find a path from position `(0, 0)` to `(m-1, n-1)` so that maximum number of apples can be collected. From a position valid moves are to right, down and right-down direction. Example:
+
+```
+1    5  1
+2    2  3
+50  10  1
+
+Path is: 1
+         2
+         50 10 1
+```
+
+Let `maxApple(i, j)` be maximum number of apples collected from position `(0, 0)` to `(i, j)`. The recursive formula for `maxApple(i, j)`:
+
+```
+maxApple(i, j) = max{maxApple(i-1, j), maxApple(i, j-1), maxApple(i-i, j-1)} + apples[i][j]
+```
+
+Top-Down Solution:
+
+```java
+public class MaximumApple {
+
+    public static void main(String[] args) {
+        apples = new int[][] {
+                {1, 5, 1},
+                {2, 5, 3},
+                {50, 10, 1}
+        };
+        m = apples.length;
+        n = apples[0].length;
+
+        memo = new int[m][n];
+        for (int[] arr : memo) Arrays.fill(arr, -1);
+
+        System.out.println(maxApples(m-1, n-1));
+    }
+
+    static int m, n;
+    static int[][] apples;
+    static int[][] memo;
+
+    static int maxApples(int i, int j) {
+        if (i < 0 || j < 0) return 0;
+        if (memo[i][j] != -1) return memo[i][j];
+        if (i == 0 && j == 0) return (memo[i][j] = apples[i][j]);
+
+        memo[i][j] = apples[i][j];
+        memo[i][j] += Math.max(Math.max(maxApples(i-1, j), maxApples(i, j-1)), maxApples(i-1, j-1));
+
+        return memo[i][j];
+    }
+}
+```
+
+### 2. Maximum Subarray 1D
 
 Given a 1D array, find subarray with maximum sum. Example:
 
