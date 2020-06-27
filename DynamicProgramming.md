@@ -14,7 +14,8 @@ Path is: 1
          50 10 1
 ```
 
-Let `maxApple(i, j)` be maximum number of apples collected from position `(0, 0)` to `(i, j)`. The recursive formula for `maxApple(i, j)`:
+Let `maxApple(i, j)` be maximum number of apples collected from position `(0, 0)` to `(i, j)`. 
+The recursive formula for `maxApple(i, j)`:
 
 ```
 maxApple(i, j) = max{maxApple(i-1, j), maxApple(i, j-1), maxApple(i-i, j-1)} + apples[i][j]
