@@ -401,6 +401,102 @@ public class LCS {
 }
 ```
 
+### 5. Coin Change
 
+Given a set `S` of `m` coins with infinite supply and a given a amount `n` find how many ways it is possible to make `n` using these coins. Example:
+
+```
+S = { 1, 2, 3 }, m = 3
+n = 4
+
+Answer: 4
+Solutions: (1, 1, 1, 1), (1, 1, 2), (2, 2), (1, 3)
+```
+
+
+Let `C(S, n, m)` be the answer for `n` with first `m` coins. Then Then recursive formula for `C(S, n, m)`:
+
+```
+C(S, n, m) = C(S, n, m-1) + C(S, n-S[m], m)           // Count by not taking mth coin + Count by taking mth coin
+
+Base Cases:
+C(S, 0, *) = 1                                        // If n == 0, then we are successful to make n using the coins, so answer is 1
+C(S, -val, *) = 1                                     // If n < 0, then unable to make n through this path, so answer is 0
+C(S, *, 0) = 0                                        // No more coins. so answer is 0
+```
+
+Bottom up table will look like following when S = {1, 2, 3}, m = 3 and n = 4
+
+|   | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| 0 | 1 | 1 | 1 | 1 |
+| 1 | 0 | 1 | 1 | 1 |
+| 2 | 0 | 1 | 2 | 2 |
+| 3 | 0 | 1 | 2 | 3 |
+| 4 | 0 | 1 | 3 | 4 |
+
+Top-Down and Bottom-Up Solution:
+
+```java
+public class CoinChange {
+
+    public static void main(String[] args) {
+        n = 10;
+        coins = new int[] {2, 3, 5, 6};
+        m = coins.length;
+        memo = new int[n+1][m+1];
+        for (int[] arr : memo) Arrays.fill(arr, -1);
+
+        System.out.println(topDownCC(n, coins.length));
+        System.out.println(bottomUpCC(n, coins.length));
+        System.out.println(bottomUpCC_2(n, coins.length));
+    }
+
+    static int[] coins;
+    static int n, m;
+    static int[][] memo;
+
+    static int topDownCC(int n, int m) {
+        if (n == 0) return memo[n][m] = 1;
+        if (n < 0) return 0;
+        if (m == 0) return 0;
+
+        if (memo[n][m] != -1) return memo[n][m];
+
+        memo[n][m] = topDownCC(n, m-1) + topDownCC(n-coins[m-1], m);
+
+        return memo[n][m];
+    }
+    
+    static int bottomUpCC(int n, int m) {
+        int[][] table = new int[n+1][m+1];
+
+        for (int i = 0; i < m; i++) 
+            table[0][i] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                int notTake = table[i][j-1];
+                int take = (i - coins[j-1] >= 0) ? table[i - coins[j-1]][j] : 0;
+                table[i][j] = notTake + take;
+            }
+        }
+        return table[n][m];
+    }
+
+    static int bottomUpCC_2(int n, int m) {
+        int[] nways = new int[n+1];
+        Arrays.fill(nways, 0);
+        nways[0] = 1;
+        
+        for (int i = 0; i < m; i++) {
+            for (int j = coins[i]; j <= n; j++) {
+                nways[j] += nways[j - coins[i]];
+            }
+        }
+        return nways[n];
+    }
+}
+```
 
 
