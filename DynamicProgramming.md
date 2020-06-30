@@ -558,4 +558,37 @@ public class CoinChange {
 }
 ```
 
+### 6. Pascal Triangle
 
+```
+nck(n, k) = nck(n-1, k) + nck(n-1, k-1)
+```
+
+```java
+public class BinomialCoefficient {
+
+    public static void main(String[] args) {
+        pascalTriangle();
+
+        for (int n = 0; n < 21; n++) {
+            for (int k = 0; k <= n; k++)
+                System.out.print(nck[n][k] + " ");
+            System.out.println();
+        }
+    }
+
+    static int MAX_N = 1001;
+    static int MAX_K = 1001;
+    static int[][] nck;
+
+    static void pascalTriangle() {
+        nck = new int[MAX_N][MAX_K];
+        nck[0][0] = 0;
+        for (int n = 0; n < MAX_N; n++) {
+            nck[n][0] = 1;
+            for (int k = 1; k <= n; k++)
+                nck[n][k] = nck[n-1][k] + nck[n-1][k-1];
+        }
+    }
+}
+```
