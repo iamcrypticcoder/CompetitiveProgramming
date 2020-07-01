@@ -363,6 +363,19 @@ Here, X[0] != Y[0]. So
 LCS("AGGTAB", "GXTXAYB") = max { LCS("GGTAB", "GXTXAYB"), LCS("AGGTAB", "XTXAYB") } 
 ```
 
+The `C` table will look like:
+
+|   |   |   | G | X | T | X | A | Y | B |
+|---|---|---|---|---|---|---|---|---|---|
+|   |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|   | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| A | 1 | 0 | 0 | 0 | 0 | 0 | 1 | 0 | 0 |
+| G | 2 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| G | 3 | 0 | 1 | 1 | 1 | 1 | 1 | 1 | 1 |
+| T | 4 | 0 | 1 | 1 | 2 | 2 | 2 | 2 | 2 |
+| A | 5 | 0 | 1 | 1 | 2 | 2 | 3 | 3 | 3 |
+| B | 6 | 0 | 1 | 1 | 2 | 2 | 3 | 3 | 4 |
+
 To build LCS string we have to keep indexes where character matched between two strings. To do this 2D `track` table is maintained ususally. Track table for example strings are following:
 
 |   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
