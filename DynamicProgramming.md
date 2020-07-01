@@ -415,7 +415,8 @@ public class LCS {
         for (int[] row : track) Arrays.fill(row, -1);
 
         //topDownLCS(m, n);
-        bottomUpLCS(m, n);
+        //bottomUpLCS(m, n);
+        bottomUp_Memory_Optimized(m, n);
         StringBuilder sb = new StringBuilder();
         makeLCSString(m, n, sb);
         return sb.toString();
@@ -469,6 +470,29 @@ public class LCS {
         }
         
         return c[m][n];
+    }
+    
+    static int bottomUp_Memory_Optimized(int m, int n) {
+        int[][] c = new int[2][n+1];
+
+        for (int i = 1; i <= m; i++) {
+            int r = (i % 2);
+            int prevR = (r == 0 ? 1 : 0);
+            for (int j = 1; j <= n; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    c[r][j] = c[prevR][j - 1] + 1;
+                    track[i][j] = 1;                    // From upper-left
+                } else if (c[prevR][j] >= c[r][j - 1]) {
+                    c[r][j] = c[prevR][j];
+                    track[i][j] = 2;                    // From north/up
+                } else {
+                    c[r][j] = c[r][j - 1];
+                    track[i][j] = 3;                    // From west/left
+                }
+            }
+        }
+
+        return c[m % 2][n];
     }
 }
 ```
