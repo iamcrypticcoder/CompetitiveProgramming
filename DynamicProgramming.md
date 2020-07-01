@@ -629,3 +629,68 @@ public class BinomialCoefficient {
     }
 }
 ```
+
+### 7. Dice Throw
+
+Given `n` dice with `m` faces, how many ways number 'x' can be made where `x` is sum of all values on each face when all the dice are thrown.
+
+First lets see for 2 dice with usual number of 6 faces.
+
+|   | 1 | 2 | 3 | 4  | 5  | 6  |
+|---|---|---|---|----|----|----|
+| 1 | 2 | 3 | 4 | 5  | 6  | 7  |
+| 2 | 3 | 4 | 5 | 6  | 7  | 8  |
+| 3 | 4 | 5 | 6 | 7  | 8  | 9  |
+| 4 | 5 | 6 | 7 | 8  | 9  | 10 |
+| 5 | 6 | 7 | 8 | 9  | 10 | 11 |
+| 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+
+After a few thoughts, we can come up with following recursive formula:
+
+
+```
+count(m, n, x) = count(m, n-1, x - i)   where 1 <= i <= m
+               = 0                      if x < n                         // x is very low
+               = 0                      if x > (n * m)                   // x is very high
+               = 0                      if x == 0 || n == 0
+               = 1                      if n == 1 && 0 < x <= m
+```
+
+Code:
+
+```java
+public class DiceThrow {
+
+    public static void main(String[] args) {
+        System.out.println(findSolution(4, 2, 1));
+        System.out.println(findSolution(2, 2, 3));
+        System.out.println(findSolution(6, 3, 8));
+        System.out.println(findSolution(4, 2, 5));
+        System.out.println(findSolution(4, 3, 5));
+    }
+
+    static long[][] dp;
+
+    static long findSolution(int m, int n, int x) {
+        dp = new long[x+1][n+1];
+        for (long[] row : dp) Arrays.fill(row, -1);
+
+        return count(m, n, x);
+    }
+
+    static long count(int m, int n, int x) {
+        if (dp[x][n] != -1) return dp[x][n];
+        if (x < n) return (dp[x][n] = 0);           // x is very low
+        if (x > (n*m)) return (dp[x][n] = 0);       // x is very high
+        if (x == 0 || n == 0) return (dp[x][n] = 0);
+        if (n == 1) return (dp[x][n] = 1);
+
+        long ret = 0;
+        for (int i = 1; i <= m; i++) {
+            if (x - i > 0) ret += count(m, n-1, x - i);
+        }
+
+        return (dp[x][n] = ret);
+    }
+}
+```
