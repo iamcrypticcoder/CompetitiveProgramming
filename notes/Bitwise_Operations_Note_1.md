@@ -316,10 +316,10 @@ public static int bitCount(int n) {
 
 ### 5. XOR of integers from 0 to N
 
-Given an integer N, compute XOR value of integers from 0 to N. Example:
+Given an integer `N`, compute XOR value of integers from `0` to `N`. Example:
 
+```
 Input: N = 5
-
 Output: 1
 
 000
@@ -330,6 +330,7 @@ Output: 1
 101
 ----
 001 = 1
+```
 
 **Solution:**
 
