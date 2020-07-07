@@ -301,7 +301,7 @@ public static int leftmostBit(int n) {
 
 public static int bitCount(int n) {
     int b = leftmostBit(n);
-    if ((1 << (b+1)) == n) return (b+1) * (1 << b);
+    if (((1 << (b+1)) - 1) == n) return (b+1) * (1 << b);
 
     int ret = 0;
     while(n > 1) {
