@@ -478,18 +478,22 @@ Integers
 
 First of all we must know below property of XOR:
 If a ^ b = c then a = b ^ c and a ^ c = b
-Suppose at bit position 4, we want set bit = 10000. It's only possible when there is a pair with different bit at position 4. To check we have to traverse all integers and do check like following:
+
+Suppose at bit position 4, we want set bit = 10000. 
+It's only possible when there is a pair with different bit at position 4.
+To check we have to traverse all integers and do check like following:
 DesiredResult = 10000
 If for any A[i], 
 DesiredResult ^ A[i] = X which is also available in array.
 Then we can confirm set bit at position 4.
 ** But how to know X is available in array. Answer if Set or HashMap
 
-We have to repeat this process until bit position 0. While doing process for bit position 4 other bits in position 3 to 0 will create problem. So before doing this process we have to modify each integer using a mask.
+We have to repeat this process until bit position 0. While doing process for bit position 4 other bits in position 3 to 0 will create problem. 
+So before doing this process we have to modify each integer using a mask.
 For position 4, mask = 10000
 For position 3, mask = 11000
 ...
-For position 9, mask = 11111
+For position 0, mask = 11111
 
 ====================================================================
 
@@ -543,7 +547,7 @@ DesiredResult = Result | (1 << 2) = 11100
 DesiredResult ^ 00000 = 11100
 DesiredResult ^ 01000 = 10100
 DesiredResult ^ 00100 = 11000 <- which is available in array. stop!
-Result = DesiredResult = 11100
+Result = DesiredResult = 11100 
 
 For position 1,
 Mask = 11110
