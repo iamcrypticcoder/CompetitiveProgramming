@@ -111,6 +111,12 @@ public static int hammingDistance(int x, int y) {
 
 ## BASIC PROBLEMS:
 
+
+### Table of Content:
+
+
+
+
 ### 1. Printing Subsets: 
 Given a set of integers print all subsets. Example:
 
@@ -355,7 +361,14 @@ IF N % 4 == 2, result = N+1
 IF N % 4 == 3, result = 0
 ```
 
-### 6. Maximum AND value pair in an array
+### 6. Minimum AND value pair in an array
+
+Given an array of integers find minimum AND value pair.
+
+**Hint:** Trie
+
+
+### 7. Maximum AND value pair in an array
 
 Given an array of integers find maximum AND value pair. Example:
 
@@ -443,13 +456,24 @@ public static int maxAndPair(int nums[]) {
 }
 ```
 
-### 7. Minimum AND value pair in an array
+### 8. Minimum OR value pair in an array:
 
-Given an array of integers find minimum AND value pair.
+**Solution:** Find minimum and second minimum. Their OR value is the result.
 
-Hint: Trie
 
-### 8. Maximum XOR value pair in an array:
+### 9. Maximum OR value pair in an array:
+
+**Solution:** Find maximum and second maximum. Their OR value is the result.
+
+
+### 8. Minimum XOR value pair in an array:
+
+Given an array of integers find minimum XOR value pair.
+
+**Hint:** Trie
+
+
+### 9. Maximum XOR value pair in an array:
 
 Given an array of integers find maximum XOR value pair. Example:
 
