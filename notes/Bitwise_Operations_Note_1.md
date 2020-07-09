@@ -1,5 +1,17 @@
 ## BASIC OPERATIONS:
 
+1. ALL_BITS
+2. NEG_BITS
+3. TEST_BIT
+4. ON_BIT
+5. OFF_BIT
+6. TOGGLE_BIT
+7. IS_POWER_TWO
+8. OFF_LOWEST_SET_BIT
+9. LOWEST_SET_BIT_POSITION
+10. DIVIDE_BY_POWER_TWO
+11. BIT COUNT IN RANGE
+12. HAMMING DISTANCE
 
 #### ALL_BITS: 
 Getting an integer with all bits set. Following expression will provide us an integer of 31 bits where all bits set.
@@ -108,13 +120,19 @@ public static int hammingDistance(int x, int y) {
 }
 ```
 
-
 ## BASIC PROBLEMS:
 
-
-### Table of Content:
-
-
+1. Printing Subsets
+2. Unique Integer Search
+3. Unique Integer Search General
+4. Counting Set Bits from 0 to N
+5. XOR of integers from 0 to N
+6. Minimum AND Value Pair in an Array
+7. Maximum AND Value Pair in an Array
+8. Minimum OR Value Pair in an Array
+9. Maximum OR Value Pair in an Array
+10. Minimum XOR Value Pair in an Array
+11. Maximum XOR Value Pair in an Array
 
 
 ### 1. Printing Subsets: 
@@ -220,7 +238,7 @@ Count    = 1 6 4 6
 Count%3  = 1 0 1 0 = 10
 ```
 
-### 4. Counting set bits from 0 to N:
+### 4. Counting Set Bits from 0 to N:
 Given an integer N, count all set bits of each integer starting from 0 up to N. Example:
 
 ```
@@ -320,7 +338,7 @@ public static int bitCount(int n) {
 }
 ```
 
-### 5. XOR of integers from 0 to N
+### 5. XOR of Integers from 0 to N
 
 Given an integer `N`, compute XOR value of integers from `0` to `N`. Example:
 
@@ -361,14 +379,14 @@ IF N % 4 == 2, result = N+1
 IF N % 4 == 3, result = 0
 ```
 
-### 6. Minimum AND value pair in an array
+### 6. Minimum AND Value Pair in an Array
 
 Given an array of integers find minimum AND value pair.
 
 **Hint:** Trie
 
 
-### 7. Maximum AND value pair in an array
+### 7. Maximum AND Value Pair in an Array
 
 Given an array of integers find maximum AND value pair. Example:
 
@@ -456,24 +474,24 @@ public static int maxAndPair(int nums[]) {
 }
 ```
 
-### 8. Minimum OR value pair in an array:
+### 8. Minimum OR Value Pair in an Array:
 
 **Solution:** Find minimum and second minimum. Their OR value is the result.
 
 
-### 9. Maximum OR value pair in an array:
+### 9. Maximum OR Value Pair in an Array:
 
 **Solution:** Find maximum and second maximum. Their OR value is the result.
 
 
-### 8. Minimum XOR value pair in an array:
+### 8. Minimum XOR Value Pair in an Array:
 
 Given an array of integers find minimum XOR value pair.
 
 **Hint:** Trie
 
 
-### 9. Maximum XOR value pair in an array:
+### 9. Maximum XOR Value Pair in an Array:
 
 Given an array of integers find maximum XOR value pair. Example:
 
