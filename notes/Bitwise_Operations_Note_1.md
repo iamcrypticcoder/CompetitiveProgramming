@@ -484,14 +484,14 @@ public static int maxAndPair(int nums[]) {
 **Solution:** Find maximum and second maximum. Their OR value is the result.
 
 
-### 8. Minimum XOR Value Pair in an Array:
+### 10. Minimum XOR Value Pair in an Array:
 
 Given an array of integers find minimum XOR value pair.
 
 **Hint:** Trie
 
 
-### 9. Maximum XOR Value Pair in an Array:
+### 11. Maximum XOR Value Pair in an Array:
 
 Given an array of integers find maximum XOR value pair. Example:
 
