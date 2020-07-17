@@ -6,11 +6,13 @@ public class BinaryTreeTraversal_Demo {
 
     public static void main(String[] args) {
         BinaryTree binaryTree = new BinaryTree();
-        Node root = new Node(10);
-        root.left = new Node(20);
-        root.right = new Node(30);
-        root.left.left = new Node(100);
-        root.left.right = new Node(200);
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
         binaryTree.setRoot(root);
 
         System.out.print("Preorder Recursive: ");
@@ -24,23 +26,31 @@ public class BinaryTreeTraversal_Demo {
         System.out.println(binaryTree.preOrderIterative().toString());
         System.out.print("Inorder Iterative: ");
         System.out.println(binaryTree.inOrderIterative().toString());
-        System.out.print("Postorder Iterative: ");
-        System.out.println(binaryTree.postOrderIterative().toString());
+        System.out.print("Postorder Iterative 1: ");
+        System.out.println(binaryTree.postOrderIterative1().toString());
+        System.out.print("Postorder Iterative 2: ");
+        System.out.println(binaryTree.postOrderIterative2().toString());
 
         // Construct binary tree
 
-        int[] preOrder = new int[] { 10, 20, 40, 50, 30, 60, 70 };
-        int[] inOrder = new int[] { 40, 20, 50, 10, 60, 30, 70 };
-        int[] postOrder = new int[] { 40, 50, 20, 60, 70, 30, 10 };
+        int[] preOrder = new int[] { 1, 2, 4, 5, 3, 6, 7 };
+        int[] inOrder = new int[] { 4, 2, 5, 1, 6, 3, 7 };
+        int[] postOrder = new int[] { 4, 5, 2, 6, 7, 3, 1 };
 
         BinaryTree builtTree = BinaryTree.buildTreeFromPreOrderInOrder(preOrder, inOrder);
-        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.print("Pre Order : ");
         System.out.println(builtTree.preOrderRecursive().toString());
+        System.out.print("In Order : ");
+        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.print("Post Order : ");
         System.out.println(builtTree.postOrderRecursive().toString());
 
         builtTree = BinaryTree.buildTreeFromPostOrderInOrder(postOrder, inOrder);
-        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.print("Pre Order : ");
         System.out.println(builtTree.preOrderRecursive().toString());
+        System.out.print("In Order : ");
+        System.out.println(builtTree.inOrderRecursive().toString());
+        System.out.print("Post Order : ");
         System.out.println(builtTree.postOrderRecursive().toString());
     }
 
@@ -119,9 +129,49 @@ public class BinaryTreeTraversal_Demo {
             return list;
         }
 
-        // TODO: Need to implement
-        public List<Integer> postOrderIterative() {
-            return null;
+        // Using two stacks
+        public List<Integer> postOrderIterative1() {
+            List<Integer> ret = new ArrayList<>();
+            Stack<Node> s1 = new Stack<>();
+            Stack<Node> s2 = new Stack<>();
+
+            s1.push(root);
+            while (!s1.isEmpty()) {
+                Node node = s1.pop();
+                s2.push(node);
+                if (null != node.left) s1.push(node.left);
+                if (null != node.right) s1.push(node.right);
+            }
+
+            while (!s2.isEmpty())
+                ret.add(s2.pop().key);
+
+            return ret;
+        }
+
+        // Using only one stack
+        // https://www.geeksforgeeks.org/iterative-postorder-traversal-set-3/?ref=rp
+        public List<Integer> postOrderIterative2() {
+            List<Integer> ret = new ArrayList<>();
+            Stack<Pair> stack = new Stack<>();
+
+            stack.push(new Pair(root, 0));
+
+            while (!stack.isEmpty()) {
+                Pair p = stack.pop();
+                if (p.code == 2) {
+                    ret.add(p.node.key);
+                    continue;
+                }
+                stack.push(new Pair(p.node, p.code+1));
+                if (p.code == 0) {
+                    if (null != p.node.left) stack.push(new Pair(p.node.left, 0));
+                } else {
+                    if (null != p.node.right) stack.push(new Pair(p.node.right, 0));
+                }
+            }
+
+            return ret;
         }
 
         public List<Integer> inOrderRecursive() {
@@ -195,6 +245,15 @@ public class BinaryTreeTraversal_Demo {
             for(int i=inStart; i <= inEnd; i++)
                 if(inOrder[i] == value) return i;
             return -1;
+        }
+    }
+
+    static class Pair {
+        Node node;
+        int code;  // 0 -  Left element, 1 -  Right element, 2 -  Node element
+        public Pair(Node node, int code) {
+            this.node = node;
+            this.code = code;
         }
     }
 
