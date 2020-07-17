@@ -7,22 +7,38 @@ public class BoundaryNodes_Demo {
 
     public static void main(String args[]) {
         Node root = new Node(1);
-        root.left = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.left.right.left = new Node(5);
-        root.left.right.right = new Node(6);
 
-        root.right = new Node(7);
-        root.right.left = new Node(8);
-        root.right.left.right = new Node(9);
-        root.right.right = new Node(10);
+        root.left = new Node(2);
+        root.right = new Node(3);
+
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+
+        root.left.left.left = new Node(8);
+        root.left.left.right = new Node(9);
+
+        root.left.right.left = new Node(10);
+
+        /**
+         *            1
+         *         /     \
+         *        2       3
+         *      /   \   /   \
+         *     4    5  6    7
+         *    / \    \
+         *   8   9   10
+         *
+         *   Result: 1 2 4 8 9 10 6 7 3
+         */
 
         BinaryTree binaryTree = new BinaryTree();
         binaryTree.setRoot(root);
 
         List<Integer> list = binaryTree.findBoundaryNodes();
-        for (int x : list) System.out.print(x + " ");
+        for (int x : list) System.out.print(x + "  ");
 
     }
 
