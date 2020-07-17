@@ -43,9 +43,10 @@ public class LevelOrderTraversal_Demo {
 
         public void setRoot(Node root) { this.root = root; }
 
+        // Complexity: O(n)
         public List<Integer> levelOrderTraverse() {
             List<Integer> list = new ArrayList<>();
-            Queue<Node> Q = new LinkedList<Node>();
+            Queue<Node> Q = new LinkedList<>();
             Q.add(root);
             while(!Q.isEmpty()) {
                 Node node = Q.poll();
