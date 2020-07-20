@@ -35,7 +35,6 @@ public class Trie_Demo {
     }
 
     static class Trie {
-        public static final int ALPHABET_SIZE = 26;
 
         private TrieNode root;
         private int keyCount;
@@ -47,29 +46,31 @@ public class Trie_Demo {
 
         // Complexity: O(length of key)
         public boolean insertKey(String key) {
-            int keyLength = key.length();
             TrieNode node = root;
 
-            for(int i=0; i < keyLength; i++) {
-                int value = charValue(key.charAt(i));
-                if(null == node.childs[value]) node.childs[value] = new TrieNode();
-                node.childs[value].parent = node;
-                node = node.childs[value];
+            char[] charArr = key.toCharArray();
+            for (char ch : charArr) {
+                TrieNode child  = node.children.get(ch);
+                if (null == child) {
+                    child = new TrieNode();
+                    child.parent = node;
+                    node.children.put(ch, child);
+                }
+                node = child;
             }
-
             node.isKey = true;
             return true;
         }
 
         // Complexity: O(length of key * alphabet size)
         public boolean removeKey(String key) {
-            int keyLength = key.length();
             TrieNode node = root;
 
-            for(int i=0; i < keyLength; i++) {
-                int value = charValue(key.charAt(i));
-                if(null == node.childs[value]) return false;
-                node = node.childs[value];
+            char[] charArr = key.toCharArray();
+            for (char ch : charArr) {
+                TrieNode child = node.children.get(ch);
+                if (null == child) return false;
+                node = child;
             }
 
             // If the given key isn't a key
@@ -83,10 +84,10 @@ public class Trie_Demo {
 
             // Going bottom to top checking is current node has any child.
             // If no child exist current node should be null
-            for(int i = keyLength-1; i >= 0; i--) {
+            for(int i = charArr.length-1; i >= 0; i--) {
                 if(childCount(node) > 0) break;
                 TrieNode parent = node.parent;
-                parent.childs[charValue(key.charAt(i))] = null;
+                parent.children.remove(charArr[i]);
                 node = parent;
             }
             return true;
@@ -94,42 +95,54 @@ public class Trie_Demo {
 
         // Complexity: O(length of key)
         public boolean searchKey(String key) {
-            int keyLength = key.length();
             TrieNode node = root;
 
-            for(int i=0; i < keyLength; i++) {
-                int value = charValue(key.charAt(i));
-                if(null == node.childs[value]) return false;
-                node = node.childs[value];
+            char[] charArr = key.toCharArray();
+            for (char ch : charArr) {
+                TrieNode child = node.children.get(ch);
+                if (null == child) return false;
+                node = child;
             }
 
             return node.isKey;
         }
 
-        private static int charValue(char ch) {
-            return ch - 'a';
-        }
-
         private static int childCount(TrieNode node) {
-            int ret = 0;
-            for(int i = 0; i < ALPHABET_SIZE; i++)
-                ret += (null == node.childs[i] ? 0 : 1);
-            return ret;
+            return node.children.size();
         }
     }
 
     static class TrieNode {
         TrieNode parent;
+        Map<Character, TrieNode> children;
+        boolean isKey;
+
+        public TrieNode() {
+            children = new HashMap<>();
+        }
+
+        public TrieNode(boolean isKey) {
+            children = new HashMap<>();
+            this.isKey = isKey;
+        }
+    }
+
+    /*
+    static class TrieNode {
+        public static final int ALPHABET_SIZE = 26;
+
+        TrieNode parent;
         TrieNode childs[];
         boolean isKey;
 
         public TrieNode() {
-            childs = new TrieNode[Trie.ALPHABET_SIZE];
+            childs = new TrieNode[ALPHABET_SIZE];
         }
 
         public TrieNode(boolean isKey) {
-            childs = new TrieNode[Trie.ALPHABET_SIZE];
+            childs = new TrieNode[ALPHABET_SIZE];
             this.isKey = isKey;
         }
     }
+     */
 }
