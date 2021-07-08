@@ -56,6 +56,7 @@ using namespace std;
 #define IS_POWER_TWO(x)                         (x && !(x & (x-1)))
 #define OFF_RIGHTMOST_SET_BIT(x)                (x & (x-1))
 
+typedef unsigned int uint;
 typedef long long LL;
 typedef unsigned long long ULL;
 typedef pair<int, int> PII;
@@ -87,9 +88,9 @@ int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
 int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
 
 inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
-inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
-inline int srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
-inline int srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
+inline uint srcUInt() { uint ret; scanf("%u", &ret); return ret; }
+inline LL srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
+inline ULL srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
 
 #define WHITE 0
 #define GRAY 1
