@@ -2,60 +2,47 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="Sorting" targetName="counting_sort" />
       <config projectName="Sorting" targetName="bubble_sort" />
       <config projectName="Sorting" targetName="insertion_sort" />
+      <config projectName="Sorting" targetName="bucket_sort" />
       <config projectName="Sorting" targetName="merge_sort" />
-      <config projectName="Sorting" targetName="STLTest" />
+      <config projectName="Sorting" targetName="radix_sort" />
+      <config projectName="Sorting" targetName="heap_sort" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0e7b492-5030-43c4-8f2b-b961e8dfdc32" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/STLTest.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bubble_sort.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/insertion_sort.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/merge_sort.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../NumberTheory/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../NumberTheory/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_728_Div_2/A.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_728_Div_2/B.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_728_Div_2/C.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_729_Div_2/A.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_729_Div_2/B.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_729_Div_2/C.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_730_Div_2/B.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../Solved Problems/CODEFORCES/Round_730_Div_2/input.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bucket_sort.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/counting_sort.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/heap_sort.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/radix_sort.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Graph/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Graph/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/merge_sort.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-52">
-              <caret line="107" selection-start-line="107" selection-end-line="107" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/STLTest.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
@@ -71,7 +58,10 @@
     <option name="width" value="1280" />
     <option name="height" value="800" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1w5dIPvYp3ozw2SkN7q5qwLRrCc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -91,54 +81,80 @@
       <pane id="Scope" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.STLTest">
-    <configuration name="STLTest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="STLTest" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="STLTest">
+  <component name="RunManager" selected="CMake Application.bucket_sort">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="bubble_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="bubble_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="bubble_sort">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="bubble_sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="bubble_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="bubble_sort">
+    <configuration name="bucket_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="bucket_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="bucket_sort">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="insertion_sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="insertion_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="insertion_sort">
+    <configuration name="counting_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="counting_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="counting_sort">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="merge_sort" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="merge_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="merge_sort">
+    <configuration name="heap_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="heap_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="heap_sort">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="insertion_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="insertion_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="insertion_sort">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="merge_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="merge_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="merge_sort">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="radix_sort" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Sorting" TARGET_NAME="radix_sort" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Sorting" RUN_TARGET_NAME="radix_sort">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.bubble_sort" />
-      <item itemvalue="Application.insertion_sort" />
-      <item itemvalue="Application.merge_sort" />
-      <item itemvalue="Application.STLTest" />
+      <item itemvalue="CMake Application.bubble_sort" />
+      <item itemvalue="CMake Application.bucket_sort" />
+      <item itemvalue="CMake Application.counting_sort" />
+      <item itemvalue="CMake Application.heap_sort" />
+      <item itemvalue="CMake Application.insertion_sort" />
+      <item itemvalue="CMake Application.merge_sort" />
+      <item itemvalue="CMake Application.radix_sort" />
     </list>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -150,6 +166,11 @@
       <option name="presentableId" value="Default" />
       <updated>1550517488430</updated>
       <workItem from="1550517489666" duration="343000" />
+      <workItem from="1627752314241" duration="1707000" />
+      <workItem from="1627754061657" duration="640000" />
+      <workItem from="1627756524668" duration="788000" />
+      <workItem from="1627800776879" duration="717000" />
+      <workItem from="1627805787593" duration="666000" />
     </task>
     <servers />
   </component>
@@ -182,6 +203,21 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -197,6 +233,11 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="CMakeRunConfiguration">
+        <watch expression="arr[p]" language="ObjectiveC" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/main.cpp">

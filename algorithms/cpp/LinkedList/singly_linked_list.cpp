@@ -151,88 +151,56 @@ bool removeAtPos(int pos) {
     return true;
 }
 
-// Return middle element value
-// http://www.geeksforgeeks.org/write-a-c-function-to-print-the-middle-of-the-linked-list/
-// Complexity: O(n)
-int getMiddle() {
-    if (NULL == head) return -1;
-    Node *slow = head;
-    Node *fast = head->next;
-    while (NULL != fast && NULL != fast->next) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-    return slow->val;
-}
 
-// http://www.geeksforgeeks.org/pairwise-swap-elements-of-a-given-linked-list/
-void pairWiseSwap() {
-    Node *ptr = head;
-    while (NULL != ptr) {
-        // Swap values of ptr and ptr.next
-        int t = ptr->val;
-        ptr->val = ptr->next->val;
-        ptr->next->val = t;
-        ptr = ptr->next->next;
-    }
-}
-
-// Is Palindrome
-// Given a linked list, check if it is a palindrome in terms of values
-// Ex: 0 -> 1 -> 2 -> 1 -> 0
-// Ex: 0 -> 1 -> 2 -> 2 -> 1 -> 0
-// Ex: 1 -> 2 -> 3 -> 3 -> 2 -> 1
-bool isPalindrome(Node* head) {
-    Node *slow = head;
-    Node *fast = head;
-    stack<int> stack;
-
-    while (NULL != fast && NULL != fast->next) {
-        stack.push(slow->val);
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-
-    // Has odd number of element
-    if (NULL != fast) {
-        slow = slow->next;
-    }
-
-    while (NULL != slow) {
-        int top = stack.top();
-        stack.pop();
-
-        if (top != slow->val) {
-            return false;
-        }
-        slow = slow->next;
-    }
-    return true;
-}
 
 // Complexity: O(size)
-void asArray(int *ret, int *n) {
-    ret = (int*) (malloc(size * sizeof(int)));
-    *n = size;
-    int i = 0;
-    Node* ptr = head;
+void asArray(int ret[], int n) {
+//    ret = (int*) (malloc(size * sizeof(int)));
+//    n = size;
+//    int i = 0;
+//    Node* ptr = head;
+//    while (NULL != ptr) {
+//        ret[i] = ptr->val;
+//        ptr = ptr->next;
+//        i = i + sizeof (int);
+//    }
+}
+
+vector<int> asVector() {
+    vector<int> ret;
+    Node *ptr = head;
     while (NULL != ptr) {
-        ret[i] = ptr->val;
+        ret.push_back(ptr->val);
         ptr = ptr->next;
-        i = i + sizeof (int);
     }
+    return ret;
 }
 
 
 int main() {
-    insertAtFirst(1);
-    insertAtLast(2);
-    insertAtLast(3);
-    insertAtLast(3);
-    insertAtLast(2);
-    insertAtLast(1);
+    int arr[] = {10, 5, 6, 9, 20, 13, 1, 25};
+    int cnt = sizeof(arr) / sizeof(arr[0]);
 
-    cout << isPalindrome(head) << endl;
+    initLinkedList();
+    for (int i = 0; i < cnt; i++) {
+        insertAtLast(arr[i]);
+    }
+    insertAtFirst(100);
+    insertAtPos(200, 2);
+
+    vector<int> v = asVector();
+    for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
+    cout << endl;
+
+    removeAtFirst();
+    removeAtLast();
+    removeAtPos(2);
+
+    v = asVector();
+    for (int i = 0; i < v.size(); i++) cout << v[i] << " ";
+    cout << endl;
+
+
 
     return 0;
 }
