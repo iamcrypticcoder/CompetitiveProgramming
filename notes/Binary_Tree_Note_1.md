@@ -472,7 +472,7 @@ public class BoundaryNodesDemo {
         if (null != node.left)
             findLeftNodes(node.left, list);
         else if (null != node.right)
-            findLeftNodes(node, list);
+            findLeftNodes(node.right, list);
     }
 
     static void findLeafNodes(TreeNode node, List<Integer> list) {
