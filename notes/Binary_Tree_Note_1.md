@@ -337,8 +337,8 @@ One level from left to right, next level traverse from right to left and so on.
 **Example:**
 
 ```
-		  1
-		/   \
+             1
+           /   \
 	  2     3
 	 / \   / \
 	4   5 6   7
