@@ -926,22 +926,22 @@ public class LongestPathFromRoot {
 ```
 
 
-### 16. Longest Path from Leaf to Leaf:
+### 16. Longest Path from Leaf to Leaf (Diameter of Binary Tree):
 
 **Example:**
 
 Given a binary tree find longest path from one leaf to another leaf. the path shouldn't always go via root node. It could be any path from one node to another node.
 
 ```
-			1
-		/      \
-	  2         3
+             1
+           /   \
+          2     3
 	 / \
 	4   5
-   /   /
-  8   10
-      /
-     11
+       /   /
+      8   10
+         /
+        11
      
 Answer: 6
 Path: 8 4 2 5 10 11
