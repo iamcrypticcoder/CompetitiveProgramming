@@ -668,6 +668,7 @@ static boolean solve(TreeNode node, int curSum, int sum) {
 ### 12. Maximum Path Sum:
 
 **Example:**
+Find a path from root to leaf such that sum of node values will be maximum.
 
 ```
       5
@@ -714,8 +715,51 @@ public class MaximumPathSum {
 
         System.out.println("Max Path Sum = " + maxSum);
         System.out.println(resultPath.toString());
+
+        System.out.println(maximumSumPath(root));
+        
+        List<Integer> path = new ArrayList<>();
+        System.out.println(maximumSumPath(root, path));
+        System.out.println(path.toString());
     }
 
+    // This version don't use external variable
+    // Also produce path values
+    static int maximumSumPath(TreeNode node, List<Integer> path) {
+        if (null == node) {
+            return 0;
+        }
+        if (isLeaf(node)) {
+            path.add(node.val);
+            return node.val;
+        }
+
+        List<Integer> listL = new ArrayList<>();
+        List<Integer> listR = new ArrayList<>();
+        int maxL = (null == node.left ? Integer.MIN_VALUE : maximumSumPath(node.left, listL));
+        int maxR = (null == node.right ? Integer.MIN_VALUE : maximumSumPath(node.right, listR));
+        if (maxL >= maxR) {
+            path.addAll(listL);
+        } else {
+            path.addAll(listR);
+        }
+        path.add(node.val);
+
+        return Math.max(maxL, maxR) + node.val;
+    }
+    
+    // This version don't use external variable, only calculates max value
+    static int maximumSumPath(TreeNode node) {
+        if (null == node) return 0;
+        if (isLeaf(node)) return node.val;
+
+        int maxL = (null == node.left ? Integer.MIN_VALUE : maximumSumPath(node.left));
+        int maxR = (null == node.right ? Integer.MIN_VALUE : maximumSumPath(node.right));
+
+        return Math.max(maxL, maxR) + node.val;
+    }
+
+    // This version of recursion using external variable
     static void maximumSumPath(TreeNode node, int curSum, List<Integer> curPath) {
         if (null == node) return;
         if (isLeaf(node)) {
