@@ -1,201 +1,11 @@
+
 ## SUM RELATED PROBLEMS
 
-1. Maximum Path Sum
-2. Sum of Longest Path from Root to Leaf
-3. Sum of only left/right leaves
-4. Maximum Path Sum between two leaves
-5. Sum of heights of all individual nodes
-6. Maximum level sum
+1. Sum of only left/right leaves
+2. Maximum Path Sum between two leaves
+3. Sum of heights of all individual nodes
+4. Maximum level sum
 
-
-### 1. Maximum Path Sum
-
-**Example:**
-
-Find a path from root to leaf such that sum of node values will be maximum.
-
-```
-      5
-     / \
-    4   8
-   /   / \
-  11  13  4
- /  \      \
-7    2      1
-
-5 + 4 + 11 + 7 = 27
-5 + 4 + 11 + 2 = 22
-5 + 8 + 13 = 26
-5 + 8 + 4 + 1 = 18
-
-Answer: 5 + 4 + 11 + 7 = 27
-```
-
-
-**Code:**
-
-
-```java
-public class MaximumPathSum {
-
-    static int maxSum;
-    static List<Integer> resultPath;
-
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(5);
-        root.left = new TreeNode(4);
-        root.right = new TreeNode(8);
-
-        root.left.left = new TreeNode(11);
-        root.left.left.left = new TreeNode(7);
-        root.left.left.right = new TreeNode(2);
-
-        root.right.left = new TreeNode(13);
-        root.right.right = new TreeNode(4);
-        root.right.right.right = new TreeNode(1);
-
-        List<Integer> curPath = new ArrayList<>();
-        resultPath = new ArrayList<>();
-        maxSum = Integer.MIN_VALUE;
-        maximumSumPath(root, 0, curPath);
-
-        System.out.println("Max Path Sum = " + maxSum);
-        System.out.println(resultPath.toString());
-
-        System.out.println(maximumSumPath(root));
-        
-        List<Integer> path = new ArrayList<>();
-        System.out.println(maximumSumPath(root, path));
-        System.out.println(path.toString());
-    }
-
-    // This version don't use external variable
-    // Also produce path values
-    static int maximumSumPath(TreeNode node, List<Integer> path) {
-        if (null == node) {
-            return 0;
-        }
-        if (isLeaf(node)) {
-            path.add(node.val);
-            return node.val;
-        }
-
-        List<Integer> listL = new ArrayList<>();
-        List<Integer> listR = new ArrayList<>();
-        int maxL = (null == node.left ? Integer.MIN_VALUE : maximumSumPath(node.left, listL));
-        int maxR = (null == node.right ? Integer.MIN_VALUE : maximumSumPath(node.right, listR));
-        if (maxL >= maxR) {
-            path.addAll(listL);
-        } else {
-            path.addAll(listR);
-        }
-        path.add(node.val);
-
-        return Math.max(maxL, maxR) + node.val;
-    }
-    
-    // This version don't use external variable, only calculates max value
-    static int maximumSumPath(TreeNode node) {
-        if (null == node) return 0;
-        if (isLeaf(node)) return node.val;
-
-        int maxL = (null == node.left ? Integer.MIN_VALUE : maximumSumPath(node.left));
-        int maxR = (null == node.right ? Integer.MIN_VALUE : maximumSumPath(node.right));
-
-        return Math.max(maxL, maxR) + node.val;
-    }
-
-    // This version of recursion using external variable
-    static void maximumSumPath(TreeNode node, int curSum, List<Integer> curPath) {
-        if (null == node) return;
-        if (isLeaf(node)) {
-            if (curSum + node.val > maxSum) {
-                maxSum = curSum + node.val;
-                resultPath.clear();
-                resultPath.addAll(curPath);
-                resultPath.add(node.val);
-            }
-            return;
-        }
-
-        curPath.add(node.val);
-        maximumSumPath(node.left, curSum + node.val, curPath);
-        maximumSumPath(node.right, curSum + node.val, curPath);
-        curPath.remove(curPath.size()-1);
-    }
-
-    static boolean isLeaf(TreeNode node) {
-        return (null == node.left && null == node.right);
-    }
-
-    static class TreeNode {
-        int val;
-        TreeNode left, right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-    }
-}
-```
-
-
-### 2. Sum of Longest Path from Root to Leaf:
-
-Example:
-
-```
-   			1
-   		  /  \
-   		 2    3
-   		/
-   	  3
-   	   \
-   	    4 
-
-Output: 1 2 3 4
-
-Sum = 10
-```
-
-Code:
-
-```java
-public class SumOfLongestPath {
-
-    public static void main(String[] args) {
-        TreeNode root = new TreeNode(1);
-        root.left = new TreeNode(2);
-        root.right = new TreeNode(3);
-
-        root.left.left = new TreeNode(3);
-        root.left.left.right = new TreeNode(4);
-
-        List<Integer> ret = longestPath(root);
-        System.out.println(ret.toString());
-        int sum = 0;
-        for (int x : ret) sum += x;
-        System.out.println("Sum = " + sum);
-    }
-
-    // No external variable used
-    static List<Integer> longestPath(TreeNode node) {
-        if (null == node) return new ArrayList<>();
-        List<Integer> leftPath = longestPath(node.left);
-        List<Integer> rightPath = longestPath(node.right);
-
-        if (leftPath.size() >= rightPath.size()) leftPath.add(0, node.val);
-        else rightPath.add(0, node.val);
-
-        return leftPath.size() >= rightPath.size() ? leftPath : rightPath;
-    }
-
-    static class TreeNode {
-        int val;
-        TreeNode left, right;
-        TreeNode() {}
-        TreeNode(int val) { this.val = val; }
-    }
-}
-```
 
 ### 3. Sum of only left/right leaves:
 
@@ -269,23 +79,22 @@ public class SumOfLeftLeaves {
 **Example:**
 
 ```
-			1
-		/      \
-	  2         3
-	 / \
-	4   5
+         1
+       /   \
+      2     3
+     / \
+    4   5
    /   /
   8   10
       /
      11
      
 Output: 8 + 4 + 2 + 5 + 10 + 11 = 40
-
 ```
 
 **Code:**
 
-```
+```java
 public class MaxPathSumBetweenLeaves {
 
     public static void main(String[] args) {
@@ -343,11 +152,11 @@ public class MaxPathSumBetweenLeaves {
 **Example:**
 
 ```
-		1
+           1
 	  /  \
 	 2    3
 	/ \
-  4   5
+       4   5
 
 Height of node 1 = 3
 Height of node 2 = 2
