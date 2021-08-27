@@ -7,7 +7,7 @@
 4. Maximum level sum
 
 
-### 3. Sum of only left/right leaves:
+### 1. Sum of only left/right leaves:
 
 **Example:**
 
@@ -73,7 +73,7 @@ public class SumOfLeftLeaves {
 ```
 
 
-### 4. Maximum Path Sum between two leaves:
+### 2. Maximum Path Sum between two leaves:
 
 
 **Example:**
@@ -147,7 +147,7 @@ public class MaxPathSumBetweenLeaves {
 }
 ```
 
-### 5. Sum of heights of all individual nodes:
+### 3. Sum of heights of all individual nodes:
 
 **Example:**
 
@@ -223,7 +223,7 @@ public class SumOfHeightsNodes {
 }
 ```
 
-### 6. Maximum level sum:
+### 4. Maximum level sum:
 
 **Example:**
 
