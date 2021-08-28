@@ -30,8 +30,7 @@ using namespace std;
 
 struct Node {
     int key;
-    Node* left = NULL;
-    Node* right = NULL;
+    Node *left = NULL, *right = NULL;
 
     Node() {}
     Node(int key) {
@@ -53,6 +52,19 @@ Node* minValueNode(Node* n) {
         n = n->left;
     return n;
 }
+int minNodeValue(Node* n) {
+    if (NULL == n) return INT_MIN;
+    while (NULL != n && NULL != n->left)
+        n = n->left;
+    return n->key;
+}
+int maxNodeValue(Node* n) {
+    if (NULL == n) return INT_MAX;
+    while (NULL != n && NULL != n->right)
+        n = n->right;
+    return n->key;
+}
+
 Node* insertNode(Node* n, int key) {
     if (NULL == n) return new Node(key);
     if (key < n->key) n->left = insertNode(n->left, key);
@@ -81,6 +93,39 @@ Node* deleteNode(Node* node, int key) {
     }
     return node;
 }
+Node* insertNodeIterative(Node* root, int key) {
+    Node* ptr = root;
+    Node* parent = NULL;
+    while (NULL != ptr) {
+        parent = ptr;
+        if (key > ptr->key) {
+            ptr = ptr->right;
+        }
+        else if (key < ptr->key) {
+            ptr = ptr->left;
+        }
+    }
+    Node* newNode = new Node(key);
+    if (NULL == parent) return newNode;
+    if (key < parent->key) parent->left = newNode;
+    else parent->right = newNode;
+    return root;
+}
+
+bool searchNodeIterative(Node* root, int key) {
+    Node* ptr = root;
+    while (NULL != ptr) {
+        if (key < ptr->key) ptr = ptr->left;
+        else if (key > ptr->key) ptr = ptr->right;
+        else return true;
+    }
+    return false;
+}
+
+Node* deleteNodeIterative(Node* node, int key) {
+    return NULL;
+}
+
 void preOrderTraverse(Node* node) {
     if (NULL == node) return;
     cout << node->key << " ";
@@ -148,8 +193,11 @@ int main() {
     bstInit();
     cout << "Insert:" << endl;
     for (int i = 0; i < cnt; i++) {
-        insertKey(keys[i]);
+        root = insertNodeIterative(root, keys[i]);
     }
+
+    cout << "" << minNodeValue(root) << endl;
+    cout << "" << maxNodeValue(root) << endl;
 
     preOrderTraverse(root);
     cout << endl;
