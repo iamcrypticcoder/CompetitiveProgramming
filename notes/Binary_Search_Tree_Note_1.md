@@ -10,6 +10,7 @@
 7. Binary Tree to BST
 8. BST Find LCA
 9. BST K'th Largest Value
+10. BST Floor and Ceil of given key
 
 
 ### 1. BST Implementation : Insert, Search, Delete:
@@ -376,3 +377,48 @@ int kthLargest(Node* n, int k, int &cnt) {
     return INT_MIN;
 }
 ```
+
+
+### 10. BST Floor and Ceil of given key:
+Example is given below:
+```
+          8
+        /   \    
+      4      12
+    /  \    /  \
+   2    6  10   14
+
+Key: 11  Floor: 10  Ceil: 12
+Key: 1   Floor: -1  Ceil: 2
+Key: 6   Floor: 6   Ceil: 6
+Key: 15  Floor: 14  Ceil: -1
+
+```
+
+**Code:**
+```cpp
+int floor(Node* n, int key) {
+    if (NULL == n) return -1;
+    if (key == n->key) return key;
+
+    if (key < n->key)
+        return floor(n->left, key);
+
+    int f = floor(n->right, key);
+    return (f != -1 && f <= key) ? f : n->key;
+}
+
+int ceil(Node* n, int key) {
+    if (NULL == n) return -1;
+    if (n->key == key) return key;
+
+    if (key > n->key)
+        return ceil(n->right, key);
+
+    int c = ceil(n->left, key);
+    return (c != -1 && c >= key) ? c : n->key;
+}
+```
+
+
+
