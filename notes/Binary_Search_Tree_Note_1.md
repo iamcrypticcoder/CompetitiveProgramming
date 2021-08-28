@@ -6,11 +6,12 @@
 3. BST Find Min/Max Value
 4. BST Check Validity
 5. Sorted Array to Balanced BST
-6. BST Count nodes of a given range
-7. Binary Tree to BST
-8. BST Find LCA
-9. BST K'th Largest Value
-10. BST Floor and Ceil of given key
+6. Normal BST to Balanced BST
+7. BST Count nodes of a given range
+8. Binary Tree to BST
+9. BST Find LCA
+10. BST K'th Largest Value
+11. BST Floor and Ceil of given key
 
 
 ### 1. BST Implementation : Insert, Search, Delete:
@@ -191,8 +192,26 @@ Node* createMinimalBST(int arr[], int cnt) {
 }
 ```
 
+### 6. Normal BST to Balanced BST:
 
-### 6. BST Count nodes of a given range:
+Example is given below:
+```
+          4                             4
+        /   \                        /    \
+       3     5                      2      6
+      /       \         --->      /  \    /  \
+     2         6                 1    3  5    7 
+    /           \
+   1             7 
+```
+
+**Solution:** 
+```
+1. Inorder traverse the given BST to get sorted list.
+2. Make a balanced BST from the sorted list.
+```
+
+### 7. BST Count nodes of a given range:
 
 Example is given below:
 ```
@@ -234,7 +253,7 @@ int countNodes(Node* n, int low, int high) {
 }
 ```
 
-### 7. Binary Tree to BST:
+### 8. Binary Tree to BST:
 Example is given below:
 ```
 Input:
@@ -310,7 +329,7 @@ void binaryTreeToBST(Node* root) {
 }
 ```
 
-### 8. BST Find LCA:
+### 9. BST Find LCA:
 Example is given below:
 ```
 Input:
@@ -340,7 +359,7 @@ Node* findLCA(Node* n, int n1, int n2) {
 }
 ```
 
-### 9. BST K'th Largest Value:
+### 10. BST K'th Largest Value:
 Example is given below:
 ```
         7
@@ -379,7 +398,7 @@ int kthLargest(Node* n, int k, int &cnt) {
 ```
 
 
-### 10. BST Floor and Ceil of given key:
+### 11. BST Floor and Ceil of given key:
 Example is given below:
 ```
           8
