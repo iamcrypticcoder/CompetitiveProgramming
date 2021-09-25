@@ -1,3 +1,13 @@
+/*
+    Solved By : Kazi Mahbubur Rahman (MAHBUB)
+                Software Engineer,
+                Samsung R&D Institute Bangladesh (SRBD),
+                Dhaka, Bangladesh.
+    Time :
+    Rank :
+    Complexity:
+*/
+
 #include <set>
 #include <map>
 #include <list>
@@ -18,121 +28,74 @@
 
 using namespace std;
 
-#define FOR(i, L, U) for(int i=(int)L; i<=(int)U; i++)
-#define FORD(i, U, L) for(int i=(int)U; i>=(int)L; i--)
-
 #define READ(x) freopen(x, "r", stdin)
 #define WRITE(x) freopen(x, "w", stdout)
 
-#define ff first
-#define ss second
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
-
-#define EPS 		1e-9
-#define SQR(x) 		((x)*(x))
-#define INF 		2000000000
-#define TO_DEG 		57.29577951
-#define PI 			2*acos(0.0)
-
-#define ALL_BITS					((1 << 31) - 1)
-#define NEG_BITS(mask)				(mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)			(mask & (1 << i))
-#define ON_BIT(mask, i)				(mask |= (1 << i))
-#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
-
-typedef long long LL;
-typedef unsigned long long ULL;
-typedef pair<int, int> PII;
-typedef pair<uint, uint> PUU;
-typedef pair<double, double> PDD;
-typedef vector<bool> VB;
-typedef vector<int> VI;
-typedef vector<uint> VU;
-typedef vector<double> VD;
-typedef vector<char> VC;
-typedef vector<string> VS;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-typedef vector<vector<bool> > VVB;
-typedef vector<vector<int> > VVI;
-typedef vector<vector<double> > VVD;
-typedef vector<vector<PII> > VVPII;
-
-ULL GCD(ULL a, ULL b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = { -1, 0, 1, 0, -1, 1,  1, -1 };
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
-int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
-
-inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
-inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
-
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 100000
-#define MAXC 26
+const int MAXC = 26;
 
 struct TrieNode {
-    TrieNode* parent = NULL;
-    TrieNode* children[MAXC] = {NULL};
-    bool isKey = false;
+    TrieNode* parent = NULL;            // Keep parent reference to remove
+    TrieNode* children[MAXC] = {NULL};  // number of alphabets
+    bool isKey = false;                 // Indicate a key node
+    int keyCount = 0;                   // Keep count of keys below including itself
     TrieNode() {}
     TrieNode(bool isKey) {
         this->isKey = isKey;
     }
 };
 
-TrieNode* root;
-
-int charValue(char ch) {
-    return ch - 'a';
-}
 int childCount(TrieNode* node) {
     int ret = 0;
-    for (int i = 0; i < MAXC; ++i) {
-        ret += ((NULL == node->children[i]) ? 0 : 1);
-    }
+    for (int i = 0; i < MAXC; i++)
+        ret += (NULL == node->children[i] ? 0 : 1);
+    return ret;
 }
 
 // Complexity: O(length of key)
-bool insertKey(string key) {
-    int keyLength = key.length();
+bool insertKey(TrieNode* root, string key) {
+    int len = key.length();
     TrieNode* node = root;
-    for (int i = 0; i < keyLength; ++i) {
-        int value = charValue(key[i]);
-        if (NULL == node->children[value]) {
-            node->children[value] = new TrieNode();
-            node->children[value]->parent = node;
+    node->keyCount++;
+    for (int i = 0; i < len; i++) {
+        int index = key[i] - 'a';
+        if (NULL == node->children[index]) {
+            node->children[index] = new TrieNode();
+            node->children[index]->parent = node;
         }
-        node = node->children[value];
+        node = node->children[index];
+        node->keyCount++;
     }
     node->isKey = true;
+    return true;
 }
 
-// Complexity: O(length of key * alphabet size)
-bool removeKey(string key) {
-    int keyLength = key.length();
+// Complexity: O(length of key)
+bool searchKey(TrieNode* root, string key) {
+    int len = key.length();
     TrieNode* node = root;
-
-    for (int i = 0; i < keyLength; ++i) {
-        int value = charValue(key[i]);
-        if (NULL == node->children[value]) return false;
-        node = node->children[value];
+    for (int i = 0; i < len; i++) {
+        int index = key[i] - 'a';
+        if (NULL == node->children[index]) return false;
+        node = node->children[index];
     }
+    return node->isKey;
+}
+
+bool removeKey(TrieNode* root, string key) {
+    int len = key.length();
 
     // If the given key isn't a key
-    if (!node->isKey) return false;
+    if (false == searchKey(root, key))
+        return false;
+
+    TrieNode* node = root;
+    node->keyCount--;
+    for (int i = 0; i < len; i++) {
+        int index = key[i] - 'a';
+        if (NULL == node->children[index]) return false;
+        node = node->children[index];
+        node->keyCount--;
+    }
 
     // if key node has any other child mark isLeaf == false and return
     if (childCount(node) > 0) {
@@ -142,52 +105,139 @@ bool removeKey(string key) {
 
     // Going bottom to top checking is current node has any child.
     // If no child exist current node should be null
-    for(int i = keyLength-1; i >= 0; i--) {
-        if(childCount(node) > 0) break;
-        TrieNode* parent = node->parent;
-        parent->children[charValue(key[i])] = NULL;
-        node = parent;
+    for (int i = len-1; i >= 0; i--) {
+        if (childCount(node) > 0) break;
+        int index = key[i] - 'a';
+        node->parent->children[index] = NULL;
+        node = node->parent;
     }
     return true;
 }
 
-bool searchKey(string key) {
-    int keyLength = key.length();
+int countKeysWithPrefix(TrieNode* root, string prefix) {
+    int len = prefix.length();
     TrieNode* node = root;
-    for (int i = 0; i < keyLength; ++i) {
-        int value = charValue(key[i]);
-        if (NULL == node->children[value]) return false;
-        node = node->children[value];
+    for (int i = 0; i < len; i++) {
+        int index = prefix[i] - 'a';
+        if (NULL == node->children[index]) return false;
+        node = node->children[index];
     }
-    return node->isKey;
+    return node->keyCount;
 }
 
-int main()
-{
-    //READ("input.txt");
-    //WRITE("input.txt");
+void findKeysRecursive(TrieNode* node, string curStr, vector<string>& output) {
+    if (node->isKey) output.push_back(curStr);
+    for (int i = 0; i < MAXC; i++) {
+        if (NULL != node->children[i]) {
+            curStr.push_back(i + 'a');
+            findKeysRecursive(node->children[i], curStr, output);
+            curStr.pop_back();
+        }
+    }
+}
 
-    int i, j;
+vector<string> findKeysWithPrefix(TrieNode* root, string key) {
+    int len = key.length();
+    TrieNode* node = root;
+    for (int i = 0; i < len; i++) {
+        int index = key[i] - 'a';
+        if (NULL == node->children[index]) return vector<string>();
+        node = node->children[index];
+    }
+
+    vector<string> output = vector<string>();
+    findKeysRecursive(node, key, output);
+
+    return output;
+}
+
+int main() {
+    ios::sync_with_stdio(true);
+
+    //READ("../input.txt");
+    //WRITE("output.txt");
+    int i, j, k;
     int TC, tc;
+
     double cl = clock();
 
-    root = new TrieNode();
+    string keys[] = {"ma", "man", "max", "much", "mouse", "min", "multi"};
 
-    insertKey("my");
-    insertKey("max");
-    insertKey("man");
-    insertKey("many");
+    TrieNode* trie1 = new TrieNode();
 
-    cout << "Search my: " << searchKey("my") << endl;
-    cout << "Search max: " << searchKey("max") << endl;
-    cout << "Search man: " << searchKey("man") << endl;
-    cout << "Search many: " << searchKey("min") << endl;
+    for (auto str : keys) {
+        insertKey(trie1, str);
+    }
+    for (auto str : keys) {
+        cout << "Search " << str << ": " << searchKey(trie1, str) << endl;
+    }
+    cout << endl;
 
-    removeKey("max");
-    cout << "Search max: " << searchKey("max") << endl;
+    cout << "countKeysWithPrefix() : " << "\"\" = " << countKeysWithPrefix(trie1, "") << endl;
+    cout << "countKeysWithPrefix() : " << "m = " << countKeysWithPrefix(trie1, "m") << endl;
+    cout << "countKeysWithPrefix() : " << "ma = " << countKeysWithPrefix(trie1, "ma") << endl;
+    cout << "countKeysWithPrefix() : " << "much = " << countKeysWithPrefix(trie1, "much") << endl;
+    cout << endl;
+
+    cout << "Keys with prefix : \"\" : ";
+    vector<string> output = findKeysWithPrefix(trie1, "");
+    for (auto s : output) cout << s << " ";
+    cout << endl;
+
+    cout << "Keys with prefix : m : ";
+    output = findKeysWithPrefix(trie1, "m");
+    for (auto s : output) cout << s << " ";
+    cout << endl;
+
+    cout << "Keys with prefix : ma : ";
+    output = findKeysWithPrefix(trie1, "ma");
+    for (auto s : output) cout << s << " ";
+    cout << endl;
+
+    cout << "Keys with prefix : mu : ";
+    output = findKeysWithPrefix(trie1, "mu");
+    for (auto s : output) cout << s << " ";
+    cout << endl << endl;
+
+    removeKey(trie1, "max");
+    cout << "Search \"max\": " << searchKey(trie1, "max") << endl;
+
+    cout << "countKeysWithPrefix() : " << "\"\" = " << countKeysWithPrefix(trie1, "") << endl;
+    cout << "countKeysWithPrefix() : " << "m = " << countKeysWithPrefix(trie1, "m") << endl;
+    cout << "countKeysWithPrefix() : " << "ma = " << countKeysWithPrefix(trie1, "ma") << endl;
+    cout << "countKeysWithPrefix() : " << "much = " << countKeysWithPrefix(trie1, "much") << endl;
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+/**
+OUTPUT:
+
+Search ma: 1
+Search man: 1
+Search max: 1
+Search much: 1
+Search mouse: 1
+Search min: 1
+Search multi: 1
+
+countKeysWithPrefix() : "" = 7
+countKeysWithPrefix() : m = 7
+countKeysWithPrefix() : ma = 3
+countKeysWithPrefix() : much = 1
+
+Keys with prefix : "" : ma man max min mouse much multi
+Keys with prefix : m : ma man max min mouse much multi
+Keys with prefix : ma : ma man max
+Keys with prefix : mu : much multi
+
+Search "max": 0
+countKeysWithPrefix() : "" = 6
+countKeysWithPrefix() : m = 6
+countKeysWithPrefix() : ma = 2
+countKeysWithPrefix() : much = 1
+
+**/
