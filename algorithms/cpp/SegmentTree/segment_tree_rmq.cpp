@@ -151,19 +151,22 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[7] = { 8, 7, 3, 9, 5, 1, 10 };
-    N = 7;
-    FOR(i, 0, N - 1) A[i] = arr[i];
+    vector<int> arr {8, 7, 3, 9, 5, 1, 10};
+    int N = arr.size();
 
+    // Build ST
+    for(int i = 0; i < N; i++) A[i] = arr[i];
     build(1, 0, N-1);
 
     Node node = query(1, 0, N-1, 0, N-1);
     cout << node.res << endl;
 
-    updateSingle(1, 0, N-1, 5, 0);
+    updateSingle(1, 0, N-1, 5, 2);
 
-    node = query(1, 0, N-1, 0, N-1);
-    cout << node.res << endl;
+    for (int i = 0; i < N; i++) {
+        node = query(1, 0, N-1, 0, i);
+        cout << "Minimum from 0 to " << i << ": " << node.res << endl;
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
