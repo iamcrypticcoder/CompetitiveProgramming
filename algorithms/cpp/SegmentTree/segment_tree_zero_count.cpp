@@ -27,72 +27,13 @@
 
 using namespace std;
 
-#define FOR(i, L, U) for(int i=(int)L; i<=(int)U; i++)
-#define FORD(i, U, L) for(int i=(int)U; i>=(int)L; i--)
-
-#define READ(x) freopen(x, "r", stdin)
-#define WRITE(x) freopen(x, "w", stdout)
-
-#define ff first
-#define ss second
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
-
-#define EPS 		1e-9
-#define SQR(x) 		((x)*(x))
-#define INF 		2000000000
-#define TO_DEG 		57.29577951
-#define PI 			2*acos(0.0)
-
-#define ALL_BITS					((1 << 31) - 1)
-#define NEG_BITS(mask)				(mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)			(mask & (1 << i))
-#define ON_BIT(mask, i)				(mask |= (1 << i))
-#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
-
-typedef long long LL;
-typedef unsigned long long ULL;
-typedef pair<int, int> PII;
-typedef pair<double, double> PDD;
-typedef vector<bool> VB;
-typedef vector<int> VI;
-typedef vector<double> VD;
-typedef vector<char> VC;
-typedef vector<string> VS;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-typedef vector<vector<bool> > VVB;
-typedef vector<vector<int> > VVI;
-typedef vector<vector<double> > VVD;
-typedef vector<vector<PII> > VVPII;
-
-int GCD(int a, int b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = { -1, 0, 1, 0, -1, 1,  1, -1 };
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2 };
-
-inline int src() { int ret; scanf("%d", &ret); return ret; }
-
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 1000000
+const int MAX = 1e6;
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
 struct Node {
-    uint cnt = 0;
+    unsigned int cnt = 0;
     int lazy = INT_MIN;
     void resetNode() {
         cnt = 0;
@@ -103,7 +44,6 @@ struct Node {
     }
 };
 
-int N;
 int A[MAX];
 Node st[3 * MAX + 7];
 
@@ -124,18 +64,21 @@ void pushUp(int p) {
 
 void pushDown(int p, int l, int r) {
     if (st[p].lazy == INT_MIN) return;
+
     int mid = (l + r) >> 1;
     if (st[p].lazy == 0) {
-        st[left(p)].cnt = (uint)(mid-l+1);
-        st[right(p)].cnt = (ULL)(r-mid+1);
+        st[left(p)].cnt = (unsigned int)(mid-l+1);
+        st[right(p)].cnt = (unsigned int)(r-mid+1);
+    } else {
+        st[left(p)].cnt = st[right(p)].cnt = 0;
     }
-    st[p].lazy = st[p].lazy = st[p].lazy;
+    st[left(p)].lazy = st[right(p)].lazy = st[p].lazy;
     st[p].lazy = INT_MIN;
 }
 
 void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
     if (i == l && j == r) {
-        st[p].cnt = (ULL)(r - l + 1) * (val == 0 ? 1 : 0);
+        st[p].cnt = (unsigned int)(r - l + 1) * (val == 0 ? 1 : 0);
         if (l != r) st[p].lazy = val;
         return;
     }
@@ -150,7 +93,7 @@ void updateRangeLazy(int p, int l, int r, int i, int j, int val) {
     pushUp(p);
 }
 
-uint queryLazy(int p, int l, int r, int i, int j) {
+unsigned int queryLazy(int p, int l, int r, int i, int j) {
     if (i == l && j == r) return st[p].cnt;
 
     pushDown(p, l, r);
@@ -159,8 +102,8 @@ uint queryLazy(int p, int l, int r, int i, int j) {
     if (j <= mid) return queryLazy(left(p), l, mid, i, j);
     if (i > mid) return queryLazy(right(p), mid + 1, r, i, j);
 
-    uint tmp1 = queryLazy(left(p), l, mid, i, mid);
-    uint tmp2 = queryLazy(right(p), mid + 1, r, mid+1, j);
+    unsigned int tmp1 = queryLazy(left(p), l, mid, i, mid);
+    unsigned int tmp2 = queryLazy(right(p), mid + 1, r, mid+1, j);
     return tmp1 + tmp2;
 }
 
@@ -172,22 +115,41 @@ int main()
     int TC, tc;
     double cl = clock();
 
-    int arr[8] = { 1, 0, 3, 0, 0, 5, 6, 0 };
-    N = 8;
-    FOR(i, 0, N - 1) A[i] = arr[i];
+    vector<int> arr { 1, 0, 3, 0, 0, 0, 6, 0 };
+    int N = arr.size();
 
-    FOR(i, 0, 3*N) st[i].resetNode();
-
+    // Build ST
+    for (int i = 0; i < N; i++) A[i] = arr[i];
     build(1, 0, N-1);
 
-    cout << queryLazy(1, 0, N-1, 0, N-1) << endl;
+    int cnt = queryLazy(1, 0, N-1, 0, N-1);
+    printf("Zero count from index %d to %d = %d\n\n", 0, N-1, cnt);
 
-    updateRangeLazy(1, 0, N-1, 0, 2, 1);
+    updateRangeLazy(1, 0, N-1, 0, 3, 0);
+    updateRangeLazy(1, 0, N-1, 0, 3, 100);
 
-    cout << queryLazy(1, 0, N-1, 0, N-1) << endl;
+    for (int i = 0; i < N; i++) {
+        cnt = queryLazy(1, 0, N-1, 0, i);
+        printf("Zero count from index %d to %d = %d\n", 0, i, cnt);
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+
+/**
+Zero count from index 0 to 7 = 5
+
+Zero count from index 0 to 0 = 0
+Zero count from index 0 to 1 = 0
+Zero count from index 0 to 2 = 0
+Zero count from index 0 to 3 = 0
+Zero count from index 0 to 4 = 1
+Zero count from index 0 to 5 = 2
+Zero count from index 0 to 6 = 2
+Zero count from index 0 to 7 = 3
+
+**/
