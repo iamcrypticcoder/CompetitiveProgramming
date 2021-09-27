@@ -1,214 +1,122 @@
+/*
+    Solved By : Kazi Mahbubur Rahman (MAHBUB)
+                Software Engineer,
+                Samsung R&D Institute Bangladesh (SRBD),
+                Dhaka, Bangladesh.
+    Time :
+    Rank :
+    Complexity:
+*/
 
-#include <cmath>
-#include <iostream>
+#include <set>
+#include <map>
 #include <list>
-#include <stack>
+#include <cmath>
+#include <ctime>
 #include <queue>
-#include <algorithm>
+#include <stack>
+#include <cctype>
 #include <cstdio>
+#include <string>
+#include <vector>
+#include <cassert>
+#include <cstdlib>
+#include <cstring>
+#include <sstream>
+#include <iostream>
+#include <algorithm>
 
 using namespace std;
 
-#define MIN(a, b) ( (a) < (b) ? (a) : (b) )
-#define FOR( i, L, U ) for( i=L ; i<=U; i++ )
+#define READ(x) freopen(x, "r", stdin)
+#define WRITE(x) freopen(x, "w", stdout)
 
-typedef vector<int> VI;
+vector<int> lisNlgN(vector<int> v) {
+    int n = v.size();
+    vector<int> piles = vector<int>(n, INT_MAX);
+    vector<int> position;
+    int maxLen = 0;
 
-#define INF 99999999
+    for(int i = 0; i < n; i++) {
+        int pos = lower_bound(piles.begin(), piles.end(), v[i]) - piles.begin();
+        piles[pos] = v[i];
+        position.push_back(pos);
+        maxLen = max(maxLen, pos+1); // Plus 1 because of 0-based index.
+    }
 
-int Sorted[1000001];			// For security I use int data type but using int may be accept.
+//    // Print piles for debug purpose
+//    for (auto x : piles) cout << x << " ";
+//    cout << endl;
+//
+//    // Print position for debug purpose
+//    for (auto x : position) cout << x << " ";
+//    cout << endl;
 
-int FindPos(int key, int lowerBound, int upperBound)
-{
-	int low = lowerBound;
-	int high = upperBound;
-	int mid, ret;
-
-	while(low <= high) {
-
-		mid = (low + high) / 2;
-
-		if(key < Sorted[mid]) {
-			ret = mid;
-			high = mid - 1;
-		}
-		else if(key > Sorted[mid]) low = mid + 1;
-
-		else return mid;
-	}
-
-	return ret;
+    vector<int> ret = vector<int>(piles.begin(), piles.begin() + maxLen);
+    return ret;
 }
 
-int LIS(VI v, VI &position)
-{
-	int pos, maxLength;
-	int total = v.size();
-	int i, j, k, temp;
+// https://www.cs.princeton.edu/courses/archive/spring13/cos423/lectures/LongestIncreasingSubsequence.pdf
+int main() {
+    READ("../input.txt");
+    //WRITE("output.txt");
 
-	FOR(i, 0, total) Sorted[i] = INF;
+    double cl = clock();
+    cl = clock() - cl;
 
-	maxLength = 0;
-	position.clear();
+    int N;
 
-	FOR(i, 0, total-1) {
-		temp = v[i];
+    while (cin >> N) {
+        vector<int> v = vector<int>(N);
+        for (int i = 0; i < N; i++) cin >> v[i];
 
-		pos = FindPos(temp, 1, total);
+        vector<int> lisList = lisNlgN(v);
+        printf("LIS Length = %d\n", lisList.size());
+        printf("LIS List = ");
+        for (auto x : lisList) printf("%d ", x);
+        printf("\n\n");
 
-		Sorted[pos] = temp;
-		position.push_back(pos);
-		if(pos > maxLength) maxLength = pos;
-	}
+//        printf("LIS Last Index = %d\n", lisLastIndex);
+//        vector<int> lisList;
+//        printLIS(lisLastIndex, lisList);
+//        printf("LIS List = ");
+//        for (auto x : lisList) printf("%d ", x);
+//        printf("\n\n");
+    }
 
-	return maxLength;
-}
-
-/*
-VI ConstructLIS(VI v, VI position, int lisLength)
-{
-	int i, j, k;
-	int tempPos = 1;
-	int curNum = v[0];
-
-	VI ret;
-	ret.push_back(curNum);
-
-	for(i=1; i<v.size(); i++)
-	{
-		if(position[i] == tempPos && v[i] < curNum) {
-				curNum = v[i];
-				tempPos = position[i];
-				ret.pop_back();
-				ret.push_back(curNum);
-		}
-		else if(position[i] > tempPos && v[i] > curNum) {
-				curNum = v[i];
-				tempPos = position[i];
-				ret.push_back(curNum);
-		}
-
-		if(tempPos == lisLength) break;
-	}
-
-	return ret;
-}
-*/
-
-VI ConstructLIS(VI v, VI position, int lisLength)
-{
-	int i, j, k;
-	int tempPos = lisLength;
-	int curNum = INF;
-
-	VI ret;
-	for(i=v.size()-1; i>=0 && tempPos!= 0; i--)
-		if(position[i] == tempPos) {	//v[i] < curNum
-			curNum = v[i];
-			ret.push_back(curNum);
-			tempPos--;
-		}
-	reverse(ret.begin(), ret.end());
-
-	return ret;
-}
-
-int main()
-{
-	freopen("input.txt", "r", stdin);
-//	freopen("output.txt", "w", stdout);
-
-    VI v, position, lis;
-	int i;
-    int temp, totalNum;
-
-	cin >> totalNum;
-
-	FOR(i, 1, totalNum) {
-		cin >> temp;
-		v.push_back(temp);
-	}
-
-	int lisLength = LIS(v, position);
-   FOR(i, 0, position.size()-1) cout << position[i] << " ";
-	lis = ConstructLIS(v, position, lisLength);
-
-	cout << lisLength << "\n\n";
-
-	FOR(i, 0, lis.size()-1)
-		cout << lis[i] << "\n";
+    fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
 
 
+/**
+Input:
+13
+6 3 5 10 11 2 9 14 13 7 4 8 12
+9
+10 22 9 33 21 50 41 60 80
+8
+10 9 2 5 3 7 101 18
+7
+7 7 7 7 7 7 7
+6
+0 1 0 3 2 3
 
-/*
-#include <vector>
-#include <cstdio>
+Output:
+LIS Length = 5
+LIS List = 2 4 7 8 12
 
-using namespace std;
+LIS Length = 6
+LIS List = 9 21 33 41 60 80
 
-// Finds longest strictly increasing subsequence. O(n log k) algorithm.
-void find_lis(vector<int> &a, vector<int> &b)
-{
-	vector<int> p(a.size());
-	int u, v;
+LIS Length = 4
+LIS List = 2 3 7 18
 
-	if (a.empty()) return;
+LIS Length = 1
+LIS List = 7
 
-	b.push_back(0);
+LIS Length = 4
+LIS List = 0 1 2 3
 
-	for (size_t i = 1; i < a.size(); i++)
-	{
-		// If next element a[i] is greater than last element of current longest subsequence a[b.back()],
-		// just push it at back of "b" and continue
-		if (a[b.back()] < a[i])
-		{
-			p[i] = b.back();
-			b.push_back(i);
-			continue;
-		}
-
-		// Binary search to find the smallest element
-		// referenced by b which is just bigger than a[i]
-		// Note : Binary search is performed on b (and not a).
-		// Size of b is always <=k and hence contributes O(log k) to complexity.
-		for (u = 0, v = b.size()-1; u < v;)
-		{
-			int c = (u + v) / 2;
-			if (a[b[c]] < a[i]) u=c+1; else v=c;
-		}
-
-		// Update b if new value is smaller then previously referenced value
-		if (a[i] < a[b[u]])
-		{
-			if (u > 0) p[i] = b[u-1];
-			b[u] = i;
-		}
-	}
-
-	for (u = b.size(), v = b.back(); u--; v = p[v])
-		b[u] = v;
-}
-
-// Example of usage:
-
-int main()
-{
-	int a[] = { 1, 9, 3, 8, 11, 4, 5, 6, 4, 19, 7, 1, 7 };
-	vector<int> seq(a, a+sizeof(a)/sizeof(a[0]));
-	// seq : Input Vector
-	vector<int> lis;
-	// lis : Vector containing indexes of longest subsequence
-
-	find_lis(seq, lis);
-
-    //Printing actual output
-	for (size_t i = 0; i < lis.size(); i++)
-	printf("%d ", seq[lis[i]]);
-   printf("\n");
-
-	return 0;
-}
-*/
+**/
