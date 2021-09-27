@@ -152,10 +152,12 @@ int main()
 
     while(cin >> s1 >> s2) {
         memset(c, -1 ,sizeof c);
-        cout << lcsTD(s1.length(), s2.length()) << endl;
+        int lcsLength = lcsTD(s1.length(), s2.length());
+        printf("LCS Length = %d\n", lcsLength);
         //cout << lcsBU() << endl;
-        printLCS(s1.length(), s2.length());
-        cout << endl;
+        string result;
+        printLCS(s1.length(), s2.length(), result);
+        printf("LCS String = %s\n", result.c_str());
     }
 
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
