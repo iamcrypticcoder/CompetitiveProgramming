@@ -28,6 +28,9 @@
 
 using namespace std;
 
+#define READ(x) freopen(x, "r", stdin)
+#define WRITE(x) freopen(x, "w", stdout)
+
 const int MAX = 1e4;
 
 // A is the main data list
@@ -71,7 +74,7 @@ void printLIS(int i, vector<int>& result) {
 
 int main()
 {
-    //READ("input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
@@ -104,6 +107,8 @@ int main()
 /**
 
 Input:
+13
+6 3 5 10 11 2 9 14 13 7 4 8 12
 9
 10 22 9 33 21 50 41 60 80
 8
@@ -114,6 +119,10 @@ Input:
 0 1 0 3 2 3
 
 Output:
+LIS Length = 5
+LIS Last Index = 7
+LIS List = 3 5 10 11 14
+
 LIS Length = 6
 LIS Last Index = 8
 LIS List = 10 22 33 41 60 80
@@ -129,5 +138,5 @@ LIS List = 7
 LIS Length = 4
 LIS Last Index = 5
 LIS List = 0 1 2 3
- 
+
  **/
