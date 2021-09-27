@@ -28,66 +28,17 @@
 
 using namespace std;
 
-#define FOR(i, L, U) for(int i=(int)L; i<=(int)U; i++)
-#define FORD(i, U, L) for(int i=(int)U; i>=(int)L; i--)
-
-#define READ(x) freopen(x, "r", stdin)
-#define WRITE(x) freopen(x, "w", stdout)
-
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
-
-#define EPS 1e-9
-#define SQR(x) ((x)*(x))
-#define INF 99999999
-#define TO_DEG 57.29577951
-#define PI 2*acos(0.0)
-
-#define ALL_BITS ((1 << 31) - 1)
-#define NEG_BITS(mask) (mask ^= ALL_BITS)
-#define TEST_BIT(mask, i) (mask & (1 << i))
-#define ON_BIT(mask, i) (mask |= (1 << i))
-#define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
-
-typedef long long LL;
-typedef unsigned long long ULL;
-typedef vector<int> VI;
-typedef vector<vector<int> > VVI;
-typedef vector<string> VS;
-typedef vector<bool> VB;
-typedef vector<char> VC;
-typedef vector< vector<bool> > VVB;
-typedef pair<int, int> PII;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-
-int GCD(int a,int b)    {   while(b)b^=a^=b^=a%=b;  return a;   }
-int LCM(int a, int b)   {   return a/GCD(a,b)*b;                }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = {-1, 0, 1, 0, -1, 1,  1, -1};
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1};
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = {-1, -2, -2, -1,  1,  2, 2, 1};
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2};
-
-inline int src() { int ret; scanf("%d", &ret); return ret; }
-
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 10000
+const int MAX = 1e4;
 
 // A is the main data list
 // L contains length if every 1 <= i <= MAX
 // P contains path of the for every 1 <= i <= MAX
 int N;
 int A[MAX+7], L[MAX+7], P[MAX+7];
-int lisLen, parent;
+int lisLen;
+
+// Indicates last element of final LIS. From here we will generate lis list.
+int lisLastIndex;
 
 int lisTD(int i)
 {
@@ -96,28 +47,31 @@ int lisTD(int i)
     if(i == 0) return L[i] = 1;
 
     int maxLen = 0;
-    FORD(j, i-1, 0) {
+    for (int j = i-1; j >= 0; j--) {
         int t = lisTD(j);
-        if(A[j] < A[i] && t > maxLen) {
+        if (A[i] > A[j] && t > maxLen) {
             maxLen = t;
             P[i] = j;
-            parent = j;
         }
     }
 
     L[i] = 1 + maxLen;
-    lisLen = max(lisLen, L[i]);
+    if (L[i] > lisLen) {
+        lisLen = L[i];
+        lisLastIndex = i;
+    }
     return L[i];
 }
 
-void printLIS()
-{
-
+void printLIS(int i, vector<int>& result) {
+    if (i == -1) return;
+    printLIS(P[i], result);
+    result.push_back(A[i]);
 }
 
 int main()
 {
-    READ("input.txt");
+    //READ("input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
@@ -125,17 +79,55 @@ int main()
     double cl = clock();
     cl = clock() - cl;
 
-    cin >> N;
-    FOR(i, 0, N-1) cin >> A[i];
+    while (cin >> N) {
+        for (int i = 0; i < N; i++)
+            cin >> A[i];
 
-    memset(L, -1, sizeof L);
-    memset(P,  0, sizeof P);
-    lisLen = 0, parent = 0;
-    lisTD(6);
-    cout << lisLen << endl;
-    cout << parent << endl;
-    FOR(i, 0, 6) cout << P[i] << " ";
+        memset(L, -1, sizeof L);
+        memset(P,  -1, sizeof P);
+        lisLen = 0, lisLastIndex = 0;
+        lisTD(N-1);
+        printf("LIS Length = %d\n", lisLen);
+        printf("LIS Last Index = %d\n", lisLastIndex);
+        vector<int> lisList;
+        printLIS(lisLastIndex, lisList);
+        printf("LIS List = ");
+        for (auto x : lisList) printf("%d ", x);
+        printf("\n\n");
+    }
+
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+/**
+
+Input:
+9
+10 22 9 33 21 50 41 60 80
+8
+10 9 2 5 3 7 101 18
+7
+7 7 7 7 7 7 7
+6
+0 1 0 3 2 3
+
+Output:
+LIS Length = 6
+LIS Last Index = 8
+LIS List = 10 22 33 41 60 80
+
+LIS Length = 4
+LIS Last Index = 6
+LIS List = 2 3 7 101
+
+LIS Length = 1
+LIS Last Index = 1
+LIS List = 7
+
+LIS Length = 4
+LIS Last Index = 5
+LIS List = 0 1 2 3
+ 
+ **/
