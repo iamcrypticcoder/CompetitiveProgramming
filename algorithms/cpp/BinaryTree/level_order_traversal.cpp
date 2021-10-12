@@ -93,20 +93,24 @@ int treeHeight(Node* n) {
 }
 
 vector<vector<int>> levelOrderList(Node* root) {
-    int h = treeHeight(root);
-    vector<vector<int>> ret = vector<vector<int>>(h);
-    queue<pair<int, Node*>> q;
+    if (NULL == root)
+        return vector<vector<int>>();
 
-    q.push(make_pair(0, root));
-
-    while (!q.empty()) {
-        pair<int, Node*> p = q.front(); q.pop();
-        int level = p.first;
-        Node* node = p.second;
-        ret[level].push_back(node->key);
-
-        if (NULL != node->left) q.push(make_pair(level+1, node->left));
-        if (NULL != node->right) q.push(make_pair(level+1, node->right));
+    vector<vector<int>> ret;
+    queue<Node*> Q;
+    Q.push(root);
+    while (!Q.empty()) {
+        int size = Q.size();
+        if (size > 0) {
+            ret.push_back(vector<int>());
+        }
+        while (size > 0) {
+            Node* n = Q.front(); Q.pop();
+            ret[ret.size()-1].push_back(n->key);
+            if (n->left) Q.push(n->left);
+            if (n->right) Q.push(n->right);
+            size--;
+        }
     }
     return ret;
 }
