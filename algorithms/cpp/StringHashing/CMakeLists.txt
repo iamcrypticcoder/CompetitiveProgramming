@@ -1,0 +1,14 @@
+cmake_minimum_required(VERSION 3.17)
+project(StringHashing)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(string_hashing string_hashing.cpp)
+add_executable(SPOJ_SUB_PROB SPOJ_SUB_PROB.cpp)
+add_executable(SPOJ_ADACLEAN SPOJ_ADACLEAN.cpp)
+add_executable(HACKERRANK_Gift_Boxes HACKERRANK_Gift_Boxes.cpp)
+add_executable(CF_Password CF_Password.cpp)
+add_executable(CF_Text_Editor CF_Text_Editor.cpp)
+add_executable(longest_common_substring longest_common_substring.cpp)
+add_executable(SPOJ_ADAPHOTO SPOJ_ADAPHOTO.cpp)
+add_executable(count_palindrome_substring count_palindrome_substring.cpp)

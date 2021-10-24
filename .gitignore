@@ -65,3 +65,5 @@ algorithms/cpp/BinaryTree/.idea/workspace.xml
 algorithms/cpp/DataStructures/cmake-build-debug
 algorithms/cpp/SegmentTree/cmake-build-debug
 algorithms/cpp/BinarySearchTree/cmake-build-debug
+algorithms/cpp/RobinKarp/cmake-build-debug/
+algorithms/cpp/StringHashing/cmake-build-debug/
