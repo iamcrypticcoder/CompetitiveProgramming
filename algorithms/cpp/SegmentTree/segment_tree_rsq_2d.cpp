@@ -7,7 +7,6 @@
     Complexity:
 */
 
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <set>
 #include <map>
@@ -29,87 +28,23 @@
 
 using namespace std;
 
-#define FOR(i, L, U) for(int i=(int)L; i<=(int)U; i++)
-#define FORD(i, U, L) for(int i=(int)U; i>=(int)L; i--)
-
 #define READ(x) freopen(x, "r", stdin)
 #define WRITE(x) freopen(x, "w", stdout)
 
-#define ff first
-#define ss second
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
-
-#define EPS 		1e-9
-#define SQR(x) 		((x)*(x))
-#define INF 		2000000000
-#define TO_DEG 		57.29577951
-#define PI 			2*acos(0.0)
-
-#define ALL_BITS					((1 << 31) - 1)
-#define NEG_BITS(mask)				(mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)			(mask & (1 << i))
-#define ON_BIT(mask, i)				(mask |= (1 << i))
-#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
-
 typedef long long LL;
 typedef unsigned long long ULL;
-typedef pair<int, int> PII;
-typedef pair<double, double> PDD;
-typedef vector<bool> VB;
-typedef vector<int> VI;
-typedef vector<double> VD;
-typedef vector<char> VC;
-typedef vector<string> VS;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-typedef vector<vector<bool> > VVB;
-typedef vector<vector<int> > VVI;
-typedef vector<vector<double> > VVD;
-typedef vector<vector<PII> > VVPII;
-
-int GCD(int a, int b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = { -1, 0, 1, 0, -1, 1,  1, -1 };
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2 };
 
 inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
-inline int srcUInt() { uint ret; scanf("%u", &ret); return ret; }
-inline int srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
-inline int srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
 
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 1000
+const int MAX = 1000;
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
+inline int combine(int a, int b) { return a + b; }
 
-struct Query {
-    uint x1, y1, x2, y2;
-    Query () {}
-    Query (uint x1, uint y1, uint x2, uint y2) {
-        this->x1 = x1;
-        this->y1 = y1;
-        this->x2 = x2;
-        this->y2 = y2;
-    }
-};
-
-uint N, M, Q;
-int A[MAX+7][MAX+7];
-ULL st[3*MAX+7][3*MAX+7];
+int N, M, Q;
+vector<vector<int>> A;
+ULL st[4*MAX+7][4*MAX+7];
 
 void buildY(int px, int lx, int rx, int py, int ly, int ry) {
     if (ly == ry) {
@@ -119,7 +54,7 @@ void buildY(int px, int lx, int rx, int py, int ly, int ry) {
     int mid = (ly + ry) >> 1;
     buildY(px, lx, rx, left(py), ly, mid);
     buildY(px, lx, rx, right(py), mid+1, ry);
-    st[px][py] = st[px][left(py)] + st[px][right(py)];
+    st[px][py] = combine(st[px][left(py)], st[px][right(py)]);
 }
 
 void buildX(int px, int lx, int rx) {
@@ -141,7 +76,7 @@ void updateY(int px, int lx, int rx, int py, int ly, int ry, int i, int j, int v
     int mid = (ly + ry) >> 1;
     if (j <= mid) updateY(px, lx, rx, left(py), ly, mid, i, j, v);
     else updateY(px, lx, rx, right(py), mid+1, ry, i, j, v);
-    st[px][py] = st[px][left(py)] + st[px][right(py)];
+    st[px][py] = combine(st[px][left(py)], st[px][right(py)]);
 }
 
 void updateX(int px, int lx, int rx, int i, int j, int v) {
@@ -174,27 +109,32 @@ ULL querySumX(int px, int lx, int rx, int i, int j, int k, int l) {
     return querySumX(left(px), lx, mid, i, mid, k, l) + querySumX(right(px), mid+1, rx, mid+1, j, k, l);
 }
 
-int main()
-{
-    READ("input.txt");
-    //WRITE("output.txt");
-    int i, j, k;
-    int TC, tc;
-    double cl = clock();
+int main() {
+    READ("../input.txt");
 
     cin >> N >> M;
-    FOR(i, 0, N-1) FOR(j, 0, M-1) cin >> A[i][j];
+    A = vector<vector<int>>(N, vector<int>(M));
+    for (int i = 0; i < N; i++)
+        for (int j = 0; j < M; j++)
+            cin >> A[i][j];
+
     buildX(1, 0, N-1);
 
     cin >> Q;
-    FOR(q, 0, Q) {
-        uint x1, y1, x2, y2;
-        scanf("%u %u %u %u", &x1, &y1, &x2, &y2);
+    for (int i = 0; i < Q; i++) {
+        int x1, y1, x2, y2;
+        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
         cout << querySumX(1, 0, N-1, x1, x2, y1, y2) << endl;
     }
 
-    cl = clock() - cl;
-    fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
+    updateX(1, 0, N-1, 2, 2, 10);
+
+    cin >> Q;
+    for (int i = 0; i < Q; i++) {
+        int x1, y1, x2, y2;
+        scanf("%d %d %d %d", &x1, &y1, &x2, &y2);
+        cout << querySumX(1, 0, N-1, x1, x2, y1, y2) << endl;
+    }
 
     return 0;
 }
@@ -210,4 +150,17 @@ Input:
 0 0 0 0
 0 0 1 1
 0 0 2 2
+3
+0 0 0 0
+0 0 1 1
+0 0 2 2
+
+Output:
+1
+14
+34
+1
+14
+43
+
  **/

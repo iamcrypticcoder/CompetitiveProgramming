@@ -33,60 +33,12 @@ using namespace std;
 #define READ(x) freopen(x, "r", stdin)
 #define WRITE(x) freopen(x, "w", stdout)
 
-#define ff first
-#define ss second
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
-
-#define EPS 		1e-9
-#define SQR(x) 		((x)*(x))
-#define INF 		2000000000
-#define TO_DEG 		57.29577951
-#define PI 			2*acos(0.0)
-
-#define ALL_BITS					((1 << 31) - 1)
-#define NEG_BITS(mask)				(mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)			(mask & (1 << i))
-#define ON_BIT(mask, i)				(mask |= (1 << i))
-#define OFF_BIT(mask, i)			(mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)				(x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)	(x & (x-1))
-
 typedef long long LL;
 typedef unsigned long long ULL;
-typedef pair<int, int> PII;
-typedef pair<double, double> PDD;
-typedef vector<bool> VB;
-typedef vector<int> VI;
-typedef vector<double> VD;
-typedef vector<char> VC;
-typedef vector<string> VS;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-typedef vector<vector<bool> > VVB;
-typedef vector<vector<int> > VVI;
-typedef vector<vector<double> > VVD;
-typedef vector<vector<PII> > VVPII;
-
-int GCD(int a, int b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = { -1, 0, 1, 0, -1, 1,  1, -1 };
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2 };
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 1000000
+const int MAX = 1e6;
 
 struct Node {
     ULL sum = 0;
@@ -100,11 +52,12 @@ struct Node {
 
 int N;
 int A[MAX];
-Node st[3 * MAX];
+Node st[4 * MAX];
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
 
+// Complexity: O(n)
 void build(int p, int l, int r) {
     if (l == r) {
         st[p].setSum(A[l]);

@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.17)
+project(Binomial_Coefficients)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(CODECHEF_NWAYS CODECHEF_NWAYS.cpp)
+add_executable(binomial_coefficient binomial_coefficient.cpp)
+add_executable(HACKEREARTH_Binomial_Coefficient HACKEREARTH_Binomial_Coefficient.cpp)

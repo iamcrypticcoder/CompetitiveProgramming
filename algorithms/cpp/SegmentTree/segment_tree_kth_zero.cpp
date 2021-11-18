@@ -86,86 +86,86 @@ inline int src() { int ret; scanf("%d", &ret); return ret; }
 #define GRAY 1
 #define BLACK 2
 
-#define MAX 1000000
+const int MAX = 1e6;
 
 inline int left(int p) { return p << 1; }
 inline int right(int p) { return (p << 1) + 1; }
+int combine(int a, int b) {
+    return a + b;
+}
 
-// Frequency of zero and kth zero
-struct Node {
-    int index = -1, cnt = 0;
-    void createLeaf(int i, int c) {
-        index = i;
-        cnt = c;
-    }
-    void combine(Node &a, Node &b) {
-        cnt = a.cnt + b.cnt;
-    }
-};
-
-uint N;
+int N;
 int A[MAX + 7];
-Node st[3*MAX + 7];
+int st[4*MAX + 7];
 
 void build(int p, int l, int r) {
     if (l == r) {
-        st[p].createLeaf(l, A[l] == 0 ? 1 : 0);
+        st[p] = (A[l] == 0);
         return;
     }
     int mid = (l + r) >> 1;
     build(left(p), l , mid);
     build(right(p), mid+1, r);
-    st[p].combine(st[left(p)], st[right(p)]);
+    st[p] = combine(st[left(p)], st[right(p)]);
 }
 
-Node queryCount(int p, int l, int r, int i, int j) {
+int queryCount(int p, int l, int r, int i, int j) {
     if (i == l && j == r) return st[p];
 
     int mid = (l + r) >> 1;
     if (j <= mid) return queryCount(left(p), l, mid, i, j);
     if (i > mid) return queryCount(right(p), mid+1, r, i, j);
 
-    Node ret;
-    Node lNode = queryCount(left(p), l, mid, i, mid);
-    Node rNode = queryCount(right(p), mid+1, r, mid+1, j);
-    ret.combine(lNode, rNode);
-    return ret;
+    return combine(queryCount(left(p), l, mid, i, mid),
+                   queryCount(right(p), mid+1, r, mid+1, j));
 }
 
-Node* queryKthZero(int p, int l, int r, int k) {
-    if (k > st[p].cnt) return NULL;
-    if (l == r) return &st[p];
+int queryKthZero(int p, int l, int r, int k) {
+    if (k > st[p]) return -1;
+    if (l == r) return l;
     int mid = (l + r) >> 1;
-    Node lNode = st[left(p)];
-    if (lNode.cnt >= k) return queryKthZero(left(p), l, mid, k);
-    else return queryKthZero(right(p), mid+1, r, k - lNode.cnt);
+    if (st[left(p)] >= k) return queryKthZero(left(p), l, mid, k);
+    else return queryKthZero(right(p), mid+1, r, k - st[left(p)]);
 }
 
-int main()
-{
-    //READ("input.txt");
-    //WRITE("output.txt");
-    int i, j, k;
-    int TC, tc;
-    double cl = clock();
+int main() {
+    READ("../input.txt");
 
-    int arr[8] = { 1, 0, 2, 3, 0, 0, 0, 4 };
-    N = 8;
-    FOR(i, 0, N-1) A[i] = arr[i];
+    cin >> N;
+    for (int i = 0; i < N; i++)
+        cin >> A[i];
 
     build(1, 0, N-1);
 
-    Node node = queryCount(1, 0, N-1, 1, 4);
-    cout << node.cnt << endl;
-
-    FOR(k, 1, 5) {
-        Node *tmp = queryKthZero(1, 0, N-1, k);
-        if (tmp == NULL) cout << "There is no k zeros" << endl;
-        else cout << tmp->index << endl;
+    int k;
+    while (cin >> k) {
+        int kthZero = queryKthZero(1, 0, N-1, k);
+        if (kthZero == -1) printf("There is no kth zero\n");
+        else printf("%d\'th zero = %d\n", k, kthZero);
     }
-
-    cl = clock() - cl;
-    fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+/**
+Input:
+10
+1 0 2 3 0 0 0 4 0 0
+1
+2
+3
+4
+5
+6
+7
+
+Output:
+1'th zero = 1
+2'th zero = 4
+3'th zero = 5
+4'th zero = 6
+5'th zero = 8
+6'th zero = 9
+There is no kth zero
+
+**/

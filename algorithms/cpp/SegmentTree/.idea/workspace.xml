@@ -2,109 +2,131 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="SegmentTree" targetName="D.XeniaandBitOperations" />
-      <config projectName="SegmentTree" targetName="C.CircularRMQ" />
-      <config projectName="SegmentTree" targetName="segment_tree_save_entire_subarray" />
       <config projectName="SegmentTree" targetName="segment_tree_rmq" />
       <config projectName="SegmentTree" targetName="HISTOGRA" />
-      <config projectName="SegmentTree" targetName="segment_tree_kth_zero" />
-      <config projectName="SegmentTree" targetName="persistent_segment_tree" />
+      <config projectName="SegmentTree" targetName="segment_tree_rmq_occurance" />
       <config projectName="SegmentTree" targetName="Multiplesof3" />
-      <config projectName="SegmentTree" targetName="UVA1232-SKYLINE" />
       <config projectName="SegmentTree" targetName="GSS3" />
-      <config projectName="SegmentTree" targetName="segment_tree_rsq_2d" />
-      <config projectName="SegmentTree" targetName="ANDROUND" />
-      <config projectName="SegmentTree" targetName="segment_tree_concise" />
-      <config projectName="SegmentTree" targetName="12532IntervalProduct" />
+      <config projectName="SegmentTree" targetName="segment_tree_gcd" />
       <config projectName="SegmentTree" targetName="GSS1" />
-      <config projectName="SegmentTree" targetName="FREQUENT-Frequentvalues" />
+      <config projectName="SegmentTree" targetName="SPOJ_KQUERY" />
       <config projectName="SegmentTree" targetName="segment_tree_rmq_lazy" />
       <config projectName="SegmentTree" targetName="segment_tree_rmq_frequency" />
+      <config projectName="SegmentTree" targetName="merge_sort_tree_find_smallest_number_greater_x" />
+      <config projectName="SegmentTree" targetName="CF_Circular_RMQ" />
+      <config projectName="SegmentTree" targetName="segment_tree_array_prefix_given_amount" />
+      <config projectName="SegmentTree" targetName="segment_tree_rsq" />
+      <config projectName="SegmentTree" targetName="D.XeniaandBitOperations" />
+      <config projectName="SegmentTree" targetName="UVA_11402" />
+      <config projectName="SegmentTree" targetName="segment_tree_save_entire_subarray" />
+      <config projectName="SegmentTree" targetName="C.CircularRMQ" />
+      <config projectName="SegmentTree" targetName="CF_Distinct_Characters_Queries" />
+      <config projectName="SegmentTree" targetName="persistent_segment_tree" />
+      <config projectName="SegmentTree" targetName="SPOJ_PSEGTREE" />
+      <config projectName="SegmentTree" targetName="segment_tree_kth_zero" />
+      <config projectName="SegmentTree" targetName="CF_Lucky_Array" />
+      <config projectName="SegmentTree" targetName="SPOJ_GSS3" />
+      <config projectName="SegmentTree" targetName="CF_Xenia_and_Bit_Operations" />
+      <config projectName="SegmentTree" targetName="CF_The_Child_and_Sequence" />
+      <config projectName="SegmentTree" targetName="UVA1232-SKYLINE" />
+      <config projectName="SegmentTree" targetName="segment_tree_rsq_2d" />
+      <config projectName="SegmentTree" targetName="segment_tree_concise" />
+      <config projectName="SegmentTree" targetName="ANDROUND" />
+      <config projectName="SegmentTree" targetName="FREQUENT-Frequentvalues" />
+      <config projectName="SegmentTree" targetName="12532IntervalProduct" />
       <config projectName="SegmentTree" targetName="RPLN" />
       <config projectName="SegmentTree" targetName="segment_tree_rsq_lazy" />
+      <config projectName="SegmentTree" targetName="segment_tree_zero_count" />
+      <config projectName="SegmentTree" targetName="maximum_subarray_sum_given_range" />
       <config projectName="SegmentTree" targetName="POSTERS" />
-      <config projectName="SegmentTree" targetName="segment_tree_rsq" />
+      <config projectName="SegmentTree" targetName="CF_DZY_Loves_Fibonacci_Numbers" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" ENABLED="true" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bcc9c8c-2679-4096-89d3-10ec7cc46d0a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Aho_Corasick/Aho_Corasick_Impl_1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Aho_Corasick/LeetCode_Stream_of_Characters.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Aho_Corasick/UVA_10679_I_Love_String.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinaryExponentiation/SPOJ_LASTDIG.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinaryExponentiation/SPOJ_LOCKER.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinaryExponentiation/SPOJ_ZSUM.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinaryExponentiation/UVA_11029_Leading_Trailing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../BinaryExponentiation/input.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/CF_Anton_and_School.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/CODECHEF_NWAYS.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/HACKEREARTH_Binomial_Coefficient.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/LIGHTOJ_Necklace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_ADATEAMS.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_DCEPC13D.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_GOODB.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_HC12.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_HLP_RAMS.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/SPOJ_UCV2013E.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/UVA_10532.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/UVA_11955.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/UVA_13184.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/UVA_13214.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/binomial_coefficient.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Binomial_Coefficients/input.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/B_Sherlock_and_his_girlfriend.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_COMDIV.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_DIVSUM.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_DIVSUM2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_HS08PAUL.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_TDPRIMES.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/SPOJ_VECTAR8.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/bitwise_sieve.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/input.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/pre_calculate_phi.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/pre_calculate_sigma.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../PrimeNumbers/pre_calculate_tau.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_Circular_RMQ.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_DZY_Loves_Fibonacci_Numbers.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_Distinct_Characters_Queries.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_Lucky_Array.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_The_Child_and_Sequence.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CF_Xenia_and_Bit_Operations.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SPOJ_GSS3.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SPOJ_KQUERY.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/UVA_11402.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/maximum_subarray_sum_given_range.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/merge_sort_tree_find_smallest_number_greater_than_x.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/persistent_segment_tree_rsq.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_array_prefix_given_amount.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/segment_tree_rmq_occurance.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/SPOJ_GIVEAWAY.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/UVA_12003.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/input.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/mo_algorithm_RSQ.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/sqrt_decomposition_COUNT_ZERO..cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/sqrt_decomposition_RMQ.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Sqrt_Decomposition/sqrt_decomposition_RSQ.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Z_Function/UVA_455_Periodic_String.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Z_Function/z_function.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/ANDROUND - AND Rounds.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/C. Circular RMQ.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/D. Xenia and Bit Operations.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/FREQUENT - Frequent values.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/GSS1 - Can you answer these queries I.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/GSS3 - Can you answer these queries III.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/HISTOGRA - Largest Rectangle in a Histogram.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/MULTQ3 - Multiples of 3.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/POSTERS - Election Posters.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/RPLN - Negative Score.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/UVA 1232 - SKYLINE.cpp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/problems/UVA 12532 Interval Product.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/persistent_segment_tree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/SPOJ_PSEGTREE.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_kth_zero.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_kth_zero.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rsq.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rsq.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rsq_2d.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rsq_2d.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/segment_tree_rsq_lazy.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../notes/GCDSUM AND LCMSUM.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/../../../notes/GCDSUM AND LCMSUM.pdf" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/segment_tree_rmq_lazy.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1210">
-              <caret line="157" selection-start-line="157" selection-end-line="157" />
-              <folding>
-                <element signature="e#119#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" column="61" selection-start-line="7" selection-start-column="61" selection-end-line="7" selection-end-column="61" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/segment_tree_rsq.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-330">
-              <caret line="105" column="31" selection-start-line="105" selection-start-column="31" selection-end-line="105" selection-end-column="31" />
-              <folding>
-                <element signature="e#119#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="900">
-              <caret line="147" column="1" selection-start-line="147" selection-start-column="1" selection-end-line="147" selection-end-column="1" />
-              <folding>
-                <element signature="e#119#133#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FindInProjectRecents">
     <findStrings>
       <find>lazy</find>
@@ -148,7 +170,10 @@
     <option name="width" value="1920" />
     <option name="height" value="1080" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="20ZwjeYIqA8XWSyjjlLzuUtouzw" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -168,86 +193,179 @@
       </pane>
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.first.check.clang-format" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.segment_tree_rsq_2d">
-    <configuration name="persistent_segment_tree" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="persistent_segment_tree" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="persistent_segment_tree">
+  <component name="RunManager" selected="CMake Application.CF_Circular_RMQ">
+    <configuration name="CF_Circular_RMQ" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_Circular_RMQ" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_Circular_RMQ">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_concise" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_concise" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_concise">
+    <configuration name="CF_DZY_Loves_Fibonacci_Numbers" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_DZY_Loves_Fibonacci_Numbers" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_DZY_Loves_Fibonacci_Numbers">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_kth_zero" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_kth_zero" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_kth_zero">
+    <configuration name="CF_Distinct_Characters_Queries" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_Distinct_Characters_Queries" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_Distinct_Characters_Queries">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rmq" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq">
+    <configuration name="CF_Lucky_Array" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_Lucky_Array" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_Lucky_Array">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rmq_frequency" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_frequency" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_frequency">
+    <configuration name="CF_The_Child_and_Sequence" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_The_Child_and_Sequence" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_The_Child_and_Sequence">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rmq_lazy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_lazy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_lazy">
+    <configuration name="CF_Xenia_and_Bit_Operations" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="CF_Xenia_and_Bit_Operations" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="CF_Xenia_and_Bit_Operations">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rsq" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq">
+    <configuration name="SPOJ_GSS3" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="SPOJ_GSS3" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="SPOJ_GSS3">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rsq_2d" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_2d" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_2d">
+    <configuration name="SPOJ_KQUERY" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="SPOJ_KQUERY" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="SPOJ_KQUERY">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_rsq_lazy" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_lazy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_lazy">
+    <configuration name="SPOJ_PSEGTREE" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="SPOJ_PSEGTREE" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="SPOJ_PSEGTREE">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="segment_tree_save_entire_subarray" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_save_entire_subarray" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_save_entire_subarray">
+    <configuration name="UVA_11402" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="UVA_11402" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="UVA_11402">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="maximum_subarray_sum_given_range" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="maximum_subarray_sum_given_range" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="maximum_subarray_sum_given_range">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="merge_sort_tree_find_smallest_number_greater_x" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="merge_sort_tree_find_smallest_number_greater_x" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="merge_sort_tree_find_smallest_number_greater_x">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="persistent_segment_tree" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="persistent_segment_tree" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="persistent_segment_tree">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_array_prefix_given_amount" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_array_prefix_given_amount" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_array_prefix_given_amount">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_concise" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_concise" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_concise">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_gcd" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_gcd" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_gcd">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_kth_zero" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_kth_zero" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_kth_zero">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq_frequency" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_frequency" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_frequency">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq_lazy" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_lazy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_lazy">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rmq_occurance" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rmq_occurance" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rmq_occurance">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rsq" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rsq_2d" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_2d" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_2d">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_rsq_lazy" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_rsq_lazy" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_rsq_lazy">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_save_entire_subarray" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_save_entire_subarray" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_save_entire_subarray">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="segment_tree_zero_count" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="SegmentTree" TARGET_NAME="segment_tree_zero_count" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="SegmentTree" RUN_TARGET_NAME="segment_tree_zero_count">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.persistent_segment_tree" />
-      <item itemvalue="Application.segment_tree_concise" />
-      <item itemvalue="Application.segment_tree_kth_zero" />
-      <item itemvalue="Application.segment_tree_rmq" />
-      <item itemvalue="Application.segment_tree_rmq_frequency" />
-      <item itemvalue="Application.segment_tree_rmq_lazy" />
-      <item itemvalue="Application.segment_tree_rsq" />
-      <item itemvalue="Application.segment_tree_rsq_2d" />
-      <item itemvalue="Application.segment_tree_rsq_lazy" />
-      <item itemvalue="Application.segment_tree_save_entire_subarray" />
+      <item itemvalue="CMake Application.CF_Circular_RMQ" />
+      <item itemvalue="CMake Application.CF_Distinct_Characters_Queries" />
+      <item itemvalue="CMake Application.CF_DZY_Loves_Fibonacci_Numbers" />
+      <item itemvalue="CMake Application.CF_Lucky_Array" />
+      <item itemvalue="CMake Application.CF_The_Child_and_Sequence" />
+      <item itemvalue="CMake Application.CF_Xenia_and_Bit_Operations" />
+      <item itemvalue="CMake Application.maximum_subarray_sum_given_range" />
+      <item itemvalue="CMake Application.merge_sort_tree_find_smallest_number_greater_x" />
+      <item itemvalue="CMake Application.persistent_segment_tree" />
+      <item itemvalue="CMake Application.segment_tree_array_prefix_given_amount" />
+      <item itemvalue="CMake Application.segment_tree_concise" />
+      <item itemvalue="CMake Application.segment_tree_gcd" />
+      <item itemvalue="CMake Application.segment_tree_kth_zero" />
+      <item itemvalue="CMake Application.segment_tree_rmq" />
+      <item itemvalue="CMake Application.segment_tree_rmq_frequency" />
+      <item itemvalue="CMake Application.segment_tree_rmq_lazy" />
+      <item itemvalue="CMake Application.segment_tree_rmq_occurance" />
+      <item itemvalue="CMake Application.segment_tree_rsq" />
+      <item itemvalue="CMake Application.segment_tree_rsq_2d" />
+      <item itemvalue="CMake Application.segment_tree_rsq_lazy" />
+      <item itemvalue="CMake Application.segment_tree_save_entire_subarray" />
+      <item itemvalue="CMake Application.segment_tree_zero_count" />
+      <item itemvalue="CMake Application.SPOJ_GSS3" />
+      <item itemvalue="CMake Application.SPOJ_KQUERY" />
+      <item itemvalue="CMake Application.SPOJ_PSEGTREE" />
+      <item itemvalue="CMake Application.UVA_11402" />
     </list>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -269,6 +387,43 @@
       <workItem from="1552067522778" duration="6106000" />
       <workItem from="1552221628560" duration="11915000" />
       <workItem from="1552495308272" duration="600000" />
+      <workItem from="1636265557184" duration="1698000" />
+      <workItem from="1636267281249" duration="1787000" />
+      <workItem from="1636269095845" duration="1772000" />
+      <workItem from="1636270908083" duration="1667000" />
+      <workItem from="1636276439876" duration="1429000" />
+      <workItem from="1636278253873" duration="2300000" />
+      <workItem from="1636286704123" duration="1917000" />
+      <workItem from="1636288650393" duration="1788000" />
+      <workItem from="1636290465035" duration="1787000" />
+      <workItem from="1636292286832" duration="1783000" />
+      <workItem from="1636294100880" duration="363000" />
+      <workItem from="1636304679510" duration="1788000" />
+      <workItem from="1636306495756" duration="1697000" />
+      <workItem from="1636308517451" duration="1816000" />
+      <workItem from="1636310364194" duration="1788000" />
+      <workItem from="1636312180450" duration="1117000" />
+      <workItem from="1636392447822" duration="1770000" />
+      <workItem from="1636394268711" duration="1793000" />
+      <workItem from="1636396102527" duration="1699000" />
+      <workItem from="1636397914176" duration="1802000" />
+      <workItem from="1636399763692" duration="1977000" />
+      <workItem from="1636401776650" duration="1780000" />
+      <workItem from="1636403590207" duration="1427000" />
+      <workItem from="1636431753271" duration="1782000" />
+      <workItem from="1636433569448" duration="1040000" />
+      <workItem from="1636440490048" duration="2335000" />
+      <workItem from="1636442896638" duration="1428000" />
+      <workItem from="1636478971891" duration="1787000" />
+      <workItem from="1636480785820" duration="1240000" />
+      <workItem from="1636482934332" duration="1530000" />
+      <workItem from="1636562747638" duration="1781000" />
+      <workItem from="1636564561175" duration="1363000" />
+      <workItem from="1636566375882" duration="1795000" />
+      <workItem from="1636568253531" duration="2139000" />
+      <workItem from="1636570419220" duration="1411000" />
+      <workItem from="1636572314397" duration="1366000" />
+      <workItem from="1637147287846" duration="60000" />
     </task>
     <servers />
   </component>
@@ -301,23 +456,16 @@
       <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
-          <line>124</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/segment_tree_concise.cpp</url>
           <line>102</line>
           <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
-          <line>133</line>
-          <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/segment_tree_rmq_frequency.cpp</url>
@@ -325,14 +473,69 @@
           <option name="timeStamp" value="37" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/segment_tree_kth_zero.cpp</url>
-          <line>136</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/maximum_subarray_sum_given_range.cpp</url>
+          <line>106</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
+          <line>110</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/segment_tree_rsq_lazy.cpp</url>
+          <line>85</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/segment_tree_rsq_2d.cpp</url>
-          <line>152</line>
-          <option name="timeStamp" value="41" />
+          <line>114</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/SPOJ_KQUERY.cpp</url>
+          <line>56</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/UVA_11402.cpp</url>
+          <line>159</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Distinct_Characters_Queries.cpp</url>
+          <line>90</line>
+          <option name="timeStamp" value="73" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Distinct_Characters_Queries.cpp</url>
+          <line>48</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Distinct_Characters_Queries.cpp</url>
+          <line>42</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Circular_RMQ.cpp</url>
+          <line>130</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Circular_RMQ.cpp</url>
+          <line>125</line>
+          <option name="timeStamp" value="81" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Circular_RMQ.cpp</url>
+          <line>108</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/CF_Circular_RMQ.cpp</url>
+          <line>89</line>
+          <option name="timeStamp" value="83" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -343,6 +546,8 @@
         <watch expression="line" language="ObjectiveC" />
         <watch expression="N" language="ObjectiveC" />
         <watch expression="X" language="ObjectiveC" />
+        <watch expression="lazy" language="ObjectiveC" />
+        <watch expression="A" language="ObjectiveC" />
       </configuration>
     </watches-manager>
   </component>

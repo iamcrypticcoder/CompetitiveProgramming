@@ -1,0 +1,9 @@
+cmake_minimum_required(VERSION 3.17)
+project(Sqrt_Decomposition)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(sqrt_decomposition_RSQ sqrt_decomposition_RSQ.cpp)
+add_executable(sqrt_decomposition_RMQ sqrt_decomposition_RMQ.cpp)
+add_executable(sqrt_decomposition_COUNT_ZERO. sqrt_decomposition_COUNT_ZERO..cpp)
+add_executable(mo_algorithm_RSQ mo_algorithm_RSQ.cpp)
