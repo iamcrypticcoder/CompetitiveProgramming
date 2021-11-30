@@ -1,10 +1,10 @@
 /*
-        Problem Link : 
+        Problem Link :
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : [AC, WA, TLE, RTE]
-        Time : 
-        Rank : 
-        Complexity: 
+        Time :
+        Rank :
+        Complexity:
 */
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -25,7 +25,7 @@
 #include <cstring>
 #include <sstream>
 #include <iostream>
-#include <limits.h>
+#include <climits>
 #include <algorithm>
 #include <unordered_set>
 #include <unordered_map>
@@ -79,7 +79,8 @@ typedef vector<vector<int> > VVI;
 typedef vector<vector<double> > VVD;
 typedef vector<vector<PII> > VVPII;
 
-int GCD(int a, int b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
+long long GCD(long long a, long long b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
+long long LCM(long long a, long long b) { return a / GCD(a, b) * b; }
 
 // UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
 int dx[8] = { -1, 0, 1, 0, -1, 1,  1, -1 };
@@ -89,30 +90,29 @@ int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1 };
 int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
 int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
 
+// Input Methods
 inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
 inline uint srcUInt() { uint ret; scanf("%u", &ret); return ret; }
 inline LL srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
 inline ULL srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
 
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
+const char WHITE = 0;
+const char GRAY = 1;
+const char BLACK = 2;
 
-#define MAX 1000001
+const int MAX = int(1e5);
 
+int main() {
+    //READ("../input.txt");
+    //WRITE("output.txt");
+    int i, j, k;
+    uint TC, tc;
+    double cl = clock();
 
-int main()
-{
-	//READ("input.txt");
-	//WRITE("output.txt");
-	int i, j, k;
-	uint TC, tc;
-	double cl = clock();
+    // Start your code here
 
-	// Start your code here
-	
-	cl = clock() - cl;
-	fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
+    cl = clock() - cl;
+    fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
-	return 0;
+    return 0;
 }
