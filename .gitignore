@@ -79,3 +79,4 @@ algorithms/cpp/DFS/cmake-build-debug/
 algorithms/cpp/BFS/cmake-build-debug/
 algorithms/cpp/Articulation_Point_Bridge/cmake-build-debug/
 algorithms/cpp/FenwickTree/cmake-build-debug
+algorithms/cpp/Dijkstra/cmake-build-debug
