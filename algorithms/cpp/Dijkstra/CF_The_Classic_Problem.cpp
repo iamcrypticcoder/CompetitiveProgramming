@@ -1,5 +1,5 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link : https://codeforces.com/contest/464/problem/E
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : [AC, WA, TLE, RTE]
         Time :

@@ -1,5 +1,5 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link :
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : [AC, WA, TLE, RTE]
         Time :
@@ -102,14 +102,69 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+int N, M;
+vector<vector<PII>> G;
+vector<int> dist, parent;
+
+void dijkstra(int src, int dest) {
+    dist = vector<int>(N+1, INT_MAX);
+    parent = vector<int>(N+1, -1);
+    dist[src] = 0;
+
+    auto comp = [](PII p1, PII p2) {
+        return p1.second > p2.second;
+    };
+    priority_queue<PII, vector<PII>, decltype(PII)> pq(comp);
+    pq.push({src, 0});
+
+    while (!pq.empty()) {
+        PII u = pq.top(); pq.pop();
+//        // If already dest found
+//        if (u.first = dest) {
+//            return;
+//        }
+        for (PII v : G[u]) {
+            if (dist[u.first] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u.first] + v.second;
+                parent[v.first] = u.first;
+                pq.push({v.first, dist[v.first]});
+            }
+        }
+    }
+}
+
+void makePath(int v, vector<int>& path) {
+    if (parent[v] != -1) makePath(parent[v]);
+    path.push_back(v);
+}
+
 int main() {
     //READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    int u, v;
 
-    // Start your code here
+    while (cin >> N >> M) {
+        if (N == 0 && M == 0) break;
+        G = vector<vector<PII>>(N+1);
+        for (int i = 0; i < M; i++) {
+            cin >> u >> v >> c;
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
+        }
+        cin >> source >> target;
+        dijkstra(source, target);
+        vector<int> path;
+        makePath(target, path);
+
+        cout << "Distance of target : " << dist[target] << "\n";
+        cout << "PATH : ";
+        cout << path[0];
+        FOR(i, 1, path.size()-1)
+            cout << " " << path[i];
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

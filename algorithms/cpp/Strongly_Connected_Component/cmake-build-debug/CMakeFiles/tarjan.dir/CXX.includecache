@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/mahbub/GITHUB/CompetitiveProgramming/algorithms/cpp/Strongly_Connected_Component/tarjan.cpp
+set
+-
+map
+-
+list
+-
+cmath
+-
+ctime
+-
+queue
+-
+stack
+-
+cctype
+-
+cstdio
+-
+string
+-
+vector
+-
+cassert
+-
+cstdlib
+-
+cstring
+-
+sstream
+-
+iostream
+-
+algorithm
+-
+

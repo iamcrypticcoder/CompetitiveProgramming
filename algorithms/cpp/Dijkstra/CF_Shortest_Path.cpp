@@ -1,5 +1,5 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link :
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : [AC, WA, TLE, RTE]
         Time :
@@ -102,14 +102,100 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+struct Triplet {
+    int x, y, z;
+    Triplet(int x, int y, int z) {
+        this->x = x;
+        this->y = y;
+        this->z = z;
+    }
+    bool operator==(const Triplet& o) const {
+        return (x == o.x && y == o.y && z == o.z);
+    };
+};
+namespace std {
+    template<> struct hash<Triplet> {
+        std::size_t operator()(const Triplet& p) const noexcept {
+            unsigned long long ret = 0;
+            ret = (ret * 31) + p.x;
+            ret = (ret * 31) + p.y;
+            ret = (ret * 31) + p.z;
+            return ret;
+        }
+    };
+}
+
+int N, M, K;
+vector<vector<int>> G;
+vector<int> parent, dist;
+unordered_set<Triplet> forbids;
+
+void bfs() {
+    dist.assign(N+1, INT_MAX);
+    parent.assign(N+1, -1);
+    auto comp = [](PII p1, PII p2) {
+        return p1.second > p2.second;
+    };
+    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
+    pq.push({1, 0});
+    dist[1] = 0;
+
+    while (!pq.empty()) {
+        auto u = pq.top(); pq.pop();
+        int a = parent[u.first], b = u.first;
+        for (int v : G[u.first]) {
+            int c = v;
+            if (forbids.find({a, b, c}) != forbids.end()) continue;
+            if (dist[u.first] + 1 < dist[v]) {
+                dist[v] = dist[u.first] + 1;
+                parent[v] = u.first;
+                pq.push({v, dist[v]});
+            }
+        }
+    }
+}
+
+void makePath(int u, vector<int>& path) {
+    if (parent[u] != -1) makePath(parent[u], path);
+    path.push_back(u);
+}
+
+vector<int> solve() {
+    bfs();
+    vector<int> path;
+    if (dist[N] == INT_MAX) return path;
+    makePath(N, path);
+    return path;
+}
+
 int main() {
-    //READ("../input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    int a, b, c, u, v;
 
-    // Start your code here
+    cin >> N >> M >> K;
+    G = vector<vector<int>>(N+1);
+    for (int i = 0; i < M; i++) {
+        u = srcInt();
+        v = srcInt();
+        G[u].push_back(v);
+        G[v].push_back(u);
+    }
+    for (int i = 0; i < K; i++) {
+        cin >> a >> b >> c;
+        forbids.insert({a, b, c});
+    }
+
+    vector<int> path = solve();
+    if (path.size() == 0) cout << "-1\n";
+    else {
+        cout << path.size()-1 << endl;
+        for (int x : path) cout << x << " ";
+        cout << endl;
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

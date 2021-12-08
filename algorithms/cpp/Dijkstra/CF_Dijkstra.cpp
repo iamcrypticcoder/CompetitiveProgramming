@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link : https://codeforces.com/contest/20/problem/C
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : [AC, WA, TLE, RTE]
+        Status : AC
         Time :
         Rank :
         Complexity:
@@ -102,14 +102,72 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+int N, M;
+vector<vector<PII>> G;
+vector<LL> dist;
+vector<int> parent;
+
+void dijkstra(int src) {
+    parent.assign(N+1, -1);
+    dist.assign(N+1, LLONG_MAX);
+    dist[src] = 0;
+    auto comp = [](pair<int, LL> p1, pair<int, LL> p2) {
+        return p1.second > p2.second;
+    };
+    priority_queue<
+            pair<int, LL>,
+            vector<pair<int, LL>>,
+            decltype(comp)> pq(comp);
+    pq.push({src, 0});
+
+    while (!pq.empty()) {
+        PII p = pq.top(); pq.pop();
+        int u = p.first;
+        for (PII v : G[u]) {
+            if (dist[u] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u] + v.second;
+                pq.push({v.first, dist[v.first]});
+                parent[v.first] = u;
+            }
+        }
+    }
+}
+
+void makePath(int u, vector<int>& path) {
+    if (parent[u] != -1) makePath(parent[u], path);
+    path.push_back(u);
+}
+
+vector<int> solve() {
+    dijkstra(1);
+    vector<int> ret;
+    if (dist[N] == LLONG_MAX) return ret;
+    makePath(N, ret);
+    return ret;
+}
+
 int main() {
-    //READ("../input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    int u, v, c;
 
-    // Start your code here
+    cin >> N >> M;
+    G = vector<vector<PII>>(N+1);
+    for (int i = 0; i < M; i++) {
+        cin >> u >> v >> c;
+        G[u].push_back({v, c});
+        G[v].push_back({u, c});
+    }
+
+    vector<int> ret = solve();
+    if (ret.size() == 0) cout << "-1\n";
+    else {
+        for (int x : ret) cout << x << " ";
+        cout << endl;
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

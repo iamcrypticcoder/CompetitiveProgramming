@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link : https://www.spoj.com/problems/ADATRIP/
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : [AC, WA, TLE, RTE]
+        Status : AC
         Time :
         Rank :
         Complexity:
@@ -102,14 +102,77 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+int N, M, Q;
+map<PII, int> edgeMap;
+vector<vector<PII>> G;
+vector<int> dist;
+
+PII dijkstra(int src) {
+    dist = vector<int>(N, INT_MAX);
+    auto comp = [](PII p1, PII p2) {
+        return p1.second > p2.second;
+    };
+    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
+    pq.push({src, 0});
+    dist[src] = 0;
+
+    int maxLen = 0;
+    int cnt = 0;
+    while (!pq.empty()) {
+        PII u = pq.top(); pq.pop();
+        if (u.second > maxLen) {
+            maxLen = u.second;
+            cnt = 1;
+        } else if (u.second == maxLen) {
+            cnt++;
+        }
+        for (PII v : G[u.first]) {
+            if (dist[u.first] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u.first] + v.second;
+                pq.push({v.first, dist[v.first]});
+            }
+        }
+    }
+
+    return {maxLen, cnt};
+}
+
+PII solve(int src) {
+    return dijkstra(src);
+}
+
 int main() {
-    //READ("../input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    int u, v, c;
 
-    // Start your code here
+    scanf("%d %d %d", &N, &M, &Q);
+    G = vector<vector<PII>>(N);
+    edgeMap.clear();
+    for (int i = 0; i < M; i++) {
+        u = srcInt();
+        v = srcInt();
+        c = srcInt();
+        if (edgeMap.find({u, v}) != edgeMap.end())
+            c = min(c, edgeMap[{u, v}]);
+        edgeMap[{u, v}] = c;
+        edgeMap[{v, u}] = c;
+    }
+    for (pair<PII, int> p : edgeMap) {
+        u = p.first.first, v = p.first.second;
+        c = p.second;
+        //printf("edge = %d %d %d\n", u, v, c);
+        G[u].push_back({v, c});
+    }
+
+    for (int i = 0; i < Q; i++) {
+        int q = srcInt();
+        PII ans = solve(q);
+        printf("%d %d\n", ans.first, ans.second);
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

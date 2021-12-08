@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link : https://www.spoj.com/problems/SHPATH/
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : [AC, WA, TLE, RTE]
+        Status : RTE
         Time :
         Rank :
         Complexity:
@@ -102,14 +102,79 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+int N;
+vector<vector<PII>> G;
+vector<int> dist;
+map<string, int> cityMap;
+
+int dijkstra(int s, int t) {
+    dist = vector<int>(N+1, INT_MAX);
+    dist[s] = 0;
+    auto comp = [](PII p1, PII p2) {
+        return p2.second > p2.second;
+    };
+    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
+    pq.push({s, 0});
+
+    while (!pq.empty()) {
+        PII p = pq.top(); pq.pop();
+        int u = p.first;
+        if (u == t) break;
+
+        for (PII v : G[u]) {
+            if (dist[u] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u] + v.second;
+                pq.push({v.first, dist[v.first]});
+            }
+        }
+    }
+}
+
+int solve(int s, int t) {
+    dijkstra(s, t);
+    return dist[t];
+}
+
 int main() {
-    //READ("../input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    string str;
+    int u, v, c;
+    int nodeNum;
+    string src, dest;
 
-    // Start your code here
+    TC = srcUInt();
+    for (tc = 1; tc <= TC; tc++) {
+        N = srcInt();
+        getline(cin, str);
+        G = vector<vector<PII>>(N+1);
+        cityMap.clear();
+        nodeNum = 0;
+        for (int i = 0; i < N; i++) {
+            getline(cin, str);
+            cityMap[str] = ++nodeNum;
+            int u = nodeNum;
+            int p = srcInt();
+            for (int j = 0; j < p; j++) {
+                scanf("%d %d", &v, &c);
+                G[u].push_back({v, c});
+                G[v].push_back({u, c});
+            }
+            getline(cin, str);
+        }
+        int r = srcInt();
+        getline(cin, str);
+        for (int i = 0; i < r; i++) {
+            cin >> src >> dest;
+            int s = cityMap[src];
+            int t = cityMap[dest];
+            //cout << s << t << endl;
+            printf("%d\n", solve(s, t));
+        }
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

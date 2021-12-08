@@ -1,5 +1,5 @@
 /*
-        Problem Link : https://www.spoj.com/problems/EC_P/
+        Problem Link : https://codeforces.com/contest/449/problem/B
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
         Status : [AC, WA, TLE, RTE]
         Time :
@@ -102,14 +102,68 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+int N, M, K;
+vector<vector<PII>> G;
+vector<LL> dist;
+unordered_map<int, int> costByTrain;
+
+void dijkstra(int src) {
+    dist.assign(N+1, LLONG_MAX);
+    auto comp = [](PII p1, PII p2) {
+        return p1.second > p2.second;
+    };
+    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
+
+    dist[src] = 0;
+    pq.push({src, 0});
+    while(!pq.empty()) {
+        PII u = pq.top(); pq.pop();
+        for (PII v : G[u.first]) {
+            if (dist[u.first] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u.first] + v.second;
+                pq.push({v.first, dist[v.first]});
+            }
+        }
+    }
+}
+
+int solve() {
+    int ret = 0;
+    dijkstra(1);
+    for (int u = 2; u <= N; u++) {
+        if (costByTrain.find(u) == costByTrain.end()) continue;
+        if (dist[u] <= costByTrain[u]) ret++;
+    }
+    return ret;
+}
+
 int main() {
-    //READ("../input.txt");
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
+    int u, v, c;
 
-    // Start your code here
+    cin >> N >> M >> K;
+    G = vector<vector<PII>>(N+1);
+    for (int i = 0; i < M; i++) {
+        cin >> u >> v >> c;
+        G[u].push_back({v, c});
+        G[v].push_back({u, c});
+    }
+    int notRequiredTrains = 0;
+    for (int i = 0; i < K; i++) {
+        cin >> u >> c;
+        if (costByTrain.find(u) == costByTrain.end())
+            costByTrain[u] = c;
+        else {
+            costByTrain[u] = min(costByTrain[u], c);
+            notRequiredTrains++;
+        }
+    }
+
+    printf("%d\n", solve() + notRequiredTrains);
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

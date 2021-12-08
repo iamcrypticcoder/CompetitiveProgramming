@@ -3,7 +3,6 @@ project(BFS)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(BFS main.cpp)
 add_executable(bfs bfs.cpp)
 add_executable(SPOJ_AKBAR SPOJ_AKBAR.cpp)
 add_executable(SPOJ_WATER SPOJ_WATER.cpp)
@@ -23,3 +22,5 @@ add_executable(LOJ_Commandos LOJ_Commandos.cpp)
 add_executable(LOJ_Jane_and_the_Frost_Giants LOJ_Jane_and_the_Frost_Giants.cpp)
 add_executable(LOJ_Corrupted_Friendship LOJ_Corrupted_Friendship.cpp)
 add_executable(SPOJ_RIOI_2_3 SPOJ_RIOI_2_3.cpp)
+add_executable(CF_Shortest_Path CF_Shortest_Path.cpp)
+add_executable(main main.cpp)
