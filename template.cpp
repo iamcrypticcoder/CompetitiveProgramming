@@ -44,11 +44,7 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS             1e-9
 #define SQR(x)          ((x)*(x))
-#define INF             2000000000
-#define TO_DEG          57.29577951
-#define PI              2*acos(0.0)
 
 #define ALL_BITS                                ((1 << 31) - 1)
 #define NEG_BITS(mask)                          (mask ^= ALL_BITS)
@@ -100,7 +96,11 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int INF       = int(1e9);
+const double EPS    = double(1e-9);
+const double TO_DEG = double(57.29577951);
+const double PI     = 2*acos(0.0);
+const int MAX_N     = int(1e5);
 
 int main() {
     //READ("../input.txt");
