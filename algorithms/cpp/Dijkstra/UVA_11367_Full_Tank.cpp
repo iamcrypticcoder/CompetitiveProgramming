@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/113/11367.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
-        Rank :
+        Status : AC
+        Time : 0.040
+        Rank : 1299
         Complexity:
 */
 
@@ -100,44 +100,56 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int MAX_N = int(1000);    // Max number of node
+const int MAX_C = int(100);     // Max fuel capacity
 
 struct State {
-    int node, dist;
+    int node, fuel, dist;
     State();
-    State(int a, int b) : node(a), dist(b) {}
+    State(int a, int b, int c) : node(a), fuel(b), dist(c) {}
     bool operator < (const State& o) const {
         return dist > o.dist;
     }
 };
 
-int N;
+int N, M, Q;
+vector<int> fuelPrice;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int dijkstra(int src, int dest, int capacity) {
+    vector<vector<int>> dist;       // {node, fuel} -> dist
+    dist.assign(N, vector<int>(capacity+1, INT_MAX));
     priority_queue<State> pq;
-    pq.push({s, 0});
+    dist[src][0] = 0;
+    pq.push({src, 0, 0});
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
 
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        if (u.node == dest) {
+            return u.dist;
+        }
+
+        // For remaining space of tank, pour 1 liter each time and try to go next node
+        for (int curFuel = u.fuel; curFuel <= capacity; curFuel++) {
+            for (PII p : G[u.node]) {
+                if (p.second > curFuel) continue;
+                int addFuelCost = (curFuel - u.fuel) * fuelPrice[u.node];
+                int vNode = p.first, vFuel = curFuel - p.second;
+
+                if (u.dist + addFuelCost < dist[vNode][vFuel]) {
+                    State v = State(p.first, curFuel - p.second, u.dist + addFuelCost);
+                    dist[vNode][vFuel] = u.dist + addFuelCost;
+                    pq.push(v);
+                }
             }
         }
     }
+    return INT_MAX;
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int solve(int src, int dest, int capacity) {
+    return dijkstra(src, dest, capacity);
 }
 
 int main() {
@@ -146,39 +158,25 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
-        }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+    scanf("%d %d", &N, &M);
+    fuelPrice = vector<int>(N);
+    G = vector<vector<PII>>(N);
+    for (int& x : fuelPrice) x = srcInt();
+    for (int i = 0; i < M; i++) {
+        u = srcInt();
+        v = srcInt();
+        c = srcInt();
+        G[u].push_back({v, c});
+        G[v].push_back({u, c});
+    }
+    Q = srcInt();
+    for (int i = 0; i < Q; i++) {
+        int src, dest, capacity;
+        scanf("%d %d %d", &capacity, &src, &dest);
+        int ans = solve(src, dest, capacity);
+        printf("%s\n", ans == INT_MAX ? "impossible" : to_string(ans).c_str());
     }
 
     cl = clock() - cl;

@@ -102,39 +102,46 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+struct State {
+    int node, dist;
+    State();
+    State(int a, int b) : node(a), dist(b) {}
+    bool operator < (const State& o) const {
+        return dist > o.dist;
+    }
+};
+
 int N, M;
 vector<vector<PII>> G;
 vector<int> dist, parent;
 
-void dijkstra(int src, int dest) {
-    dist = vector<int>(N+1, INT_MAX);
-    parent = vector<int>(N+1, -1);
+int dijkstra(int src, int dest) {
+    parent.assign(N+1, -1);
+    dist.assign(N+1, INT_MAX);
+    priority_queue<State> pq;
+    pq.push({src, 0});
     dist[src] = 0;
 
-    auto comp = [](PII p1, PII p2) {
-        return p1.second > p2.second;
-    };
-    priority_queue<PII, vector<PII>, decltype(PII)> pq(comp);
-    pq.push({src, 0});
-
     while (!pq.empty()) {
-        PII u = pq.top(); pq.pop();
+        auto u = pq.top(); pq.pop();
 //        // If already dest found
 //        if (u.first = dest) {
-//            return;
+//            break;
 //        }
-        for (PII v : G[u]) {
-            if (dist[u.first] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.first] + v.second;
-                parent[v.first] = u.first;
+        for (PII v : G[u.node]) {
+            if (dist[u.node] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u.node] + v.second;
+                parent[v.first] = u.node;
                 pq.push({v.first, dist[v.first]});
             }
         }
     }
+    return dist[dest];
 }
 
 void makePath(int v, vector<int>& path) {
-    if (parent[v] != -1) makePath(parent[v]);
+    if (v == -1) return;
+    makePath(parent[v], path);
     path.push_back(v);
 }
 
@@ -144,7 +151,8 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    int u, v;
+    int u, v, c;
+    int src, dest;
 
     while (cin >> N >> M) {
         if (N == 0 && M == 0) break;
@@ -154,12 +162,12 @@ int main() {
             G[u].push_back({v, c});
             G[v].push_back({u, c});
         }
-        cin >> source >> target;
-        dijkstra(source, target);
+        cin >> src >> dest;
+        dijkstra(src, dest);
         vector<int> path;
-        makePath(target, path);
+        makePath(dest, path);
 
-        cout << "Distance of target : " << dist[target] << "\n";
+        cout << "Distance of target : " << dist[dest] << "\n";
         cout << "PATH : ";
         cout << path[0];
         FOR(i, 1, path.size()-1)

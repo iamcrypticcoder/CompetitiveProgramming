@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/102/10278.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
-        Rank :
+        Status : AC
+        Time : 0.000
+        Rank : 212
         Complexity:
 */
 
@@ -111,33 +111,54 @@ struct State {
     }
 };
 
-int N;
+int F, N;
 vector<vector<PII>> G;
 vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
+void dijkstra(priority_queue<State>& pq, vector<int>& dist) {
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
 
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        for (PII p : G[u.node]) {
+            if (u.dist + p.second < dist[p.first]) {
+                dist[p.first] = u.dist + p.second;
+                pq.push({p.first, dist[p.first]});
             }
         }
     }
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int findMaxDist(vector<int> v) {
+    int ret = INT_MIN;
+    for (int i = 1; i <= N; i++) ret = max(ret, v[i]);
+    return ret;
+}
+
+int solve(vector<int> stations) {
+    priority_queue<State> pq;
+    vector<int> dist = vector<int>(N+1, INT_MAX);
+    for (int x : stations) {
+        dist[x] = 0;
+        pq.push(State(x, 0));
+    }
+    dijkstra(pq, dist);
+    vector<int> orgDist = dist;
+
+    int minDist = INT_MAX;
+    int ans = 1;
+    for (int i = 1; i <= N; i++) {
+        pq = priority_queue<State>();
+        dist = orgDist;
+        dist[i] = 0;
+        pq.push({i, 0});
+        dijkstra(pq, dist);
+        int maxDist = findMaxDist(dist);
+        if (maxDist < minDist) {
+            minDist = maxDist;
+            ans = i;
+        }
+    }
+    return ans;
 }
 
 int main() {
@@ -146,39 +167,30 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
+    string line;
+    stringstream ss;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
+        if (tc > 1) printf("\n");
+        F = srcInt();
         N = srcInt();
-        getline(cin, str);
         G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+        vector<int> stations = vector<int>(F);
+        for (int& x : stations) x = srcInt();
+        getchar();
+        G = vector<vector<PII>>(N+1);
+        while (getline(cin, line) && line.size() != 0) {
+            ss.clear();
+            ss << line;
+            ss >> u >> v >> c;
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        int ans = solve(stations);
+        printf("%d\n", ans);
     }
 
     cl = clock() - cl;

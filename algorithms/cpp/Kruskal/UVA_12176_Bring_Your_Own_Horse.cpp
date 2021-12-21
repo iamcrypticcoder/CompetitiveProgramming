@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/121/12176.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 46
         Complexity:
 */
 
@@ -44,11 +44,7 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS             1e-9
 #define SQR(x)          ((x)*(x))
-#define INF             2000000000
-#define TO_DEG          57.29577951
-#define PI              2*acos(0.0)
 
 #define ALL_BITS                                ((1 << 31) - 1)
 #define NEG_BITS(mask)                          (mask ^= ALL_BITS)
@@ -100,85 +96,94 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int INF       = int(1e9);
+const double EPS    = double(1e-9);
+const double TO_DEG = double(57.29577951);
+const double PI     = 2*acos(0.0);
+const int MAX_N     = int(3e3);
 
-struct State {
-    int node, dist;
-    State();
-    State(int a, int b) : node(a), dist(b) {}
-    bool operator < (const State& o) const {
-        return dist > o.dist;
+struct Edge {
+    int u, v, w;
+    Edge();
+    Edge(int a, int b, int c) : u(a), v(b), w(c) {}
+    bool operator < (const Edge& o) const {
+        return w < o.w;
     }
 };
 
-int N;
+// -------------------- Disjoint Set Structure --------------------------------------
+int dset[MAX_N+1];
+void initSet(int N)     {   FOR(i, 0, N)    dset[i] = i;     }
+int findSet(int u)      {   return dset[u] == u ? u : (dset[u] = findSet(dset[u]));    }
+void unionSet(int u, int v){   dset[findSet(u)] = findSet(v); }
+// ----------------------------------------------------------------------------------
+
+int N, R, Q;
+vector<Edge> edges;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
-            }
+void kruskal() {
+    sort(edges.begin(), edges.end());
+    initSet(N+1);
+    G = vector<vector<PII>>(N+1);
+    for(int i=0; i<edges.size(); i++) {
+        int u = edges[i].u, v = edges[i].v, c = edges[i].w;
+        if(findSet(u) != findSet(v)) {
+            unionSet(u, v);
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
         }
     }
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int solve(int src, int dest) {
+    vector<int> dist = vector<int>(N+1, 0);
+    vector<char> color = vector<char>(N+1, WHITE);
+    queue<int> q;
+    q.push(src);
+    color[src] = GRAY;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        if (u == dest) break;
+        for (PII p : G[u]) {
+            if (color[p.first] == WHITE) {
+                dist[p.first] = max(dist[u], p.second);
+                q.push(p.first);
+                color[p.first] = GRAY;
+            }
+        }
+        color[u] = BLACK;
+    }
+    return dist[dest];
 }
 
 int main() {
     READ("../input.txt");
-    //WRITE("output.txt");
+    WRITE("../output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+        scanf("%d %d", &N, &R);
+        edges.clear();
+        for (int i = 0; i < R; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            edges.push_back(Edge(u, v, c));
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
+
+        kruskal();
+
+        scanf("%d", &Q);
+        printf("Case %u\n", tc);
+        for (int i = 0; i < Q; i++) {
+            scanf("%d %d", &u, &v);
+            int ans = solve(u, v);
+            printf("%d\n", ans);
         }
+        printf("\n");
     }
 
     cl = clock() - cl;

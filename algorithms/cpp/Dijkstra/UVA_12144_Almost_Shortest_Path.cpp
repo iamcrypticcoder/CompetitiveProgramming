@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/121/12144.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 94
         Complexity:
 */
 
@@ -100,7 +100,7 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int MAX_N = int(501);
 
 struct State {
     int node, dist;
@@ -111,33 +111,48 @@ struct State {
     }
 };
 
-int N;
+int N, M, S, D;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+vector<vector<int>> parents;
+bool badEdges[MAX_N][MAX_N];
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int dijkstra(int src, int dest) {
+    vector<int> dist = vector<int>(N, INT_MAX);
+    parents = vector<vector<int>>(N);
     priority_queue<State> pq;
-    pq.push({s, 0});
+    dist[src] = 0;
+    pq.push(State(src, 0));
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
 
         for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+            if (badEdges[u.node][v.first]) continue;
+
+            int d = u.dist + v.second;
+            if (d < dist[v.first]) {
+                dist[v.first] = d;
+                pq.push(State(v.first, d));
+                parents[v.first].clear();
+                parents[v.first].push_back(u.node);
+            } else if (d == dist[v.first]) {
+                parents[v.first].push_back(u.node);
             }
         }
     }
+    return dist[dest];
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+void markBadEdges() {
+    queue<int> q;
+    q.push(D);
+    while (!q.empty()) {
+        int v = q.front(); q.pop();
+        for (int u : parents[v]) {
+            badEdges[u][v] = true;
+            q.push(u);
+        }
+    }
 }
 
 int main() {
@@ -146,39 +161,24 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+    while (scanf("%d %d", &N, &M) == 2) {
+        if (N == 0 && M == 0) break;
+        scanf("%d %d", &S, &D);
+
+        G = vector<vector<PII>>(N);
+        for (int i = 0; i < M; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            G[u].push_back({v, c});
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        memset(badEdges, false, sizeof badEdges);
+        dijkstra(S, D);
+        markBadEdges();
+        int ans = dijkstra(S, D);
+        if (ans == INT_MAX) printf("-1\n");
+        else printf("%d\n", ans);
     }
 
     cl = clock() - cl;

@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/106/10603.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
-        Rank :
+        Status : AC
+        Time : 0.000
+        Rank : 353
         Complexity:
 */
 
@@ -16,6 +16,7 @@
 #include <ctime>
 #include <queue>
 #include <stack>
+#include <tuple>
 #include <cctype>
 #include <cstdio>
 #include <string>
@@ -24,8 +25,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <sstream>
-#include <iostream>
 #include <climits>
+#include <iostream>
 #include <algorithm>
 #include <unordered_set>
 #include <unordered_map>
@@ -103,41 +104,102 @@ const char BLACK = 2;
 const int MAX = int(1e5);
 
 struct State {
-    int node, dist;
+    int a, b, c, poured;
     State();
-    State(int a, int b) : node(a), dist(b) {}
+    State(int x, int y, int z, int w) : a(x), b(y), c(z), poured(w) {}
     bool operator < (const State& o) const {
-        return dist > o.dist;
+        return poured > o.poured;
+    }
+    bool have(int x) {
+        return a == x || b == x || c == x;
+    }
+    int closeTo(int x) {
+        int ret = 0;
+        if (a < x) ret = max(ret, a);
+        if (b < x) ret = max(ret, b);
+        if (c < x) ret = max(ret, c);
+        return ret;
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+int A, B, C, D;
+map<tuple<int, int, int>, int> dist;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
-            }
-        }
+void relax(State v, priority_queue<State>& pq) {
+    if (dist.find({v.a, v.b, v.c}) == dist.end() || v.poured < dist[{v.a, v.b, v.c}]) {
+        dist[{v.a, v.b, v.c}] = v.poured;
+        pq.push(v);
     }
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+pair<int, int> dijkstra() {
+    State src = State(0, 0, C, 0);
+    priority_queue<State> pq;
+    pq.push(src);
+    dist.clear();
+    dist[{0, 0, C}] = 0;
+    int dPrime = 0;
+    int poured = 0;
+
+    while (!pq.empty()) {
+        State u = pq.top(); pq.pop();
+        //printf("a = %d, b = %d, c = %d, poured = %d\n", u.a, u.b, u.c, u.poured);
+
+        if (u.have(D)) {
+            return {u.poured, D};
+        } else if (u.closeTo(D) > dPrime) {
+            dPrime = u.closeTo(D);
+            poured = u.poured;
+        }
+
+        if (u.a) {
+            // If B isn't full
+            if (B - u.b > 0) {
+                int x = min(B - u.b, u.a);
+                State v = State(u.a - x, u.b + x, u.c, u.poured + x);
+                relax(v, pq);
+            }
+            // If C isn't full
+            if (C - u.c > 0) {
+                int x = min(C - u.c, u.a);
+                State v = State(u.a - x, u.b, u.c + x, u.poured + x);
+                relax(v, pq);
+            }
+        }
+        if (u.b) {
+            // If A isn't full
+            if (A - u.a > 0) {
+                int x = min(A - u.a, u.b);
+                State v = State(u.a + x, u.b - x, u.c, u.poured + x);
+                relax(v, pq);
+            }
+            // If C isn't full
+            if (C - u.c > 0) {
+                int x = min(C - u.c, u.b);
+                State v = State(u.a, u.b - x, u.c + x, u.poured + x);
+                relax(v, pq);
+            }
+        }
+        if (u.c) {
+            // If A isn't full
+            if (A - u.a > 0) {
+                int x = min(A - u.a, u.c);
+                State v = State(u.a + x, u.b, u.c - x, u.poured + x);
+                relax(v, pq);
+            }
+            // If B isn't full
+            if (B - u.b > 0) {
+                int x = min(B - u.b, u.c);
+                State v = State(u.a, u.b + x, u.c - x, u.poured + x);
+                relax(v, pq);
+            }
+        }
+    }
+    return {poured, dPrime};
+}
+
+pair<int, int> solve() {
+    return dijkstra();
 }
 
 int main() {
@@ -146,39 +208,13 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
-        }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+        scanf("%d %d %d %d", &A, &B, &C, &D);
+
+        auto ans = solve();
+        printf("%d %d\n", ans.first, ans.second);
     }
 
     cl = clock() - cl;

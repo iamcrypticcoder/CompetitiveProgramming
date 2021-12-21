@@ -1,7 +1,7 @@
 /*
         Problem Link : https://codeforces.com/contest/449/problem/B
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : [AC, WA, TLE, RTE]
+        Status : Wrong answer on test 5
         Time :
         Rank :
         Complexity:
@@ -102,6 +102,16 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
+struct State {
+    int node;
+    LL dist;
+    State();
+    State(int a, LL b) : node(a), dist(b) {}
+    bool operator < (const State& o) const {
+        return dist > o.dist;
+    }
+};
+
 int N, M, K;
 vector<vector<PII>> G;
 vector<LL> dist;
@@ -109,18 +119,15 @@ unordered_map<int, int> costByTrain;
 
 void dijkstra(int src) {
     dist.assign(N+1, LLONG_MAX);
-    auto comp = [](PII p1, PII p2) {
-        return p1.second > p2.second;
-    };
-    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
+    priority_queue<State> pq;
 
     dist[src] = 0;
     pq.push({src, 0});
     while(!pq.empty()) {
-        PII u = pq.top(); pq.pop();
-        for (PII v : G[u.first]) {
-            if (dist[u.first] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.first] + v.second;
+        State u = pq.top(); pq.pop();
+        for (PII v : G[u.node]) {
+            if (dist[u.node] + v.second < dist[v.first]) {
+                dist[v.first] = dist[u.node] + v.second;
                 pq.push({v.first, dist[v.first]});
             }
         }
@@ -147,11 +154,21 @@ int main() {
 
     cin >> N >> M >> K;
     G = vector<vector<PII>>(N+1);
+    map<PII, int> edgeCost;
     for (int i = 0; i < M; i++) {
         cin >> u >> v >> c;
-        G[u].push_back({v, c});
-        G[v].push_back({u, c});
+        if (edgeCost.find({u, v}) == edgeCost.end()) {
+            edgeCost[{u, v}] = edgeCost[{v, u}] = c;
+        } else {
+            c = min(edgeCost[{u, v}], c);
+            edgeCost[{u, v}] = edgeCost[{v, u}] = c;
+        }
     }
+    for (auto it = edgeCost.begin(); it != edgeCost.end(); it++) {
+        int u = it->first.first, v = it->first.second, c = it->second;
+        G[u].push_back({v, c});
+    }
+
     int notRequiredTrains = 0;
     for (int i = 0; i < K; i++) {
         cin >> u >> c;

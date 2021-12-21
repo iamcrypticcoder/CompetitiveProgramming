@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/118/11833.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
         Rank :
         Complexity:
@@ -111,33 +111,37 @@ struct State {
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+int N, M, C, K;
+vector<vector<pair<int, int>>> G;
+vector<vector<int>> cost;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int dijkstra(int src, int dest) {
+    vector<int> dist;
+    dist.assign(N, INT_MAX);
     priority_queue<State> pq;
-    pq.push({s, 0});
+    pq.push({src, 0});
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
 
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        if (u.node == C-1) continue;
+
+        if (u.node < C) {
+            int v = u.node + 1;
+            if (u.dist + cost[u.node][v] < dist[v]) {
+                dist[v] = u.dist + cost[u.node][v];
+                pq.push(State(v, dist[v]));
+            }
+        } else {
+            for (PII v : G[u.node]) {
+                if (u.dist + cost[u.node][v.first] < dist[v.first]) {
+                    dist[v.first] = u.dist + cost[u.node][v.first];
+                    pq.push(State(v.first, dist[v.first]));
+                }
             }
         }
     }
-}
-
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+    return dist[dest];
 }
 
 int main() {
@@ -146,39 +150,22 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+    while (scanf("%d %d %d %d", &N, &M, &C, &K) == 4) {
+        if (N == 0 && M == 0 && C == 0 && K == 0) break;
+        G = vector<vector<PII>>(N);
+        cost.assign(N, vector<int>(N));
+        for (int i = 0; i < M; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
+            cost[u][v] = c;
+            cost[v][u] = c;
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        int ans = dijkstra(K, C-1);
+        printf("%d\n", ans);
     }
 
     cl = clock() - cl;

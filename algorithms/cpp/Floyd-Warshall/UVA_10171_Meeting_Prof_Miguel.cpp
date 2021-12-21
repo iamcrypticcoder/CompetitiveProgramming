@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/101/10171.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 1132
         Complexity:
 */
 
@@ -44,11 +44,7 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS             1e-9
 #define SQR(x)          ((x)*(x))
-#define INF             2000000000
-#define TO_DEG          57.29577951
-#define PI              2*acos(0.0)
 
 #define ALL_BITS                                ((1 << 31) - 1)
 #define NEG_BITS(mask)                          (mask ^= ALL_BITS)
@@ -100,44 +96,52 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int INF       = int(1e9);
+const double EPS    = double(1e-9);
+const double TO_DEG = double(57.29577951);
+const double PI     = 2*acos(0.0);
+const int MAX_N     = int(26);
 
-struct State {
-    int node, dist;
-    State();
-    State(int a, int b) : node(a), dist(b) {}
-    bool operator < (const State& o) const {
-        return dist > o.dist;
-    }
-};
+int yGraph[MAX_N][MAX_N];
+int mGraph[MAX_N][MAX_N];
+int src, dest;
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+void resetGraph() {
+    for (int i = 0; i < MAX_N; i++)
+        for (int j = 0; j < MAX_N; j++) {
+            yGraph[i][j] = (i == j ? 0 : INF);
+            mGraph[i][j] = (i == j ? 0 : INF);
+        }
+}
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+void floydWarshall() {
+    for (int k = 0; k < MAX_N; k++) {
+        for (int i = 0; i < MAX_N; i++) {
+            for (int j = 0; j < MAX_N; j++) {
+                yGraph[i][j] = min(yGraph[i][j], yGraph[i][k] + yGraph[k][j]);
+                mGraph[i][j] = min(mGraph[i][j], mGraph[i][k] + mGraph[k][j]);
             }
         }
     }
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+vector<char> solve(int& minEnergy) {
+    vector<char> ret;
+    floydWarshall();
+    minEnergy = INT_MAX;
+    for (int i = 0; i < MAX_N; i++) {
+        if (yGraph[src][i] != INF && mGraph[dest][i] != INF) {
+            int d = yGraph[src][i] + mGraph[dest][i];
+            if (d < minEnergy) {
+                minEnergy = d;
+                ret.clear();
+                ret.push_back('A'+i);
+            } else if (d == minEnergy) {
+                ret.push_back('A'+i);
+            }
+        }
+    }
+    return ret;
 }
 
 int main() {
@@ -146,38 +150,40 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
+    char age, dir, city1, city2;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
+    int N;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
+    while (scanf("%d", &N) == 1) {
+        if (N == 0) break;
+        getchar();
+        resetGraph();
+
         for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
+            scanf("%c %c %c %c %d", &age, &dir, &city1, &city2, &c);
+            getchar();
+            u = city1 - 'A';
+            v = city2 - 'A';
+            if (age == 'Y') {
+                yGraph[u][v] = min(yGraph[u][v], c);
+                if (dir == 'B') yGraph[v][u] = min(yGraph[v][u], c);
+            } else {
+                mGraph[u][v] = min(mGraph[u][v], c);
+                if (dir == 'B') mGraph[v][u] = min(mGraph[v][u], c);
             }
-            getline(cin, str);
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
+
+        scanf("%c %c", &city1, &city2);
+        src = city1 - 'A';
+        dest = city2 - 'A';
+
+        int minEnergy;
+        auto list = solve(minEnergy);
+        if (list.size() == 0) printf("You will never meet.\n");
+        else {
+            printf("%d", minEnergy);
+            for (char ch : list) printf(" %c", ch);
+            cout << endl;
         }
     }
 

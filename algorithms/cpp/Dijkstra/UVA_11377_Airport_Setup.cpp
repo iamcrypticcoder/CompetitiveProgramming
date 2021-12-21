@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/113/11377.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
-        Rank :
+        Status : AC
+        Time : 0.010
+        Rank : 76
         Complexity:
 */
 
@@ -111,74 +111,71 @@ struct State {
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+int N, M, K, Q;
+vector<bool> haveAirport;
+vector<vector<int>> G;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int dijkstra(int src, int dest) {
+    vector<int> dist;
+    dist.assign(N+1, INT_MAX);
     priority_queue<State> pq;
-    pq.push({s, 0});
+    dist[src] = haveAirport[src] ? 0 : 1;
+    pq.push(State(src, dist[src]));
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        State u = pq.top(); pq.pop();
+        if (u.node == dest) return u.dist;
+        if (dist[u.node] == u.dist) {
+            for (int v: G[u.node]) {
+                int d = haveAirport[v] ? u.dist : u.dist + 1;
+                if (d < dist[v]) {
+                    dist[v] = d;
+                    pq.push(State(v, d));
+                }
             }
         }
     }
+    return dist[dest];
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int solve(int src, int dest) {
+    return dijkstra(src, dest);
 }
 
 int main() {
     READ("../input.txt");
-    //WRITE("output.txt");
+    WRITE("../output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
+    int u, v;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
+        scanf("%d %d %d", &N, &M, &K);
+        haveAirport.assign(N+1, false);
+        for (int i = 0; i < K; i++) {
+            int x = srcInt();
+            haveAirport[x] = true;
+        }
+        G = vector<vector<int>>(N+1);
+        for (int i = 0; i < M; i++) {
+            scanf("%d %d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
+        }
+        Q = srcInt();
+        printf("Case %d:\n", tc);
+        for (int i = 0; i < Q; i++) {
+            scanf("%d %d", &u, &v);
+            if (u == v) {
+                printf("0\n");
+            } else {
+                int ans = solve(u, v);
+                printf("%d\n", ans == INT_MAX ? -1 : ans);
             }
-            getline(cin, str);
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+        printf("\n");
     }
 
     cl = clock() - cl;

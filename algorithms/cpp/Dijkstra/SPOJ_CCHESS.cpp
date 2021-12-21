@@ -1,8 +1,8 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://www.spoj.com/problems/CCHESS/
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
+        Status : AC
+        Time : 0.01
         Rank :
         Complexity:
 */
@@ -103,41 +103,43 @@ const char BLACK = 2;
 const int MAX = int(1e5);
 
 struct State {
-    int node, dist;
+    int x, y, dist;
     State();
-    State(int a, int b) : node(a), dist(b) {}
+    State(int a, int b, int c) : x(a), y(b), dist(c) {}
     bool operator < (const State& o) const {
         return dist > o.dist;
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+int A, B, C, D;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
-            }
-        }
-    }
+bool onGrid(int x, int y) {
+    return x >= 0 && x < 8 && y >= 0 && y < 8;
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int dijkstra() {
+    priority_queue<State> pq;
+    vector<vector<int>> dist;
+    dist.assign(8, vector<int>(8, INT_MAX));
+    pq.push(State(A, B, 0));
+    dist[A][B] = 0;
+
+    while (!pq.empty()) {
+        State u = pq.top(); pq.pop();
+        int x = u.x, y = u.y;
+        if (x == C && y == D) return u.dist;
+        for (int i = 0; i < 8; i++) {
+            int xx = x + dxKnightMove[i];
+            int yy = y + dyKnightMove[i];
+            if (!onGrid(xx, yy)) continue;
+            int d = u.dist + x*xx + y*yy;
+            if (d < dist[xx][yy]) {
+                dist[xx][yy] = d;
+                pq.push(State(xx, yy, d));
+            }
+        }
+    };
+    return INT_MAX;
 }
 
 int main() {
@@ -146,39 +148,10 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
-        }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+    while (scanf("%d %d %d %d", &A, &B, &C, &D) == 4) {
+        int ans = dijkstra();
+        printf("%d\n", ans == INT_MAX ? -1 : ans);
     }
 
     cl = clock() - cl;

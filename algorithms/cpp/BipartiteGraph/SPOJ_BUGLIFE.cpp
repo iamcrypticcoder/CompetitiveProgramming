@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link :
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : [AC, WA, TLE, RTE]
         Time :
         Rank :
         Complexity:
@@ -44,11 +44,7 @@ using namespace std;
 #define PB push_back
 #define SZ size()
 
-#define EPS             1e-9
 #define SQR(x)          ((x)*(x))
-#define INF             2000000000
-#define TO_DEG          57.29577951
-#define PI              2*acos(0.0)
 
 #define ALL_BITS                                ((1 << 31) - 1)
 #define NEG_BITS(mask)                          (mask ^= ALL_BITS)
@@ -100,45 +96,38 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int INF       = int(1e9);
+const double EPS    = double(1e-9);
+const double TO_DEG = double(57.29577951);
+const double PI     = 2*acos(0.0);
+const int MAX_N     = int(1e5);
 
-struct State {
-    int node, dist;
-    State();
-    State(int a, int b) : node(a), dist(b) {}
-    bool operator < (const State& o) const {
-        return dist > o.dist;
-    }
-};
+int N, M;
+vector<vector<int>> G;
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
-
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+bool bipartiteCheck() {
+    vector<char> color = vector<char>(N+1, WHITE);
+    for (int i = 1; i <= N; i++) {
+        if (color[i] == WHITE) {
+            queue<int> q;
+            q.push(i);
+            color[i] = GRAY;
+            while (!q.empty()) {
+                int u = q.front(); q.pop();
+                char c = (color[u] == GRAY ? BLACK : GRAY);
+                for (int v : G[u]) {
+                    if (color[v] == WHITE) {
+                        color[v] = c;
+                        q.push(v);
+                    }
+                    else if (color[u] == color[v]) return false;
+                }
             }
         }
     }
+    return true;
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
-}
 
 int main() {
     READ("../input.txt");
@@ -146,39 +135,23 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
+    int u, v;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
         N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+        M = srcInt();
+
+        G = vector<vector<int>>(N+1);
+        for (int i = 0; i < M; i++) {
+            scanf("%d %d", &u, &v);
+            G[u].push_back(v);
+            G[v].push_back(u);
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        printf("Scenario #%u:\n", tc);
+        if (bipartiteCheck()) printf("No suspicious bugs found!\n");
+        else printf("Suspicious bugs found!\n");
     }
 
     cl = clock() - cl;

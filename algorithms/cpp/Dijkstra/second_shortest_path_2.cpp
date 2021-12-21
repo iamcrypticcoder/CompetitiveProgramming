@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/103/10342.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 283
         Complexity:
 */
 
@@ -111,73 +111,74 @@ struct State {
     }
 };
 
-int N;
+int N, R, Q;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+void dijkstra(int src, int dest, vector<int>& dist) {
+    dist.assign(N, INT_MAX);
+    dist[src] = 0;
     priority_queue<State> pq;
-    pq.push({s, 0});
+    pq.push(State(src, 0));
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
+        State u = pq.top(); pq.pop();
         for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+            if (u.dist + v.second < dist[v.first]) {
+                dist[v.first] = u.dist + v.second;
+                pq.push(State(v.first, dist[v.first]));
             }
         }
     }
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int secondShortest(int src, int dest) {
+    vector<int> distS;
+    vector<int> distT;
+    dijkstra(src, dest, distS);
+    dijkstra(dest, src, distT);
+
+    int shortest = distS[dest];
+    if (shortest == INT_MAX) return INT_MAX;
+
+    int secondShortest = INT_MAX;
+    for (int i = 0; i < N; i++) {
+        int u = i;
+        for (auto p : G[i]) {
+            int v = p.first;
+            int c = p.second;
+            if (distS[u] + c + distT[v] > shortest) {
+                secondShortest = min(secondShortest, distS[u] + c + distT[v]);
+            }
+        }
+    }
+    return secondShortest;
 }
 
+// THIS DOESN'T WORK. NEED TO REVISE AGAIN.
 int main() {
     READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+    tc = 1;
+    while (scanf("%d %d", &N, &R) == 2) {
+        G = vector<vector<PII>>(N);
+        for (int i = 0; i < R; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
+
+        printf("Set #%d\n", tc++);
+        scanf("%d", &Q);
+        for (int i = 0; i < Q; i++) {
+            scanf("%d %d", &u, &v);
+            int ans = secondShortest(u, v);
+            if (ans == INT_MAX) printf("?\n");
+            else printf("%d\n", ans);
         }
     }
 
@@ -186,3 +187,4 @@ int main() {
 
     return 0;
 }
+

@@ -1,7 +1,7 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link :
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : [AC, WA, TLE, RTE]
         Time :
         Rank :
         Complexity:
@@ -107,78 +107,35 @@ struct State {
     State();
     State(int a, int b) : node(a), dist(b) {}
     bool operator < (const State& o) const {
-        return dist > o.dist;
+        return dist < o.dist;
     }
 };
 
-int N;
+int N, M, S, T, P;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
-
-    while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
-
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
-            }
-        }
-    }
-}
-
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int dijkstra() {
+    priority_queue<>
 }
 
 int main() {
-    READ("../input.txt");
+    //READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+        scanf("%d %d %d %d", &N, &M, &S, &T, &P);
+        G = vector<vector<PII>>(N);
+        for (int i = 0; i < M; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            G[u].push_back({v, c});
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+
     }
 
     cl = clock() - cl;

@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/9/929.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
-        Time :
-        Rank :
+        Status : AC
+        Time : 0.580
+        Rank : 177
         Complexity:
 */
 
@@ -102,42 +102,49 @@ const char BLACK = 2;
 
 const int MAX = int(1e5);
 
-struct State {
-    int node, dist;
-    State();
-    State(int a, int b) : node(a), dist(b) {}
-    bool operator < (const State& o) const {
-        return dist > o.dist;
+int N, M;
+vector<vector<int>> grid;
+
+struct Cell {
+    int x, y, dist;
+    Cell(int X, int Y, int D) : x(X), y(Y), dist(D) {}
+    bool operator< (const Cell& c) const {
+        return dist > c.dist;
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+bool onGrid(int x, int y) {
+    return x >= 0 && x < N && y >= 0 && y < M;
+}
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
-    priority_queue<State> pq;
-    pq.push({s, 0});
+int dijkstra() {
+    vector<vector<int>> dist;
+    dist.assign(N, vector<int>(M, INT_MAX));
+    priority_queue<Cell> pq;
+    dist[0][0] = grid[0][0];
+    pq.push(Cell(0, 0, dist[0][0]));
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        Cell u = pq.top(); pq.pop();
+        if (u.x == N-1 && u.y == M-1)
+            break;
 
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        for (int i = 0; i < 4; i++) {
+            int xx = u.x + dx[i];
+            int yy = u.y + dy[i];
+            if (!onGrid(xx, yy)) continue;
+            if (u.dist + grid[xx][yy] < dist[xx][yy]) {
+                dist[xx][yy] = u.dist + grid[xx][yy];
+                Cell v = Cell(xx, yy, dist[xx][yy]);
+                pq.push(v);
             }
         }
     }
+    return dist[N-1][M-1];
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+int solve() {
+    return dijkstra();
 }
 
 int main() {
@@ -146,39 +153,17 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
 
     TC = srcUInt();
     for (tc = 1; tc <= TC; tc++) {
         N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+        M = srcInt();
+        grid = vector<vector<int>>(N, vector<int>(M));
+        for (vector<int>& row : grid) {
+            for (int& x : row) x  = srcInt();
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        printf("%d\n", solve());
     }
 
     cl = clock() - cl;

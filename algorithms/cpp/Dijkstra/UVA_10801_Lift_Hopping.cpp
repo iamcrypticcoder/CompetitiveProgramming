@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/108/10801.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 1269
         Complexity:
 */
 
@@ -103,82 +103,101 @@ const char BLACK = 2;
 const int MAX = int(1e5);
 
 struct State {
-    int node, dist;
+    int node, elev;
+    LL dist;
     State();
-    State(int a, int b) : node(a), dist(b) {}
+    State(int n, int e, LL d) : node(n), elev(e), dist(d) {}
     bool operator < (const State& o) const {
         return dist > o.dist;
     }
 };
 
-int N;
-vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
+struct Edge {
+    int node, elev, cost;
+    Edge();
+    Edge(int a, int b, int c) : node(a), elev(b), cost(c) {}
+};
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int N = 100;
+int K;
+vector<vector<Edge>> G;
+
+LL dijkstra(int src) {
+    vector<LL> dist = vector<LL>(N, LLONG_MAX);
+    dist[src] = 0;
     priority_queue<State> pq;
-    pq.push({s, 0});
+    bool used[5] = { false };
+    for (Edge e : G[0]) {
+        if (false == used[e.elev]) {
+            pq.push(State(src, e.elev, 0));
+            used[e.elev] = true;
+        }
+    }
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
 
-        for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
+        if (u.node == K) {
+//            for (int i = 0; i < N; i++) printf("%d -> %lld\n", i, dist[i]);
+//            cout << endl;
+            return u.dist;
+        }
+
+        for (Edge e : G[u.node]) {
+            // Go through same elevator
+            if (u.elev == e.elev) {
+                if (u.dist + e.cost < dist[e.node]) {
+                    dist[e.node] = u.dist + e.cost;
+                    pq.push(State(e.node, e.elev, dist[e.node]));
+                }
+            } else {
+                if (u.dist + e.cost + 60 < dist[e.node]) {
+                    dist[e.node] = u.dist + e.cost + 60;
+                    pq.push(State(e.node, e.elev, dist[e.node]));
+                }
             }
         }
     }
+
+    return dist[K];
 }
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+LL solve() {
+    return dijkstra(0);
 }
 
 int main() {
     READ("../input.txt");
     //WRITE("output.txt");
-    int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
-    int u, v, c;
-    int nodeNum;
-    string src, dest;
+    string line;
+    int u, v;
+    int n;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
+    while (scanf("%d %d", &n, &K) == 2) {
+        vector<int> ti = vector<int>(n);
+        for (int &x: ti) x = srcInt();
+        getchar();
+
+        G = vector<vector<Edge>>(100);
+        for (int i = 0; i < n; i++) {
+            getline(cin, line);
+            stringstream ss(line);
+            vector<int> floors;
+            while (ss >> u) floors.emplace_back(u);
+            for (int j = 0; j < floors.size(); j++) {
+                int u = floors[j];
+                for (int k = j+1; k < floors.size(); k++) {
+                    int v = floors[k];
+                    G[u].push_back(Edge(v, i, (v - u) * ti[i]));
+                    G[v].push_back(Edge(u, i, (v - u) * ti[i]));
+                }
             }
-            getline(cin, str);
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        LL ans = solve();
+        printf("%s\n", ans == LLONG_MAX ? "IMPOSSIBLE" : to_string(ans).c_str());
     }
 
     cl = clock() - cl;

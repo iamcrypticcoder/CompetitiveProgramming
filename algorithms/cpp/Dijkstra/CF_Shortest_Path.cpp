@@ -100,7 +100,7 @@ const char WHITE = 0;
 const char GRAY = 1;
 const char BLACK = 2;
 
-const int MAX = int(1e5);
+const int MAX_N = int(1e3);
 
 struct Triplet {
     int x, y, z;
@@ -124,32 +124,41 @@ namespace std {
         }
     };
 }
+struct State {
+    int node, prevNode, dist;
+    State();
+    State(int a, int b, int c) : node(a), prevNode(b), dist(c) {}
+    bool operator < (const State& o) const {
+        return dist > o.dist;
+    }
+};
 
 int N, M, K;
 vector<vector<int>> G;
 vector<int> parent, dist;
 unordered_set<Triplet> forbids;
+vector<vector<bool>> visited;
 
 void bfs() {
+    visited.assign(MAX_N+1, vector<bool>(MAX_N+1, false));
     dist.assign(N+1, INT_MAX);
     parent.assign(N+1, -1);
-    auto comp = [](PII p1, PII p2) {
-        return p1.second > p2.second;
-    };
-    priority_queue<PII, vector<PII>, decltype(comp)> pq(comp);
-    pq.push({1, 0});
+    priority_queue<State> pq;
+    pq.push(State(1, -1, 0));
     dist[1] = 0;
 
     while (!pq.empty()) {
         auto u = pq.top(); pq.pop();
-        int a = parent[u.first], b = u.first;
-        for (int v : G[u.first]) {
+        if (u.node == N) break;
+        int a = u.prevNode, b = u.node;
+        for (int v : G[u.node]) {
             int c = v;
             if (forbids.find({a, b, c}) != forbids.end()) continue;
-            if (dist[u.first] + 1 < dist[v]) {
-                dist[v] = dist[u.first] + 1;
-                parent[v] = u.first;
-                pq.push({v, dist[v]});
+
+            if (dist[u.node] + 1 < dist[v]) {
+                dist[v] = dist[u.node] + 1;
+                parent[v] = u.node;
+                pq.push(State(v, u.node, dist[v]));
             }
         }
     }

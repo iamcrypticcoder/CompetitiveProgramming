@@ -1,9 +1,9 @@
 /*
-        Problem Link : https://www.spoj.com/problems/SHPATH/
+        Problem Link : https://onlinejudge.org/external/103/10342.pdf
         Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : RTE
+        Status : AC
         Time :
-        Rank :
+        Rank : 283
         Complexity:
 */
 
@@ -111,33 +111,48 @@ struct State {
     }
 };
 
-int N;
+int N, R;
 vector<vector<PII>> G;
-vector<int> dist;
-map<string, int> cityMap;
 
-int dijkstra(int s, int t) {
-    dist = vector<int>(N+1, INT_MAX);
-    dist[s] = 0;
+int dijkstra(int src, int dest) {
+    vector<pair<int, int>> dist;
+    dist.assign(N, {INT_MAX, INT_MAX});
     priority_queue<State> pq;
-    pq.push({s, 0});
+    for (PII v : G[src]) {
+        pq.push(State(v.first, v.second));
+    }
+    dist[src] = {0, INT_MAX};
 
     while (!pq.empty()) {
-        auto u = pq.top(); pq.pop();
-        if (u.node == t) break;
+        State u = pq.top(); pq.pop();
+
+        // If dist matched with shortest, no nothing
+        if (u.dist == dist[u.node].first) continue;
+
+        // If shortest distance isn't found yet.
+        if (dist[u.node].first == INT_MAX) {
+            dist[u.node].first = u.dist;
+        } else {
+            // If new shortest dist found
+            if (u.dist < dist[u.node].first) {
+                dist[u.node].second = dist[u.node].first;
+                dist[u.node].first = u.dist;
+            } else if (dist[u.node].second == INT_MAX || u.dist < dist[u.node].second) {
+                // If new 2nd shortest found
+                dist[u.node].second = u.dist;
+            } else continue;
+        }
 
         for (PII v : G[u.node]) {
-            if (dist[u.node] + v.second < dist[v.first]) {
-                dist[v.first] = dist[u.node] + v.second;
-                pq.push({v.first, dist[v.first]});
-            }
+            pq.push(State(v.first, u.dist + v.second));
         }
     }
-}
 
-int solve(int s, int t) {
-    dijkstra(s, t);
-    return dist[t];
+//    for (int i = 0; i < dist.size(); i++) {
+//        printf("%d -> %d %d\n", i, dist[i].first, dist[i].second);
+//    }
+
+    return dist[dest].second;
 }
 
 int main() {
@@ -146,39 +161,21 @@ int main() {
     int i, j, k;
     uint TC, tc;
     double cl = clock();
-    string str;
     int u, v, c;
-    int nodeNum;
-    string src, dest;
 
-    TC = srcUInt();
-    for (tc = 1; tc <= TC; tc++) {
-        N = srcInt();
-        getline(cin, str);
-        G = vector<vector<PII>>(N+1);
-        cityMap.clear();
-        nodeNum = 0;
-        for (int i = 0; i < N; i++) {
-            getline(cin, str);
-            cityMap[str] = ++nodeNum;
-            int u = nodeNum;
-            int p = srcInt();
-            for (int j = 0; j < p; j++) {
-                scanf("%d %d", &v, &c);
-                G[u].push_back({v, c});
-                G[v].push_back({u, c});
-            }
-            getline(cin, str);
+    tc = 1;
+    while (scanf("%d %d", &N, &R) == 2) {
+        G = vector<vector<PII>>(N);
+        for (int i = 0; i < R; i++) {
+            scanf("%d %d %d", &u, &v, &c);
+            G[u].push_back({v, c});
+            G[v].push_back({u, c});
         }
-        int r = srcInt();
-        getline(cin, str);
-        for (int i = 0; i < r; i++) {
-            cin >> src >> dest;
-            int s = cityMap[src];
-            int t = cityMap[dest];
-            //cout << s << t << endl;
-            printf("%d\n", solve(s, t));
-        }
+
+        scanf("%d %d", &u, &v);
+        int ans = dijkstra(u, v);
+        if (ans == INT_MAX) printf("?\n");
+        else printf("%d\n", ans);
     }
 
     cl = clock() - cl;
@@ -186,3 +183,22 @@ int main() {
 
     return 0;
 }
+
+/*
+Input:
+8 9
+0 1 4
+0 2 4
+0 3 10
+1 4 4
+2 5 4
+3 6 10
+4 7 4
+5 7 5
+6 7 10
+0 7
+
+Output:
+
+
+ */

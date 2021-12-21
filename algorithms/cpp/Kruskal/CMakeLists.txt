@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.21)
+project(Kruskal)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(Kruskal main.cpp)
+
+add_executable(kruskal kruskal.cpp)
+add_executable(SPOJ_KOICOST SPOJ_KOICOST.cpp)
+add_executable(SPOJ_MARYBMW SPOJ_MARYBMW.cpp)
+add_executable(UVA_10724_Road_Construction UVA_10724_Road_Construction.cpp)
+add_executable(10600_ACM_Contest_and_Blackout 10600_ACM_Contest_and_Blackout.cpp)
+add_executable(UVA_11710_Expensive_Subway UVA_11710_Expensive_Subway.cpp)
+add_executable(UVA_10307_Killing_Aliens_in_Borg_Maze UVA_10307_Killing_Aliens_in_Borg_Maze.cpp)
+add_executable(UVA_11747_Heavy_Cycle_Edges UVA_11747_Heavy_Cycle_Edges.cpp)
+add_executable(UVA_11733_Airports UVA_11733_Airports.cpp)
+add_executable(UVA_11631_Dark_roads UVA_11631_Dark_roads.cpp)
+add_executable(UVA_12176_Bring_Your_Own_Horse UVA_12176_Bring_Your_Own_Horse.cpp)
+add_executable(LEETCODE_1584_Min_Cost_to_Connect_All_Points LEETCODE_1584_Min_Cost_to_Connect_All_Points.cpp)

@@ -109,7 +109,7 @@ int main() {
     uint TC, tc;
     double cl = clock();
 
-    // Start your code here
+    // THIS PROBLEM VERY DIFFICULT
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);

@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.21)
+project(Floyd_Warshall)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(SPOJ_SOCIALNE SPOJ_SOCIALNE.cpp)
+add_executable(SPOJ_ARBITRAG SPOJ_ARBITRAG.cpp)
+add_executable(UVA_117_The_Postal_Worker_Rings_Once UVA_117_The_Postal_Worker_Rings_Once.cpp)
+add_executable(UVA_821_Page_Hopping UVA_821_Page_Hopping.cpp)
+add_executable(floyd_warshall floyd_warshall.cpp)
+add_executable(main main.cpp)
+add_executable(UVA_10048_Audiophobia UVA_10048_Audiophobia.cpp)
+add_executable(UVA_1198_The_Geodetic_Set_Problem UVA_1198_The_Geodetic_Set_Problem.cpp)
+add_executable(UVA_10171_Meeting_Prof_Miguel UVA_10171_Meeting_Prof_Miguel.cpp)
+add_executable(UVA_10724_Road_Construction UVA_10724_Road_Construction.cpp)
+add_executable(UVA_11463_Commandos UVA_11463_Commandos.cpp)
