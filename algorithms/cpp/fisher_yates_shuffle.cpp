@@ -15,14 +15,18 @@
 #include <sstream>
 #include <iostream>
 #include <algorithm>
+#include <random>
 
 using namespace std;
 
-void randomize(vector<int>& arr) {
+void shuffle(vector<int>& arr) {
     int n = arr.size();
-    srand(time(NULL));
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(1, n);
     for (int i = n-1; i >= 0; i--) {
-        int j = rand() % (i+1);
+        int x = distribution(generator);
+        int j = x % (i+1);
         swap(arr[i], arr[j]);
     }
 }
@@ -32,9 +36,9 @@ void randomize(vector<int>& arr) {
  * https://www.geeksforgeeks.org/shuffle-a-given-array-using-fisher-yates-shuffle-algorithm/
  */
 int main() {
-    vector<int> arr {1, 2, 3, 4};
+    vector<int> arr {1, 2, 3, 4, 5, 6};
 
-    randomize(arr);
+    shuffle(arr);
     for (auto x : arr) cout << x << " ";
     cout << endl;
 
