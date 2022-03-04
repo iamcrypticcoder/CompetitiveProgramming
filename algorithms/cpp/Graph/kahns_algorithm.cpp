@@ -44,7 +44,7 @@ vector<int> kahnsAlgo() {
     for (int u = 1; u <= NODE; u++)
         if (inDeg[u] == 0) Q.push(u);
 
-    int cnt = 0;
+    int visited = 0;
     while (!Q.empty()) {
         int u = Q.front();
         Q.pop();
@@ -53,11 +53,11 @@ vector<int> kahnsAlgo() {
             inDeg[v]--;
             if (inDeg[v] == 0) Q.push(v);
         }
-        cnt++;
+        visited++;
     }
 
     // If all nodes aren't traversed, it means cycle exists
-    if (cnt != NODE) {
+    if (visited != NODE) {
         cout << "There exists a cycle in the graph\n";
         return vector<int>();
     }
