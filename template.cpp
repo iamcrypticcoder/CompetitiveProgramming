@@ -75,6 +75,14 @@ typedef vector<vector<int> > VVI;
 typedef vector<vector<double> > VVD;
 typedef vector<vector<PII> > VVPII;
 
+int allBits()               { return ((1 << 31) - 1);     }
+int negBits(int n)          { return n ^ ((1 << 31) - 1); }
+bool checkBit(int n, int i) { return (n & (1 << i));      }
+int setBit(int n, int i)    { return (n | (1 << i));      }
+int clearBit(int n, int i)  { return (n & ~(1 << i));     }
+int flipBit(int n, int i)   { return (n ^ (1 << i));      }
+bool isPower2(int n)        { return (n && !(n & (n-1))); }
+
 long long GCD(long long a, long long b) { while (b)b ^= a ^= b ^= a %= b;  return a; }
 long long LCM(long long a, long long b) { return a / GCD(a, b) * b; }
 
