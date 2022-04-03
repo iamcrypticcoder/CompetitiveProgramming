@@ -51,6 +51,7 @@ using namespace std;
 #define ON_BIT(mask, i) (mask |= (1 << i))
 #define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
 
+typedef pair<double, double> PDD;
 typedef long long LL;
 typedef unsigned long long ULL;
 typedef vector<int> VI;
@@ -92,6 +93,12 @@ typedef struct {
 ** DESCRIPTION:
 ** Given three vertices a triangle, returns the area of the triangle.
 **
+** FORMULA:
+** We know cross product value of two vectors provides area of parallalogram. So divide by 2 gives triangle area
+** |AB x BC| / 2 = answer
+** vec(AB) = (B.x - A.x, B.y - A.y)
+** vec(BC) = (C.x - B.x, C.y - B.x)
+**
 ** COMPLEXITY:  O(1)
 **
 ** INPUT:
@@ -106,9 +113,11 @@ typedef struct {
 **
 ** NOTE:
 **/
-double triangleArea(Point a, Point b, Point c)
-{
-    return fabs((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) / 2.0;
+double triangleArea(Point a, Point b, Point c) {
+    return fabs((b.x - a.x) * (c.y - b.y) - (c.x - b.x) * (b.y - a.y)) / 2.0;
+}
+double triangleArea(PDD a, PDD b, PDD c) {
+    return fabs((b.first - a.first) * (c.second - a.second) - (b.second - a.second) * (c.first - a.first)) / 2.0;
 }
 
 /**
@@ -130,11 +139,10 @@ double triangleArea(Point a, Point b, Point c)
 ** RELIABILITY: 10
 **
 **/
-double triangleArea(double a, double b, double c)
-{
-   double s = (a + b + c) / 2.0;
-   if(a > s || b > s || c > s) return -1;
-   return sqrt(s * (s-a) * (s-b) * (s-c));
+double triangleArea(double a, double b, double c) {
+    double s = (a + b + c) / 2.0;
+    if(a > s || b > s || c > s) return -1;
+    return sqrt(s * (s-a) * (s-b) * (s-c));
 }
 
 /**
@@ -155,8 +163,7 @@ double triangleArea(double a, double b, double c)
 ** RELIABILITY: 10
 **
 **/
-double triangleArea(double m1, double m2, double m3)
-{
+double triangleArea(double m1, double m2, double m3) {
     double s = 0.5 * (m1 + m2 + m3);
     double area = s * (s - m1) * (s - m2) * (s - m3);
     if(area < 0.0) return -1.0;
@@ -172,6 +179,8 @@ int main()
 
     double cl = clock();
     cl = clock() - cl;
+
+    Point a, b, c;
 
     while(scanf("%lf %lf %lf %lf %lf %lf", &a.x, &a.y, &b.x, &b.y, &c.x, &c.y) == 6){
         printf("Area of triangle = %f\n", triangleArea(a,b,c));
