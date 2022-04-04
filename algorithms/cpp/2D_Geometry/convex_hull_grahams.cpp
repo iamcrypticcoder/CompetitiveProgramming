@@ -42,8 +42,9 @@ void showPoints(vector<Point> pnts) {
 }
 vector<Point> grahamsScan(vector<Point> pnts) {
     vector<Point> ret;
-
     int n = (int) pnts.size();
+    if (n <= 3) return pnts;     // Special case
+    
     // Selecting the pivot Point, most bottom and rightmost if tie
     int pIndex = 0;                 // Pivot Index
     for(int i = 1; i < n; i++)
@@ -146,7 +147,5 @@ Convex Hull consists of following Points:
 4.00 4.00
 3.00 1.00
 0.00 0.00
-
-https://i.ibb.co/Kw6yKcy/grahams-scan.png
 
 */
