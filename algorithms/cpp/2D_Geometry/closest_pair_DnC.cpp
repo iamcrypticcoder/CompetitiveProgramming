@@ -8,36 +8,12 @@
     Complexity:
 */
 
-#include <set>
-#include <map>
-#include <list>
-#include <cmath>
-#include <ctime>
-#include <queue>
-#include <stack>
-#include <cctype>
-#include <cstdio>
-#include <string>
-#include <vector>
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-#include <float.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-#define FOR(i, L, U) for(int i=(int)L; i<=(int)U; i++)
-#define FORD(i, U, L) for(int i=(int)U; i>=(int)L; i--)
-
 #define READ(x) freopen(x, "r", stdin)
 #define WRITE(x) freopen(x, "w", stdout)
-
-#define PQ priority_queue
-#define PB push_back
-#define SZ size()
 
 #define EPS 1e-9
 #define SQR(x) ((x)*(x))
@@ -45,138 +21,136 @@ using namespace std;
 #define TO_DEG 57.29577951
 #define PI 2*acos(0.0)
 
-#define ALL_BITS ((1 << 31) - 1)
-#define NEG_BITS(mask) (mask ^= ALL_BITS)
-#define TEST_BIT(mask, i) (mask & (1 << i))
-#define ON_BIT(mask, i) (mask |= (1 << i))
-#define OFF_BIT(mask, i) (mask &= NEG_BITS(1 << i))
-
-typedef long long LL;
-typedef unsigned long long ULL;
-typedef vector<int> VI;
-typedef vector<vector<int> > VVI;
-typedef vector<string> VS;
-typedef vector<bool> VB;
-typedef vector<char> VC;
-typedef vector< vector<bool> > VVB;
-typedef pair<int, int> PII;
-typedef map<int, int> MII;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-
-int GCD(int a,int b)    {   while(b)b^=a^=b^=a%=b;  return a;   }
-int LCM(int a, int b)   {   return a/GCD(a,b)*b;                }
-
-// UP, RIGHT, DOWN, LEFT, UPPER-RIGHT, LOWER-RIGHT, LOWER-LEFT, UPPER-LEFT
-int dx[8] = {-1, 0, 1, 0, -1, 1,  1, -1};
-int dy[8] = { 0, 1, 0,-1,  1, 1, -1, -1};
-
-// Represents all moves of a knight in a chessboard
-int dxKnightMove[8] = {-1, -2, -2, -1,  1,  2, 2, 1};
-int dyKnightMove[8] = { 2,  1, -1, -2, -2, -1, 1, 2};
-
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-#define WHITE 0
-#define GRAY 1
-#define BLACK 2
-
-#define MAX 10000
-
-typedef struct {
+struct Point{
     double x, y;
-} Point;
+    Point() {}
+    Point(double a, double b) : x(a), y(b) {}
+};
 
-int N;                      // Number of Points given
-Point pnts[10001];
-Point minA, minB;           // two points of closest pair
-double minDist;             // Distance of closest pair
-
-bool compX(Point a, Point b)
-{
-    return (a.x < b.x);
-}
-bool compY(Point a, Point b)
-{
-    return (a.y < b.y);
+double sqrDist2D(Point a, Point b) {
+    return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 }
 
-void checkPair(Point a, Point b)
-{
-    double d = SQR(b.x-a.x)+SQR(b.y-a.y);
-    if(d < minDist) {
-        minDist = d;
-        minA = a; minB = b;
+void closestPairDnC(vector<Point> pnts, int l, int r, double& minDist, Point& p1, Point& p2) {
+    if(r-l+1 < 2) return;
+    if(r-l+1 == 2) {
+        minDist = min(minDist, sqrDist2D(pnts[0], pnts[1]));
+        p1 = pnts[0], p2 = pnts[1];
+        return;
     }
-}
 
-// A recursive function to find the smallest distance. The array P contains
-// all points sorted according to x coordinate
-void divideAndConquer(Point p[], int n)
-{
-    int i, j, cnt;
-    vector<Point> strip;
-
-    if(n == 2) checkPair(p[1], p[2]);         /* base cases */
-    if(n <= 2) return;
-
-    int mid = n / 2;
-    divideAndConquer(p, mid);
-    divideAndConquer(p + mid, n - mid);
+    int mid = l + (r-l)/2;
+    closestPairDnC(pnts, l, mid, minDist, p1, p2);
+    closestPairDnC(pnts, mid+1, r, minDist, p1, p2);
 
     /// Build an vector strip that contains points close (closer than min)
     /// to the line passing through the middle point
-    for(i = 1; i <= n; i++)
-        if(SQR(p[i].x - p[mid].x) < minDist) strip.push_back(p[i]);
-    sort(strip.begin(), strip.end(), compY);                    // Sorting by y-coordinate
+    vector<Point> strip;
+    for (auto p : pnts)
+        if(SQR(p.x - pnts[mid].x) < minDist) strip.push_back(p);
+    // Sorting by y-coordinate
+    sort(strip.begin(), strip.end(), [](Point p1, Point p2) {
+        return p1.y < p2.y;
+    });
 
     // Find the closest points in strip.
-    for(i = 0; i < strip.size(); i++) {
-        if(SQR(strip[i].x - p[mid].x) >= minDist) break;
-        for(j = i+1; j < strip.size(); j++) {
+    for (int i = 0; i < (int)strip.size(); i++) {
+        for (int j = i+1; j < (int)strip.size(); j++) {
             if(SQR(strip[i].y - strip[j].y) >= minDist) break;
-            checkPair(strip[i], strip[j]);
+            Point a = strip[i], b = strip[j];
+            double d = SQR(b.x-a.x)+SQR(b.y-a.y);
+            if (d < minDist) {
+                minDist = d;
+                p1 = a, p2 = b;
+            }
         }
     }
 }
 
-// Make sure points are stored in array from index 1
-double closestPair(Point p[], int n)
-{
-    minDist = DBL_MAX;
-    sort(p + 1, p + 1 + n, compX);
-    divideAndConquer(p, n);
-}
-
-void showPnts()
-{
-    for(int i = 1; i <= N; i++) {
-        printf("%lf %lf\n", pnts[i].x, pnts[i].y);
+double closestPair(vector<Point> pnts, Point& p1, Point& p2) {
+    int n = (int)pnts.size();
+    if(n < 2) return DBL_EPSILON;
+    if(n == 2) {
+        double minDist = sqrt(sqrDist2D(p1, p2));
+        p1 = pnts[0], p2 = pnts[1];
+        return minDist;
     }
+
+    // Sort w.r.t X
+    sort(pnts.begin(), pnts.end(), [](Point p1, Point p2) {
+        return p1.x < p2.x;
+    });
+
+    int l = 0, r = n-1;
+    int mid = l + (r-l)/2;
+    double minDist = DBL_MAX;
+    closestPairDnC(pnts, l, mid, minDist, p1, p2);
+    closestPairDnC(pnts, mid+1, r, minDist, p1, p2);
+    minDist = sqrt(minDist);
+    return minDist;
 }
 
-
-int main()
-{
-    //READ("input.txt");
+int main() {
+    READ("../input.txt");
     //WRITE("output.txt");
     int i, j, k;
     int TC, tc;
 
     double cl = clock();
     cl = clock() - cl;
-
+    int N;
     while(scanf("%d", &N) == 1) {
-        for(i = 1; i <= N; i++)
-            scanf("%lf %lf", &pnts[i].x, &pnts[i].y);
+        vector<Point> pnts(N);
+        for (auto& p : pnts) scanf("%lf %lf", &p.x, &p.y);
+        Point p1, p2;
+        double minDist = closestPair(pnts, p1, p2);
 
-        closestPair(pnts, N);
-
-        printf("Closest Points are (%.4lf, %.4lf) and (%.4lf, %.4lf)\n", minA.x, minA.y, minB.x, minB.y);
-        printf("Closest Distance is: %.4lf\n", sqrt(minDist));
+        printf("Closest Points are (%.2lf, %.2lf) and (%.2lf, %.2lf)\n", p1.x, p1.y, p2.x, p2.y);
+        printf("Closest Distance is: %.4lf\n", minDist);
     }
 
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
 
     return 0;
 }
+
+/**
+INPUT
+=====
+8
+3 1
+0 2
+0 9
+2 5
+4 4
+5 7
+7 4
+7 1
+
+13
+1 1
+1 5
+2 3
+3 1
+3 4
+3 7
+4 9
+5 7
+6 5
+9 3
+9 8
+10 1
+12 3
+
+OUTPUT
+======
+Closest Points are (0.00, 2.00) and (0.00, 9.00)
+Closest Distance is: 2.2361
+Closest Points are (1.00, 1.00) and (1.00, 5.00)
+Closest Distance is: 1.4142
+
+https://i.ibb.co/G3SSNPg/closest-pair-dnc.png
+
+**/
