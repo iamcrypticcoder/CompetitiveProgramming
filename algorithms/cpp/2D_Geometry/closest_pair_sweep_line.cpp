@@ -109,3 +109,42 @@ int main() {
 
     return 0;
 }
+
+/**
+INPUT
+=====
+8
+3 1
+0 2
+0 9
+2 5
+4 4
+5 7
+7 4
+7 1
+
+13
+1 1
+1 5
+2 3
+3 1
+3 4
+3 7
+4 9
+5 7
+6 5
+9 3
+9 8
+10 1
+12 3
+
+OUTPUT
+======
+Closest Points are (4.00, 4.00) and (2.00, 5.00)
+Closest Distance is: 2.2361
+Closest Points are (3.00, 4.00) and (2.00, 3.00)
+Closest Distance is: 1.4142
+
+https://i.ibb.co/G3SSNPg/closest-pair-dnc.png
+
+**/
