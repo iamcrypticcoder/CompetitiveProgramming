@@ -74,7 +74,7 @@ double closestPairSweepLine(vector<Point> pnts, Point& p1, Point& p2) {
         auto lowerBound = candidates.lower_bound(lowerLimit);
 
         for(auto it = lowerBound; it->y <= pnts[i].y + minDist && it != candidates.end(); it++ ) {
-            double dist = sqrt(SQR(pnts[i].x - it->x) + SQR(pnts[i].y - it->y));
+            double dist = SQR(pnts[i].x - it->x) + SQR(pnts[i].y - it->y);
             if(dist < minDist) {
                 minDist = dist;
                 p1 = pnts[i];
@@ -83,7 +83,7 @@ double closestPairSweepLine(vector<Point> pnts, Point& p1, Point& p2) {
         }
         candidates.insert(pnts[i]);
     }
-    return minDist;
+    return sqrt(minDist);
 }
 
 int main() {
