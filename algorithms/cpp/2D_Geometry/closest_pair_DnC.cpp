@@ -36,8 +36,11 @@ double sqrDist2D(Point a, Point b) {
 void closestPairDnC(vector<Point> pnts, int l, int r, double& minDist, Point& p1, Point& p2) {
     if(r-l+1 < 2) return;
     if(r-l+1 == 2) {
-        minDist = min(minDist, sqrDist2D(pnts[0], pnts[1]));
-        p1 = pnts[0], p2 = pnts[1];
+        double d = sqrDist2D(pnts[0], pnts[1]);
+        if (d < minDist) {
+            minDist = d;
+            p1 = pnts[0], p2 = pnts[1];
+        }
         return;
     }
 
@@ -146,9 +149,9 @@ INPUT
 
 OUTPUT
 ======
-Closest Points are (0.00, 2.00) and (0.00, 9.00)
+Closest Points are (4.00, 4.00) and (2.00, 5.00)
 Closest Distance is: 2.2361
-Closest Points are (1.00, 1.00) and (1.00, 5.00)
+Closest Points are (2.00, 3.00) and (3.00, 4.00)
 Closest Distance is: 1.4142
 
 https://i.ibb.co/G3SSNPg/closest-pair-dnc.png
