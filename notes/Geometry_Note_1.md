@@ -56,7 +56,7 @@ double sqrDist2D(Point a, Point b) {
 ```
 
 
-
+&NewLine;
 
 
 ### 2. Angle 2D: Given 3 points (A, B, C) find angle ABC:
