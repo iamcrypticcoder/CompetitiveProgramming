@@ -581,7 +581,7 @@ bool isConvex(vector<Point> points) {
 
 ### 25. **Polygon:** Given points of polygon find a convex hull:
 
-**Code: (Graham's Scan) **
+**Code: (Graham's Scan)**
 
 ```cpp
 #include <bits/stdc++.h>
