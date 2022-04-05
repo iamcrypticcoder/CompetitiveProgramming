@@ -30,9 +30,6 @@
 
 
 ### 1. **Distance 2D:** Given 2 points (A, B) find the Euclidean distance:
-
-------
-
 **Code:**
 
 ```cpp
@@ -54,15 +51,10 @@ double sqrDist2D(Point a, Point b) {
     return (a.x-b.x)*(a.x-b.x) + (a.y-b.y)*(a.y-b.y);
 }
 ```
-
-
-&NewLine;
+------
 
 
 ### 2. Angle 2D: Given 3 points (A, B, C) find angle ABC:
-
-------
-
 **Code:**
 
 ```cpp
