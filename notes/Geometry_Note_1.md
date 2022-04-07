@@ -673,18 +673,11 @@ int main() {
     cl = clock() - cl;
 
     int N;
-    Point p;
-    vector<Point> Points;
-    vector<Point> hull;
-
     while(cin >> N) {
-        for(int i = 1; i <= N; i++) {
-            cin >> p.x >> p.y;
-            Points.push_back(p);
-        }
-        hull = grahamsScan(Points);
-
-        cout << "Convex Hull consists of following Points:\n";
+        vector<Point> points(N);
+        for (auto& p : points) cin >> p.x >> p.y;
+        vector<Point> hull = grahamsScan(points);
+        cout << "Convex Hull consists of following points:\n";
         showPoints(hull);
     }
 
@@ -708,6 +701,8 @@ int main() {
 1 2
 3 1
 3 3
+
+https://i.ibb.co/Kw6yKcy/grahams-scan.png
 ```
 
 **Output:**
@@ -818,16 +813,10 @@ int main() {
     cl = clock() - cl;
 
     int N;
-    Point p;
-    vector<Point> points;
-    vector<Point> hull;
-
     while(cin >> N) {
-        for(int i = 1; i <= N; i++) {
-            cin >> p.x >> p.y;
-            points.push_back(p);
-        }
-        hull = convexHullAMC(points);
+        vector<Point> points(N);
+        for (auto& p : points) cin >> p.x >> p.y;
+        vector<Point> hull = convexHullAMC(points);
         cout << "Convex Hull consists of following points:\n";
         showPoints(hull);
     }
@@ -875,6 +864,9 @@ Convex Hull consists of following points:
 4.00 4.00
 0.00 3.00
 0.00 0.00
+
+https://i.ibb.co/Kw6yKcy/grahams-scan.png
+
 ```
 
 -----
