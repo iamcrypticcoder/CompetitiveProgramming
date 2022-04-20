@@ -12,7 +12,8 @@ inline uint64_t srcUInt64() { uint64_t ret; scanf("%llu", &ret); return ret; }
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
     //READ("../input.txt");
     //WRITE("output.txt");
 
