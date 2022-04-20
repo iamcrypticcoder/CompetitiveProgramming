@@ -52,7 +52,8 @@ const int MAX_N     = int(1e5);
 
 int main() {
     ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
     //READ("../input.txt");
     //WRITE("output.txt");
     int64_t TC, tc;
