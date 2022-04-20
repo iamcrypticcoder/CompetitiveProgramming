@@ -1,11 +1,5 @@
-/*
-        Problem Link :
-        Solved By : Kazi Mahbubur Rahman (iamcrypticcoder)
-        Status : [AC, WA, TLE, RTE]
-        Time :
-        Rank :
-        Complexity:
-*/
+// Problem Link :
+// Solved By : iamcrypticcoder
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -20,37 +14,6 @@ using namespace std;
 #define PQ priority_queue
 #define PB push_back
 #define SZ size()
-
-#define SQR(x)          ((x)*(x))
-
-#define ALL_BITS                                ((1 << 31) - 1)
-#define NEG_BITS(mask)                          (mask ^= ALL_BITS)
-#define TEST_BIT(mask, i)                       (mask & (1 << i))
-#define ON_BIT(mask, i)                         (mask |= (1 << i))
-#define OFF_BIT(mask, i)                        (mask &= NEG_BITS(1 << i))
-#define IS_POWER_TWO(x)                         (x && !(x & (x-1)))
-#define OFF_RIGHTMOST_SET_BIT(x)                (x & (x-1))
-
-typedef unsigned int uint;
-typedef long long LL;
-typedef unsigned long long ULL;
-typedef pair<int, int> PII;
-typedef pair<uint, uint> PUU;
-typedef pair<double, double> PDD;
-typedef vector<bool> VB;
-typedef vector<int> VI;
-typedef vector<uint> VU;
-typedef vector<double> VD;
-typedef vector<char> VC;
-typedef vector<string> VS;
-typedef map<int, int> MII;
-typedef map<uint, uint> MUU;
-typedef map<char, int> MCI;
-typedef map<string, int> MSI;
-typedef vector<vector<bool> > VVB;
-typedef vector<vector<int> > VVI;
-typedef vector<vector<double> > VVD;
-typedef vector<vector<PII> > VVPII;
 
 int allBits()               { return ((1LL << 31) - 1);     }
 int negBits(int n)          { return n ^ ((1LL << 31) - 1); }
@@ -72,10 +35,10 @@ int dxKnightMove[8] = { -1, -2, -2, -1,  1,  2, 2, 1 };
 int dyKnightMove[8] = {  2,  1, -1, -2, -2, -1, 1, 2 };
 
 // Input Methods
-inline int srcInt() { int ret; scanf("%d", &ret); return ret; }
-inline uint srcUInt() { uint ret; scanf("%u", &ret); return ret; }
-inline LL srcLongLong() { long long ret; scanf("%lld", &ret); return ret; }
-inline ULL srcULongLong() { unsigned long long ret; scanf("%llu", &ret); return ret; }
+inline int32_t srcInt32() { int ret; scanf("%d", &ret); return ret; }
+inline uint32_t srcUInt32() { uint32_t ret; scanf("%u", &ret); return ret; }
+inline int64_t srcInt64() { int64_t ret; scanf("%lld", &ret); return ret; }
+inline uint64_t srcUInt64() { uint64_t ret; scanf("%llu", &ret); return ret; }
 
 const char WHITE = 0;
 const char GRAY = 1;
@@ -88,13 +51,17 @@ const double PI     = 2*acos(0.0);
 const int MAX_N     = int(1e5);
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
     //READ("../input.txt");
     //WRITE("output.txt");
-    int i, j, k;
-    uint TC, tc;
+    int64_t TC, tc;
     double cl = clock();
 
-    // Start your code here
+    TC = srcInt64();
+    for (tc = 1; tc <= TC; tc++) {
+        // Start code for a test case
+    }
 
     cl = clock() - cl;
     fprintf(stderr, "Total Execution Time = %lf seconds\n", cl / CLOCKS_PER_SEC);
