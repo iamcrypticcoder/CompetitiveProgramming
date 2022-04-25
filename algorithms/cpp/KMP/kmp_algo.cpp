@@ -1,30 +1,7 @@
-/*
-    Solved By : Kazi Mahbubur Rahman (MAHBUB)
-                Software Engineer,
-                Samsung R&D Institute Bangladesh (SRBD),
-                Dhaka, Bangladesh.
-    Time :
-    Rank :
-    Complexity:
-*/
+// Problem Link :
+// Solved By : iamcrypticcoder
 
-#include <set>
-#include <map>
-#include <list>
-#include <cmath>
-#include <ctime>
-#include <queue>
-#include <stack>
-#include <cctype>
-#include <cstdio>
-#include <string>
-#include <vector>
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -61,7 +38,7 @@ void kmpSearch(string text, string pattern) {
             else i++;
         }
         if (j == m) {
-            printf("pattern found at index %d in T\n", i-j);
+            printf("Pattern found at index %d in T\n", i-j);
             j = pi[j-1];
         }
     }
@@ -69,8 +46,13 @@ void kmpSearch(string text, string pattern) {
 
 int main() {
     kmpSearch("abdabcabc", "abc");
+    printf("\n");
     kmpSearch("abababa", "aba");
+    printf("\n");
     kmpSearch("ababacababa", "abacababa");
+    printf("\n");
+    kmpSearch("AAAA", "A");
+    printf("\n");
 }
 
 /**
