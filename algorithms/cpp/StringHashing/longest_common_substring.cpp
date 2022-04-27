@@ -1,31 +1,4 @@
-/*
-    Solved By : Kazi Mahbubur Rahman (MAHBUB)
-                Software Engineer,
-                Samsung R&D Institute Bangladesh (SRBD),
-                Dhaka, Bangladesh.
-    Time :
-    Rank :
-    Complexity:
-*/
-
-#include <set>
-#include <map>
-#include <list>
-#include <cmath>
-#include <ctime>
-#include <queue>
-#include <stack>
-#include <cctype>
-#include <cstdio>
-#include <string>
-#include <vector>
-#include <cassert>
-#include <cstdlib>
-#include <cstring>
-#include <sstream>
-#include <iostream>
-#include <algorithm>
-#include <unordered_set>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -34,17 +7,14 @@ using namespace std;
 
 inline int src() { int ret; scanf("%d", &ret); return ret; }
 
-typedef long long LL;
+const int64_t p = 257;
+const int64_t MOD = 1e9 + 7;
 
-const LL p = 257;
-const LL MOD = 1e9 + 9;
-
-long long bigMod(long long a,
-                 long long n,
-                 long long m) {
-    a = a % m;
-    long long ret = 1;
-    while (n > 0) {
+// Finds a^n % m
+int64_t bigPow(int64_t a, int64_t n, int64_t m) {
+    a %= m;
+    int64_t ret = 1;
+    while (n) {
         if (n & 1) ret = (ret * a) % m;
         a = (a * a) % m;
         n >>= 1;
@@ -53,34 +23,32 @@ long long bigMod(long long a,
 }
 
 // Complexity: lg(m) * n
-int longestCommonSubstring(string s1, string s2) {
+int longestCommonSubstring(string& s1, string& s2) {
     int n = s1.length();
     int m = s2.length();
+    const int maxLen = max(m, n);
+    const int minLen = min(m, n);
 
-    LL power[n];
+    int64_t power[maxLen];
     power[0] = 1;
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < maxLen; i++)
         power[i] = (power[i-1] * p % MOD);
 
     // Binary search over length of smaller string
-    int l = 1, r = min(m, n);
+    int l = 1, r = minLen;
     while (l <= r) {
-        int len = (l + r) / 2;
-        if (len > m) {
-            r = len-1;
-            continue;
-        }
+        int len = l + (r - l) / 2;
 
         // hash of first len chars in both s1 and s2
-        LL s1Hash = 0, s2Hash = 0;
+        int64_t s1Hash = 0, s2Hash = 0;
         for (int i = 0; i < len; i++) {
             s1Hash = ((s1Hash * p) + s1[i]) % MOD;
             s2Hash = ((s2Hash * p) + s2[i]) % MOD;
         }
         // Find all hashes of substring of length = len from s1
-        unordered_set<LL> hashes;
+        unordered_set<int64_t> seen;
         for (int i = 0; i <= n-len; i++) {
-            hashes.insert(s1Hash);
+            seen.insert(s1Hash);
             if (i < n-len) {
                 s1Hash = ((s1Hash - s1[i]*power[len-1]) * p + s1[i+len]) % MOD;
                 if (s1Hash < 0) s1Hash += MOD;
@@ -91,7 +59,7 @@ int longestCommonSubstring(string s1, string s2) {
         // Also search in hashes
         bool found = false;
         for (int i = 0; i <= m-len; i++) {
-            if (hashes.find(s2Hash) != hashes.end()) {
+            if (seen.find(s2Hash) != seen.end()) {
                 found = true;
                 break;
             }
@@ -121,11 +89,19 @@ int main() {
 /**
 
 Input:
+a a
+abc abc
+mahbub mahbubmahbub
+mahbubRmahbub mahabc
 mnoabcxy xyabc
 abcde c
 abcde x
 
 Output:
+1
+3
+6
+3
 3
 1
 0
